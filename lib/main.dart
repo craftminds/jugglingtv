@@ -5,12 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:convert';
 
+// get movies from the file
 Future<List<Movie>> fetchMovies() async {
   final String response = await rootBundle.loadString('assets/videos.json');
   //print(response);
   return compute(parseMovies, response);
 }
 
+//decode from json to list iterable by dart
 List<Movie> parseMovies(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
   return parsed.map<Movie>((json) => Movie.fromJson(json)).toList();
@@ -70,25 +72,60 @@ class MoviesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-      ),
+    //using simple builder to create the tiles with the movie pictures
+    return ListView.builder(
       itemCount: movies.length,
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              child: Image.network(
-                movies[index].thumbnailUrl,
+        return Card(
+          elevation: 3,
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          child: Container(
+            height: 80,
+            padding: const EdgeInsets.all(0),
+            alignment: Alignment.center,
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(
+                  movies[index].thumbnailUrl,
+                ),
+                child: const Padding(padding: EdgeInsets.all(10)),
+              ),
+              title: Text(movies[index].title),
+              subtitle: Text(movies[index].author),
+              trailing: FittedBox(
+                child: Container(
+                  width: 80,
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.visibility_outlined),
+                        const SizedBox(width: 5),
+                        Text(movies[index].views),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.av_timer),
+                        const SizedBox(width: 5),
+                        Text(movies[index].duration),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.comment),
+                        const SizedBox(width: 5),
+                        Text(movies[index].commentsNo),
+                      ],
+                    ),
+                  ]),
+                ),
               ),
             ),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(movies[index].title),
-            ),
-          ],
+          ),
         );
       },
     );
