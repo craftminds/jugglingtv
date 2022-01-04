@@ -43,7 +43,14 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Image.asset(
+            "assets/images/logo.png",
+            //fit: BoxFit.cover,
+            scale: 1.5,
+          ),
+        ),
       ),
       body: FutureBuilder<List<Movie>>(
         future: fetchMovies(),
