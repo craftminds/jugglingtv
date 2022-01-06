@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'models/movies.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:convert';
+
+import './movie_list.dart';
+import 'models/movies.dart';
 
 // get movies from the file
 Future<List<Movie>> fetchMovies() async {
@@ -27,8 +30,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'jugglingtv';
 
-    return const MaterialApp(
+    return MaterialApp(
       title: appTitle,
+      theme: ThemeData(
+        primaryColor: Colors.lightGreen,
+        // fontFamily: 'Quicksand',
+      ),
       home: MyHomePage(title: appTitle),
     );
   }
@@ -60,7 +67,7 @@ class MyHomePage extends StatelessWidget {
               child: Text("${snapshot.error}"),
             );
           } else if (snapshot.hasData) {
-            return MoviesList(movies: snapshot.data!);
+            return MovieList(movies: snapshot.data!);
           } else {
             return const Center(
               child: CircularProgressIndicator(),
@@ -68,73 +75,6 @@ class MyHomePage extends StatelessWidget {
           }
         },
       ),
-    );
-  }
-}
-
-class MoviesList extends StatelessWidget {
-  const MoviesList({Key? key, required this.movies}) : super(key: key);
-
-  final List<Movie> movies;
-
-  @override
-  Widget build(BuildContext context) {
-    //using simple builder to create the tiles with the movie pictures
-    return ListView.builder(
-      itemCount: movies.length,
-      itemBuilder: (context, index) {
-        return Card(
-          elevation: 3,
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          child: Container(
-            height: 80,
-            padding: const EdgeInsets.all(0),
-            alignment: Alignment.center,
-            child: ListTile(
-              leading: CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
-                  movies[index].thumbnailUrl,
-                ),
-                child: const Padding(padding: EdgeInsets.all(10)),
-              ),
-              title: Text(movies[index].title),
-              subtitle: Text(movies[index].author),
-              trailing: FittedBox(
-                child: Container(
-                  width: 80,
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.visibility_outlined),
-                        const SizedBox(width: 5),
-                        Text(movies[index].views),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.av_timer),
-                        const SizedBox(width: 5),
-                        Text(movies[index].duration),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.comment),
-                        const SizedBox(width: 5),
-                        Text(movies[index].commentsNo),
-                      ],
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
