@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:convert';
 
-import './movie_list.dart';
+import 'widgets/movie_list.dart';
 import 'models/movies.dart';
 
 // get movies from the file
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightGreen,
         // fontFamily: 'Quicksand',
       ),
-      home: MyHomePage(title: appTitle),
+      home: const MyHomePage(title: appTitle),
+      routes: {},
     );
   }
 }
@@ -70,7 +72,10 @@ class MyHomePage extends StatelessWidget {
             return MovieList(movies: snapshot.data!);
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.grey,
+                strokeWidth: 1.0,
+              ),
             );
           }
         },
