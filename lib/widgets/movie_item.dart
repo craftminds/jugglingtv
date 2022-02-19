@@ -37,10 +37,11 @@ class MovieItem extends StatelessWidget {
         child: Row(
           children: [
             //first column in the ROW
-            Expanded(
+            Flexible(
+              fit: FlexFit.tight,
               flex: 3,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(7),
+                borderRadius: BorderRadius.circular(4),
                 child: Image.network(
                   thumbnailUrl,
                   fit: BoxFit.cover,
@@ -48,19 +49,23 @@ class MovieItem extends StatelessWidget {
               ),
             ),
             //second column in the ROW
-            Expanded(
-              flex: 6,
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 5,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      maxLines: 3,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        maxLines: 3,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(author),
                   ],
@@ -68,8 +73,8 @@ class MovieItem extends StatelessWidget {
               ),
             ),
             //third column in the ROW
-            Expanded(
-              flex: 2,
+            Flexible(
+              flex: 3,
               child: FittedBox(
                 child: Container(
                   //width: 80,
