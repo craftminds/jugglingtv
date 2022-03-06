@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         // fontFamily: 'Quicksand',
       ),
       home: const MovieListScreen(),
-      routes: {},
+      //routes: {},
     );
   }
 }
