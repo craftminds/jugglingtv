@@ -13,11 +13,11 @@ class MovieList extends StatelessWidget {
       itemBuilder: (context, index) {
         return MovieItem(
           title: movies[index].title,
-          author: movies[index].authorId as String,
-          commentsNo: movies[index].commentsNo as String,
+          author: movies[index].authorName,
+          commentsNo: movies[index].commentsNo,
           duration: movies[index].duration,
           thumbnailUrl: movies[index].thumbnailUrl,
-          views: movies[index].views as String,
+          views: movies[index].views,
         );
       },
     );

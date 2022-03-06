@@ -5,8 +5,8 @@ class MovieItem extends StatelessWidget {
   final String thumbnailUrl;
   final String author;
   final String duration;
-  final String views;
-  final String commentsNo;
+  final int views;
+  final int commentsNo;
 
   const MovieItem({
     Key? key,
@@ -87,7 +87,7 @@ class MovieItem extends StatelessWidget {
                           children: [
                             const Icon(Icons.visibility_outlined),
                             const SizedBox(width: 5),
-                            Text(views),
+                            Text(views.toString()),
                           ],
                         ),
                         Row(
@@ -103,7 +103,7 @@ class MovieItem extends StatelessWidget {
                           children: [
                             const Icon(Icons.comment),
                             const SizedBox(width: 5),
-                            Text(commentsNo),
+                            Text(commentsNo.toString()),
                           ],
                         ),
                       ]),
