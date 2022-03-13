@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import 'dart:convert';
 
-import '../models/movies.dart';
 import '../widgets/movie_list.dart';
 import '../db/videos_database.dart';
 import '../models/videos_db_model.dart';

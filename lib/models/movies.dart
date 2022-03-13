@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Movie {
+  final int id;
   final String title;
   final String videoLink;
   final String thumbnailUrl;
@@ -10,6 +11,7 @@ class Movie {
   final String commentsNo;
 
   const Movie({
+    required this.id,
     required this.title,
     required this.videoLink,
     required this.thumbnailUrl,
@@ -21,6 +23,7 @@ class Movie {
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
+      id: json['id'] as int,
       title: json['title'] as String,
       videoLink: json['video_link'] as String,
       thumbnailUrl: json['thumbnail'] as String,

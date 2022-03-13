@@ -12,6 +12,7 @@ class MovieList extends StatelessWidget {
       itemCount: movies.length,
       itemBuilder: (context, index) {
         return MovieItem(
+          id: movies[index].id,
           title: movies[index].title,
           author: movies[index].authorName,
           commentsNo: movies[index].commentsNo,

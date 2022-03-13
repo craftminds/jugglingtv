@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
@@ -5,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 import '../models/videos_db_model.dart';
 
-class VideosDatabase {
+class VideosDatabase with ChangeNotifier {
   static final VideosDatabase instance = VideosDatabase._init();
 
   Database? _database;
@@ -113,6 +114,7 @@ CREATE TABLE $tableVideoTag (
 )''');
   }
 
+//already implemented below without the safe whereArgs declaration
   Future<Video> readVideo(int id) async {
     final db = await instance.database;
     final maps = await db.query(
@@ -139,7 +141,9 @@ CREATE TABLE $tableVideoTag (
     // ); // authorID should be already joined with another table here - String should be the output, should be done with rawQuery function
 
     final result = await db.rawQuery(
-      '''SELECT $tableVideo.${VideosFields.title},
+      '''SELECT 
+      $tableVideo.${VideosFields.id},
+      $tableVideo.${VideosFields.title},
         $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
@@ -157,6 +161,35 @@ CREATE TABLE $tableVideoTag (
     );
     //print(result);
     return result.map((json) => Video.fromJson(json)).toList();
+  }
+
+//this function only returns one record
+  Future<Video> readVideoById(int videoId) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''SELECT 
+        $tableVideo.${VideosFields.id},
+        $tableVideo.${VideosFields.title},
+        $tableVideo.${VideosFields.thumbnailUrl},
+        $tableVideo.${VideosFields.videoUrl},
+        $tableVideo.${VideosFields.views},
+        $tableVideo.${VideosFields.duration},
+        $tableVideo.${VideosFields.commentsNo},
+        $tableVideo.${VideosFields.description},
+        $tableVideo.${VideosFields.year},
+        $tableVideo.${VideosFields.country},
+        $tableAuthor.${AuthorFields.name}
+        FROM
+        $tableVideo, $tableAuthor
+        WHERE
+        $tableVideo.${VideosFields.id} = $videoId AND
+        $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id}
+        ''',
+    );
+    //print(result);
+    return result.map((json) => Video.fromJson(json)).toList()[0];
+    // dirty solution - takes the first found element, always should be only one though
   }
 
   Future<Author> readAuthor(int id) async {

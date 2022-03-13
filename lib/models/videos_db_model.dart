@@ -133,7 +133,7 @@ class VideosFields {
 }
 
 class Video {
-  final int? id;
+  final int id;
   final String title;
   final String thumbnailUrl;
   final String videoUrl;
@@ -146,7 +146,7 @@ class Video {
   final String authorName;
 
   const Video({
-    this.id,
+    required this.id,
     required this.title,
     required this.thumbnailUrl,
     required this.videoUrl,
@@ -160,7 +160,7 @@ class Video {
   });
 
   static Video fromJson(Map<String, Object?> json) => Video(
-        //id: json[VideosFields.id] as int,
+        id: json[VideosFields.id] as int,
         title: json[VideosFields.title] as String,
         thumbnailUrl: json[VideosFields.thumbnailUrl] as String,
         videoUrl: json[VideosFields.videoUrl] as String,
@@ -170,8 +170,7 @@ class Video {
         description: json[VideosFields.description] as String,
         year: DateTime.parse(json[VideosFields.year] as String),
         country: json[VideosFields.country] as String,
-        authorName: json[AuthorFields.name]
-            as String, // <- problem jest tutaj bo ta zmienna nie jest przekazywana
+        authorName: json[AuthorFields.name] as String,
       );
 }
 

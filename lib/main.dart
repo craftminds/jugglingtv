@@ -3,6 +3,8 @@ import 'package:jugglingtv/screens/movies_list_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter/foundation.dart';
+import './screens/video_screen.dart';
+import './db/videos_database.dart';
 
 void main() => runApp(const MyApp());
 
@@ -13,14 +15,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'jugglingtv';
 
-    return MaterialApp(
-      title: appTitle,
-      theme: ThemeData(
-        primaryColor: Colors.lightGreen,
-        // fontFamily: 'Quicksand',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => VideosDatabase())
+      ],
+      child: MaterialApp(
+        title: appTitle,
+        theme: ThemeData(
+          primaryColor: Colors.lightGreen,
+          // fontFamily: 'Quicksand',
+        ),
+        home: const MovieListScreen(),
+        routes: {
+          VideoScreen.routeName: (ctx) => VideoScreen(),
+        },
       ),
-      home: const MovieListScreen(),
-      //routes: {},
     );
   }
 }
