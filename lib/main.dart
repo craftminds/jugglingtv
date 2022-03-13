@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import './screens/video_screen.dart';
 import './db/videos_database.dart';
+import './models/videos_db_model.dart';
 
 void main() => runApp(const MyApp());
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => VideosDatabase())
+        ChangeNotifierProvider(create: (context) => VideosDatabase.instance),
       ],
       child: MaterialApp(
         title: appTitle,
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const MovieListScreen(),
         routes: {
-          VideoScreen.routeName: (ctx) => VideoScreen(),
+          VideoScreen.routeName: (context) => const VideoScreen(),
         },
       ),
     );

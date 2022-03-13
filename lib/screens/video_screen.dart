@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/db/videos_database.dart';
 import 'package:provider/provider.dart';
 import '../models/videos_db_model.dart';
 
@@ -8,7 +9,7 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videoId = ModalRoute.of(context)?.settings.arguments as int;
-    final loadedvideo = Provider.of<Video>(context, listen: false);
+    final loadedvideo = Provider.of<VideosDatabase>(context, listen: false);
     print(videoId);
     return Scaffold(
       appBar: AppBar(

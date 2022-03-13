@@ -132,7 +132,7 @@ class VideosFields {
   static const String authorId = 'author_id';
 }
 
-class Video {
+class Video with ChangeNotifier {
   final int id;
   final String title;
   final String thumbnailUrl;
@@ -145,7 +145,7 @@ class Video {
   final String country;
   final String authorName;
 
-  const Video({
+  Video({
     required this.id,
     required this.title,
     required this.thumbnailUrl,
