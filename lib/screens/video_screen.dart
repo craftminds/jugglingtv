@@ -9,7 +9,9 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videoId = ModalRoute.of(context)?.settings.arguments as int;
-    final loadedvideo = Provider.of<VideosDatabase>(context, listen: false);
+    final loadedvideo = Provider.of<VideosDatabase>(context, listen: false)
+        .readVideoById(videoId);
+    final title = loadedvideo.then((value) => value.title);
     print(videoId);
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +27,9 @@ class VideoScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(),
+      body: Container(
+        child: Center(child: Text('title')),
+      ),
     );
   }
 }

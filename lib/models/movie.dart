@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+//this class is no longer in use
+
 class Movie {
   final int id;
   final String title;
