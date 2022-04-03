@@ -60,7 +60,7 @@ class MovieItem extends StatelessWidget {
                 fit: FlexFit.tight,
                 flex: 5,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

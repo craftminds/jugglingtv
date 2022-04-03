@@ -20,4 +20,8 @@ class Videos with ChangeNotifier {
     _items = loadedVideos;
     return _items;
   }
+
+  Video readVideoById(int id) {
+    return _items.firstWhere((vid) => vid.id == id);
+  }
 }
