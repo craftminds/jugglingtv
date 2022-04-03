@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 import 'dart:async';
 
 import '../widgets/movie_list.dart';
-import '../db/videos_database.dart';
-import '../models/videos_db_model.dart';
+import '../db/local_database.dart';
+import '../models/videos_db.dart';
+import '../providers/videos.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -34,27 +35,45 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   late List<Video> videos;
   bool isLoading = false;
+  var _isInit = true;
+  var _isLoading = false;
+
   void initState() {
     super.initState();
+  }
 
-    refreshVideos();
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      //print('Fetching videos...');
+      Provider.of<Videos>(context).fetchAndSetVideos().then((_) {
+        _isLoading = false;
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    VideosDatabase.instance.close();
+    LocalDatabase.instance.close();
     super.dispose;
   }
 
-  Future refreshVideos() async {
-    setState(() => isLoading = true);
-    this.videos = await VideosDatabase.instance.readAllVideos();
+  // Future refreshVideos() async {
+  //   setState(() => isLoading = true);
+  //   this.videos = await LocalDatabase.instance.readAllVideos();
+  //   //this.videos = await Videos.
 
-    setState(() => isLoading = false);
-  }
+  //   setState(() => isLoading = false);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final videosData = Provider.of<Videos>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -66,9 +85,14 @@ class _MovieListScreenState extends State<MovieListScreen> {
           ),
         ),
       ),
-      body: FutureBuilder<List<Video>>(
-        future: VideosDatabase.instance
-            .readAllVideos(), //place the list generation function here, Firebase, sqflite, json, whatever is the application
+      body: //_isLoading
+          // ? const Center(child: CircularProgressIndicator())
+          // : MovieList(movies: videosData.items)
+//TODO: above tries to load all the data - maybe it's wrong?
+
+          FutureBuilder<List<Video>>(
+        // future: LocalDatabase.instance.readAllVideos(),
+        future: Provider.of<Videos>(context).fetchAndSetVideos(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(

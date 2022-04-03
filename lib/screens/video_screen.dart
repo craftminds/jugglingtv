@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/db/videos_database.dart';
+import 'package:jugglingtv/db/local_database.dart';
 import 'package:provider/provider.dart';
-import '../models/videos_db_model.dart';
+import '../models/videos_db.dart';
 
 class VideoScreen extends StatelessWidget {
   const VideoScreen({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videoId = ModalRoute.of(context)?.settings.arguments as int;
-    final loadedvideo = Provider.of<VideosDatabase>(context, listen: false)
+    final loadedvideo = Provider.of<LocalDatabase>(context, listen: false)
         .readVideoById(videoId);
     final title = loadedvideo.then((value) => value.title);
     print(videoId);
@@ -29,6 +29,7 @@ class VideoScreen extends StatelessWidget {
       ),
       body: Container(
         child: Center(child: Text('title')),
+        //TODO: make the proper video page
       ),
     );
   }

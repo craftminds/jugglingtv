@@ -4,14 +4,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
-import '../models/videos_db_model.dart';
+import '../models/videos_db.dart';
 
-class VideosDatabase with ChangeNotifier {
-  static final VideosDatabase instance = VideosDatabase._init();
+class LocalDatabase with ChangeNotifier {
+  static final LocalDatabase instance = LocalDatabase._init();
 
   Database? _database;
 
-  VideosDatabase._init();
+  LocalDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;

@@ -4,8 +4,9 @@ import 'package:provider/provider.dart';
 
 import 'package:flutter/foundation.dart';
 import './screens/video_screen.dart';
-import './db/videos_database.dart';
-import './models/videos_db_model.dart';
+import './db/local_database.dart';
+import 'models/videos_db.dart';
+import 'providers/videos.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => VideosDatabase.instance),
+        ChangeNotifierProvider(create: (context) => LocalDatabase.instance),
+        ChangeNotifierProvider(create: (context) => Videos()),
       ],
       child: MaterialApp(
         title: appTitle,
