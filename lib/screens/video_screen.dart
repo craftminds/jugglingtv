@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/db/local_database.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -39,13 +38,24 @@ class VideoScreen extends StatelessWidget {
             children: [
               Container(
                 height: 270,
-                width: double.infinity,
+                // padding:
+                //     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                color: Colors.black,
                 child: VideoItem(
                   videoPlayerController:
                       VideoPlayerController.network(videoUrl),
                   autoplay: false,
                   looping: false,
                 ),
+              ),
+              Divider(),
+              Container(
+                height: 30,
+                child: Expanded(
+                    child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(title),
+                )),
               )
             ],
           ),

@@ -6,11 +6,13 @@ class VideoItem extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final bool looping;
   final bool autoplay;
+  //final double aspect_ratio;
 
   VideoItem({
     required this.videoPlayerController,
     this.looping = false,
     this.autoplay = false,
+    //this.aspect_ratio = 4 / 3,
     Key? key,
   }) : super(key: key);
 
@@ -20,25 +22,36 @@ class VideoItem extends StatefulWidget {
 
 class _VideoItemState extends State<VideoItem> {
   late ChewieController _chewieController;
+  late Future<void> _future;
+
+  Future<void> initVideoPlayer() async {
+    await widget.videoPlayerController.initialize();
+    setState(() {
+      print(widget.videoPlayerController.value.aspectRatio);
+      print('Width: ${widget.videoPlayerController.value.size.width}');
+      print('Heigth: ${widget.videoPlayerController.value.size.height}');
+      _chewieController = ChewieController(
+        videoPlayerController: widget.videoPlayerController,
+        aspectRatio: widget.videoPlayerController.value.aspectRatio,
+        autoInitialize: true,
+        autoPlay: widget.autoplay,
+        looping: widget.looping,
+        errorBuilder: (context, errorMessage) {
+          return Center(
+            child: Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+        },
+      );
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _chewieController = ChewieController(
-      videoPlayerController: widget.videoPlayerController,
-      aspectRatio: 4 / 3,
-      autoInitialize: true,
-      autoPlay: widget.autoplay,
-      looping: widget.looping,
-      errorBuilder: (context, errorMessage) {
-        return Center(
-          child: Text(
-            errorMessage,
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
-      },
-    );
+    _future = initVideoPlayer();
   }
 
   @override
@@ -49,11 +62,19 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Chewie(
-        controller: _chewieController,
-      ),
-    );
+    return FutureBuilder(
+        future: _future,
+        builder: (context, snapshot) {
+          return Center(
+            child: widget.videoPlayerController.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: widget.videoPlayerController.value.aspectRatio,
+                    child: Chewie(
+                      controller: _chewieController,
+                    ),
+                  )
+                : const CircularProgressIndicator(),
+          );
+        });
   }
 }
