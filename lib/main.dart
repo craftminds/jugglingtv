@@ -23,9 +23,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Videos()),
       ],
       child: MaterialApp(
+        //TODO: work on theme for the app, the font, the colors etc.
         title: appTitle,
         theme: ThemeData(
           primaryColor: Colors.lightGreen,
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(
+              fontFamily: 'Quicksand',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           // fontFamily: 'Quicksand',
         ),
         home: const MovieListScreen(),

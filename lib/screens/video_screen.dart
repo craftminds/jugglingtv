@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../providers/videos.dart';
 import '../widgets/video_item.dart';
@@ -16,6 +18,7 @@ class VideoScreen extends StatelessWidget {
         Provider.of<Videos>(context, listen: false).readVideoById(videoId);
     final title = loadedvideo.title;
     final videoUrl = loadedvideo.videoUrl;
+    final videoYearString = DateFormat('yyyy-MM-dd').format(loadedvideo.year);
     print(videoUrl);
     //print(videoId);
     return Scaffold(
@@ -48,15 +51,64 @@ class VideoScreen extends StatelessWidget {
                   looping: false,
                 ),
               ),
-              Divider(),
-              Container(
-                height: 30,
-                child: Expanded(
-                    child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(title),
-                )),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 15.0),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Row(
+                          children: [
+                            //const Icon(Icons.visibility_outlined),
+                            const SizedBox(width: 4.0),
+                            Text(
+                              '${loadedvideo.views} views',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(fontSize: 14.0),
+                            ),
+                          ],
+                        )),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                '$videoYearString (${timeago.format(loadedvideo.year)})',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(fontSize: 14.0),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               )
+
+              // Divider(),
+              // Container(
+              //   height: 30,
+              //   child: Expanded(
+              //     child: Container(
+              //       alignment: Alignment.centerLeft,
+              //       child: Text(title),
+              //     ),
+              //   ),
+              // )
             ],
           ),
         ),

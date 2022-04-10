@@ -168,7 +168,7 @@ class Video {
         duration: json[VideosFields.duration] as String,
         commentsNo: json[VideosFields.commentsNo] as int,
         description: json[VideosFields.description] as String,
-        year: DateTime.parse(json[VideosFields.year] as String),
+        year: json[VideosFields.year] as DateTime,
         country: json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
       );
