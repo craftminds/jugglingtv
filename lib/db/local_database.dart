@@ -220,7 +220,8 @@ SELECT
     FROM
     $tableVideoChannel, $tableChannel
     WHERE
-    $tableVideoChannel.${VideoChannelFields.channelId} = $tableChannel.${ChannelFields.id}
+    $tableVideoChannel.${VideoChannelFields.channelId} = $tableChannel.${ChannelFields.id} AND
+    $tableVideoChannel.${VideoChannelFields.videoId} = $id
 ''',
     );
     print(result);
