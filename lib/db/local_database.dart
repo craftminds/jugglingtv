@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
+import 'package:collection/collection.dart';
 import '../models/videos_db.dart';
 
 class LocalDatabase with ChangeNotifier {
@@ -206,6 +207,27 @@ CREATE TABLE $tableVideoTag (
       throw Exception('ID $id not found');
     }
   }
+
+  //TODO: create function to read channels for a video
+  Future<List<VideoChannel>> readChannelsByVideoId(int id) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''
+SELECT 
+    $tableVideoChannel.${VideoChannelFields.videoId},
+    $tableChannel.${ChannelFields.name}
+    FROM
+    $tableVideoChannel, $tableChannel
+    WHERE
+    $tableVideoChannel.${VideoChannelFields.channelId} = $tableChannel.${ChannelFields.id}
+''',
+    );
+    print(result);
+    //var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
+    return result.map((json) => VideoChannel.fromJson(json)).toList();
+  }
+  //TODO: create function to read tags for a video
 
   Future close() async {
     final db = await instance.database;

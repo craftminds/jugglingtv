@@ -168,7 +168,8 @@ class Video {
         duration: json[VideosFields.duration] as String,
         commentsNo: json[VideosFields.commentsNo] as int,
         description: json[VideosFields.description] as String,
-        year: json[VideosFields.year] as DateTime,
+        year: DateTime.parse(json[VideosFields.year] as String),
+        // year: json[VideosFields.year] as DateTime,
         country: json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
       );
@@ -188,12 +189,17 @@ class VideoChannelFields {
 
 class VideoChannel {
   final int videoId;
-  final int channelId;
+  final List<String> channelNames;
 
   const VideoChannel({
     required this.videoId,
-    required this.channelId,
+    required this.channelNames,
   });
+//TODO: correct the mapping!
+  static VideoChannel fromJson(Map<String, Object?> json) => VideoChannel(
+        videoId: json[VideoChannelFields.videoId] as int,
+        channelNames: json[ChannelFields.name] as List<String>,
+      );
 }
 
 /*

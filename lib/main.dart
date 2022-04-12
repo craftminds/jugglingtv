@@ -7,6 +7,7 @@ import './screens/video_screen.dart';
 import './db/local_database.dart';
 import 'models/videos_db.dart';
 import 'providers/videos.dart';
+import 'providers/channels.dart';
 
 void main() => runApp(const MyApp());
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LocalDatabase.instance),
         ChangeNotifierProvider(create: (context) => Videos()),
+        ChangeNotifierProvider(create: (context) => VideoChannels()),
       ],
       child: MaterialApp(
         //TODO: work on theme for the app, the font, the colors etc.
