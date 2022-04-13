@@ -215,7 +215,6 @@ CREATE TABLE $tableVideoTag (
     final result = await db.rawQuery(
       '''
 SELECT 
-    $tableVideoChannel.${VideoChannelFields.videoId},
     $tableChannel.${ChannelFields.name}
     FROM
     $tableVideoChannel, $tableChannel
@@ -225,7 +224,8 @@ SELECT
 ''',
     );
     print(result);
-    //var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
+    // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
+    // print(groupedResult);
     return result.map((json) => VideoChannel.fromJson(json)).toList();
   }
   //TODO: create function to read tags for a video

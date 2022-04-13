@@ -188,17 +188,16 @@ class VideoChannelFields {
 }
 
 class VideoChannel {
-  final int videoId;
-  final List<String> channelNames;
+  //final int videoId;
+  final String channelName;
 
   const VideoChannel({
-    required this.videoId,
-    required this.channelNames,
+    //required this.videoId,
+    required this.channelName,
   });
 //TODO: correct the mapping!
   static VideoChannel fromJson(Map<String, Object?> json) => VideoChannel(
-        videoId: json[VideoChannelFields.videoId] as int,
-        channelNames: json[ChannelFields.name] as List<String>,
+        channelName: json[ChannelFields.name] as String,
       );
 }
 

@@ -108,30 +108,35 @@ class VideoInfo extends StatelessWidget {
           ),
           const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
-          FutureBuilder<List<VideoChannel>>(
-              future: Provider.of<VideoChannels>(context)
-                  .fetchChannelsForVideo(loadedvideo.id),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text("${snapshot.error}"),
-                  );
-                } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      return Text(snapshot.data.toString());
-                    },
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.grey,
-                      strokeWidth: 1.0,
-                    ),
-                  );
-                }
-              })
+          const Text('Related channels:'),
+          Container(
+            height: 250,
+            child: FutureBuilder<List<VideoChannel>>(
+                future: Provider.of<VideoChannels>(context)
+                    .fetchChannelsForVideo(loadedvideo.id),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("${snapshot.error}"),
+                    );
+                  } else if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                            '#${snapshot.data?[index].channelName as String}');
+                      },
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.grey,
+                        strokeWidth: 1.0,
+                      ),
+                    );
+                  }
+                }),
+          )
         ],
       ),
     );
