@@ -34,6 +34,15 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Quicksand',
                 fontWeight: FontWeight.bold,
               ),
+              bodyText2: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.normal,
+                wordSpacing: 3.0,
+              ),
+              caption: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.normal,
+              ),
             ),
             // fontFamily: 'Quicksand',
 

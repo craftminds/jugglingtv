@@ -29,11 +29,12 @@ class _VideoItemState extends State<VideoItem> {
     setState(() {
       print(widget.videoPlayerController.value.aspectRatio);
       print('Width: ${widget.videoPlayerController.value.size.width}');
-      print('Heigth: ${widget.videoPlayerController.value.size.height}');
+      print('Height: ${widget.videoPlayerController.value.size.height}');
       _chewieController = ChewieController(
         videoPlayerController: widget.videoPlayerController,
         aspectRatio: widget.videoPlayerController.value.aspectRatio,
         autoInitialize: true,
+        materialProgressColors: ChewieProgressColors(playedColor: Colors.amber),
         autoPlay: widget.autoplay,
         looping: widget.looping,
         errorBuilder: (context, errorMessage) {

@@ -39,6 +39,7 @@ class VideoInfo extends StatelessWidget {
             children: [
               Expanded(
                   child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   //const Icon(Icons.visibility_outlined),
                   const SizedBox(width: 5.0),
@@ -49,21 +50,28 @@ class VideoInfo extends StatelessWidget {
                         .caption!
                         .copyWith(fontSize: 14.0),
                   ),
+                  Text(
+                    ' • $videoYearString (${timeago.format(loadedvideo.year)})',
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption!
+                        .copyWith(fontSize: 14.0),
+                  )
                 ],
               )),
-              Expanded(
-                child: Row(
-                  children: [
-                    Text(
-                      '$videoYearString (${timeago.format(loadedvideo.year)})',
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .copyWith(fontSize: 14.0),
-                    )
-                  ],
-                ),
-              )
+              // Expanded(
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         '$videoYearString (${timeago.format(loadedvideo.year)})',
+              //         style: Theme.of(context)
+              //             .textTheme
+              //             .caption!
+              //             .copyWith(fontSize: 14.0),
+              //       )
+              //     ],
+              //   ),
+              // )
             ],
           ),
           const Divider(thickness: 2),
@@ -74,6 +82,7 @@ class VideoInfo extends StatelessWidget {
                   child: Text(
                 loadedvideo.description.replaceAll(RegExp(r'/n'), '\n'),
                 softWrap: true,
+                style: Theme.of(context).textTheme.bodyText2,
               )),
             ],
           ),

@@ -26,27 +26,26 @@ class VideoInfoChannels extends StatelessWidget {
                 child: Text("${snapshot.error}"),
               );
             } else if (snapshot.hasData) {
-              return ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: snapshot.data!.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(width: 20.0),
-                itemBuilder: (context, index) {
-                  return Text(
-                    '${snapshot.data?[index].channelName as String}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        //fontSize: 20,
-                        height: 3,
-                        background: Paint()
-                          ..strokeWidth = 18.0
-                          ..color = const Color.fromARGB(255, 255, 186, 8)
-                          ..style = PaintingStyle.stroke
-                          ..strokeJoin = StrokeJoin.round),
-                  );
-                },
+              return Wrap(
+                runAlignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                spacing: 20.0,
+                children: <Widget>[
+                  for (var item in snapshot.data!)
+                    Text(
+                      item.channelName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          //fontSize: 20,
+                          height: 3,
+                          background: Paint()
+                            ..strokeWidth = 18.0
+                            ..color = const Color.fromARGB(255, 255, 186, 8)
+                            ..style = PaintingStyle.stroke
+                            ..strokeJoin = StrokeJoin.round),
+                    ),
+                ],
+                //
               );
             } else {
               return const Center(
