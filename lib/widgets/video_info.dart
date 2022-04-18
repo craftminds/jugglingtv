@@ -41,7 +41,7 @@ class VideoInfo extends StatelessWidget {
                   child: Row(
                 children: [
                   //const Icon(Icons.visibility_outlined),
-                  const SizedBox(width: 4.0),
+                  const SizedBox(width: 5.0),
                   Text(
                     '${loadedvideo.views} views',
                     style: Theme.of(context)

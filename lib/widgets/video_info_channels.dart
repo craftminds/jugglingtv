@@ -16,8 +16,8 @@ class VideoInfoChannels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 250,
+      width: MediaQuery.of(context).size.width,
       child: FutureBuilder<List<VideoChannel>>(
-          //TODO: put it in separate widget and play with the text style (oval background)
           future: Provider.of<VideoChannels>(context)
               .fetchChannelsForVideo(loadedvideo.id),
           builder: (context, snapshot) {
@@ -26,8 +26,13 @@ class VideoInfoChannels extends StatelessWidget {
                 child: Text("${snapshot.error}"),
               );
             } else if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data?.length,
+              return ListView.separated(
+                physics: NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(width: 20.0),
                 itemBuilder: (context, index) {
                   return Text(
                     '${snapshot.data?[index].channelName as String}',
@@ -37,7 +42,7 @@ class VideoInfoChannels extends StatelessWidget {
                         height: 3,
                         background: Paint()
                           ..strokeWidth = 18.0
-                          ..color = Color.fromARGB(255, 255, 186, 8)
+                          ..color = const Color.fromARGB(255, 255, 186, 8)
                           ..style = PaintingStyle.stroke
                           ..strokeJoin = StrokeJoin.round),
                   );
