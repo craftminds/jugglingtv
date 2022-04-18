@@ -76,7 +76,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
     final videosData = Provider.of<Videos>(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: Center(
           child: Image.asset(
             "assets/images/logo.png",

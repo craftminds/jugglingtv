@@ -28,15 +28,20 @@ class MyApp extends StatelessWidget {
         //TODO: work on theme for the app, the font, the colors etc.
         title: appTitle,
         theme: ThemeData(
-          primaryColor: Colors.lightGreen,
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(
-              fontFamily: 'Quicksand',
-              fontWeight: FontWeight.bold,
+            primaryColor: Colors.lightGreen,
+            textTheme: const TextTheme(
+              bodyText1: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          // fontFamily: 'Quicksand',
-        ),
+            // fontFamily: 'Quicksand',
+
+            scaffoldBackgroundColor: const Color.fromARGB(255, 251, 251, 251),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color.fromARGB(255, 251, 251, 251),
+              foregroundColor: Color.fromARGB(255, 251, 251, 251),
+            )),
         home: const MovieListScreen(),
         routes: {
           VideoScreen.routeName: (context) => const VideoScreen(),
