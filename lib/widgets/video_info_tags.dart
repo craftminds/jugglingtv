@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/videos_db.dart';
-import '../providers/video_channel.dart';
+import '../providers/video_tag.dart';
 
-class VideoInfoChannels extends StatelessWidget {
-  const VideoInfoChannels({
+class VideoInfoTags extends StatelessWidget {
+  const VideoInfoTags({
     Key? key,
     required this.loadedvideo,
   }) : super(key: key);
@@ -17,9 +17,9 @@ class VideoInfoChannels extends StatelessWidget {
     return Container(
       height: 80,
       width: MediaQuery.of(context).size.width,
-      child: FutureBuilder<List<VideoChannel>>(
-          future: Provider.of<VideoChannels>(context)
-              .fetchChannelsForVideo(loadedvideo.id),
+      child: FutureBuilder<List<VideoTag>>(
+          future:
+              Provider.of<VideoTags>(context).fetchTagsForVideo(loadedvideo.id),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -33,7 +33,7 @@ class VideoInfoChannels extends StatelessWidget {
                 children: <Widget>[
                   for (var item in snapshot.data!)
                     Text(
-                      item.channelName,
+                      item.tagName,
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           //fontSize: 20,

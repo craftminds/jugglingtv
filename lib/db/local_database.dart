@@ -230,6 +230,26 @@ SELECT
   }
   //TODO: create function to read tags for a video
 
+  Future<List<VideoTag>> readTagsByVideoId(int id) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''
+SELECT 
+    $tableTag.${TagFields.name}
+    FROM
+    $tableVideoTag, $tableTag
+    WHERE
+    $tableVideoTag.${VideoTagFields.tagId} = $tableTag.${TagFields.id} AND
+    $tableVideoTag.${VideoTagFields.videoId} = $id
+''',
+    );
+    print(result);
+    // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
+    // print(groupedResult);
+    return result.map((json) => VideoTag.fromJson(json)).toList();
+  }
+
   Future close() async {
     final db = await instance.database;
     db.close();

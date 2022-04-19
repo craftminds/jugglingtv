@@ -214,11 +214,13 @@ class VideoTagFields {
 }
 
 class VideoTag {
-  final int videoId;
-  final int tagId;
+  final String tagName;
 
   const VideoTag({
-    required this.videoId,
-    required this.tagId,
+    // required this.videoId,
+    required this.tagName,
   });
+  static VideoTag fromJson(Map<String, Object?> json) => VideoTag(
+        tagName: json[TagFields.name] as String,
+      );
 }

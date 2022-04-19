@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/providers/channels.dart';
+import 'package:jugglingtv/providers/video_channel.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../models/videos_db.dart';
 import 'package:provider/provider.dart';
 import './video_info_channels.dart';
+import './video_info_tags.dart';
 
 class VideoInfo extends StatelessWidget {
   const VideoInfo({
@@ -120,7 +121,11 @@ class VideoInfo extends StatelessWidget {
           const SizedBox(height: _sizedBoxHeight),
           const Text('Channels:'),
           // const SizedBox(height: 5.0),
-          VideoInfoChannels(loadedvideo: loadedvideo)
+          VideoInfoChannels(loadedvideo: loadedvideo),
+          const Divider(thickness: 2.0),
+          const SizedBox(height: _sizedBoxHeight),
+          const Text('Tags:'),
+          VideoInfoTags(loadedvideo: loadedvideo)
         ],
       ),
     );
