@@ -56,7 +56,9 @@ class VideoScreen extends StatelessWidget {
               ),
               const Divider(),
               VideoInfo(
-                  loadedvideo: loadedvideo, videoYearString: videoYearString)
+                loadedvideo: loadedvideo,
+                videoYearString: videoYearString,
+              )
             ],
           ),
         ),

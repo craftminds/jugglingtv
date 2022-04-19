@@ -15,7 +15,7 @@ class VideoInfoChannels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      constraints: const BoxConstraints(maxHeight: double.infinity),
       width: MediaQuery.of(context).size.width,
       child: FutureBuilder<List<VideoChannel>>(
           future: Provider.of<VideoChannels>(context)
@@ -35,7 +35,7 @@ class VideoInfoChannels extends StatelessWidget {
                     Text(
                       item.channelName,
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          //fontWeight: FontWeight.w600,
                           //fontSize: 20,
                           height: 3,
                           background: Paint()

@@ -18,9 +18,9 @@ class VideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double _sizedBoxHeight = 7.0;
+    const double _sizedBoxHeight = 3.0;
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,6 +77,10 @@ class VideoInfo extends StatelessWidget {
           ),
           const Divider(thickness: 2),
           const SizedBox(height: _sizedBoxHeight),
+          const Text(
+            'Description:',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           Row(
             children: [
               Expanded(
@@ -119,12 +123,19 @@ class VideoInfo extends StatelessWidget {
           ),
           const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
-          const Text('Channels:'),
+          const Text(
+            'Channels:',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           // const SizedBox(height: 5.0),
           VideoInfoChannels(loadedvideo: loadedvideo),
+          const SizedBox(height: _sizedBoxHeight),
           const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
-          const Text('Tags:'),
+          const Text(
+            'Tags:',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           VideoInfoTags(loadedvideo: loadedvideo)
         ],
       ),
