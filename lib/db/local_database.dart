@@ -228,7 +228,25 @@ SELECT
     // print(groupedResult);
     return result.map((json) => VideoChannel.fromJson(json)).toList();
   }
-  //TODO: create function to read tags for a video
+
+  Future<List<Channel>> readAllChannels() async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''
+SELECT 
+    $tableChannel.${ChannelFields.name}
+    $tableChannel.${ChannelFields.imageUrl}
+    $tableChannel.${ChannelFields.description}
+    FROM
+    $tableChannel
+''',
+    );
+    print(result);
+    // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
+    // print(groupedResult);
+    return result.map((json) => Channel.fromJson(json)).toList();
+  }
 
   Future<List<VideoTag>> readTagsByVideoId(int id) async {
     final db = await instance.database;

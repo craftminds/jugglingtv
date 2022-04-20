@@ -9,6 +9,7 @@ import '../widgets/movie_list.dart';
 import '../db/local_database.dart';
 import '../models/videos_db.dart';
 import '../providers/videos.dart';
+import '../widgets/app_drawer.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -85,6 +86,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
           ),
         ),
       ),
+      drawer: const AppDrawer(),
       body: //_isLoading
           // ? const Center(child: CircularProgressIndicator())
           // : MovieList(movies: videosData.items)

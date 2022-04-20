@@ -51,7 +51,8 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: const Color.fromARGB(255, 251, 251, 251),
             appBarTheme: const AppBarTheme(
               backgroundColor: Color.fromARGB(255, 251, 251, 251),
-              foregroundColor: Color.fromARGB(255, 251, 251, 251),
+              // foregroundColor: Color.fromARGB(255, 251, 251, 251),
+              foregroundColor: Colors.black54,
             )),
         home: const MovieListScreen(),
         routes: {

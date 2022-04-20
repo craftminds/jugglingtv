@@ -55,17 +55,22 @@ class ChannelFields {
 }
 
 class Channel {
-  final int id;
+  //final int id;
   final String name;
   final String imageUrl;
   final String description;
 
   const Channel({
-    required this.id,
+    //required this.id,
     required this.name,
     required this.imageUrl,
     required this.description,
   });
+  static Channel fromJson(Map<String, Object?> json) => Channel(
+        name: json[ChannelFields.name] as String,
+        imageUrl: json[ChannelFields.imageUrl] as String,
+        description: json[ChannelFields.description] as String,
+      );
 }
 
 /*
