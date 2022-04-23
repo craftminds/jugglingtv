@@ -9,6 +9,8 @@ import 'models/videos_db.dart';
 import 'providers/videos.dart';
 import 'providers/video_channel.dart';
 import 'providers/video_tag.dart';
+import 'providers/channels.dart';
+import './screens/channels_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Videos()),
         ChangeNotifierProvider(create: (context) => VideoChannels()),
         ChangeNotifierProvider(create: (context) => VideoTags()),
+        ChangeNotifierProvider(create: (context) => Channels()),
       ],
       child: MaterialApp(
         //TODO: work on theme for the app, the font, the colors etc.
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
         home: const MovieListScreen(),
         routes: {
           VideoScreen.routeName: (context) => const VideoScreen(),
+          ChannelsScreen.routeName: (context) => ChannelsScreen(),
         },
       ),
     );

@@ -235,14 +235,14 @@ SELECT
     final result = await db.rawQuery(
       '''
 SELECT 
-    $tableChannel.${ChannelFields.name}
-    $tableChannel.${ChannelFields.imageUrl}
+    $tableChannel.${ChannelFields.name},
+    $tableChannel.${ChannelFields.imageUrl},
     $tableChannel.${ChannelFields.description}
     FROM
     $tableChannel
 ''',
     );
-    print(result);
+    //print(result);
     // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
     // print(groupedResult);
     return result.map((json) => Channel.fromJson(json)).toList();
