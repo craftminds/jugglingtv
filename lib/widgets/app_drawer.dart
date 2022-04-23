@@ -19,14 +19,14 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.tv),
               title: const Text('Channels'),
               onTap: () {
-                Navigator.of(context).pushNamed(ChannelsScreen.routeName);
+                Navigator.of(context).popAndPushNamed(ChannelsScreen.routeName);
               }),
           const Divider(),
           ListTile(
               leading: const Icon(Icons.tag_sharp),
               title: const Text('Tags'),
               onTap: () {
-                Navigator.of(context).pushNamed(TagsScreen.routeName);
+                Navigator.of(context).popAndPushNamed(TagsScreen.routeName);
               }),
           const Divider(),
           ListTile(
