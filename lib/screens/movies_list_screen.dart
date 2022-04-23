@@ -76,6 +76,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     final videosData = Provider.of<Videos>(context);
+    final r = 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -88,6 +89,22 @@ class _MovieListScreenState extends State<MovieListScreen> {
         ),
       ),
       drawer: const AppDrawer(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sort),
+            label: 'Sort',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.tv),
+            label: 'Channels',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.tag_sharp),
+            label: 'Tags',
+          ),
+        ],
+      ),
       body: //_isLoading
           // ? const Center(child: CircularProgressIndicator())
           // : MovieList(movies: videosData.items)
@@ -95,6 +112,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
           FutureBuilder<List<Video>>(
         // future: LocalDatabase.instance.readAllVideos(),
+        //TODO: write a function that recognizes what filters to apply ie: channels, tags, there show be a row in the headline
+        // saying what filters are applied
         future: Provider.of<Videos>(context).fetchAndSetVideos(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -102,7 +121,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
               child: Text("${snapshot.error}"),
             );
           } else if (snapshot.hasData) {
-            //return MovieList(movies: snapshot.data!);
             return MovieList(movies: snapshot.data!);
           } else {
             return const Center(
