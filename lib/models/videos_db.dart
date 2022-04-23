@@ -86,13 +86,16 @@ class TagFields {
 }
 
 class Tag {
-  final int id;
+  //final int id;
   final String name;
 
   const Tag({
-    required this.id,
+    //required this.id,
     required this.name,
   });
+  static Tag fromJson(Map<String, Object?> json) => Tag(
+        name: json[TagFields.name] as String,
+      );
 }
 
 /*CREATE TABLE video (

@@ -229,6 +229,21 @@ SELECT
     return result.map((json) => VideoChannel.fromJson(json)).toList();
   }
 
+  Future<List<Tag>> readAllTags() async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''
+SELECT 
+    $tableTag.${TagFields.name}
+    FROM
+    $tableTag
+''',
+    );
+
+    return result.map((json) => Tag.fromJson(json)).toList();
+  }
+
   Future<List<Channel>> readAllChannels() async {
     final db = await instance.database;
 

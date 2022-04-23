@@ -11,6 +11,8 @@ import 'providers/video_channel.dart';
 import 'providers/video_tag.dart';
 import 'providers/channels.dart';
 import './screens/channels_screen.dart';
+import './screens/tags_screen.dart';
+import 'providers/tags.dart';
 
 void main() => runApp(const MyApp());
 
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => VideoChannels()),
         ChangeNotifierProvider(create: (context) => VideoTags()),
         ChangeNotifierProvider(create: (context) => Channels()),
+        ChangeNotifierProvider(create: (context) => Tags()),
       ],
       child: MaterialApp(
         //TODO: work on theme for the app, the font, the colors etc.
@@ -60,7 +63,8 @@ class MyApp extends StatelessWidget {
         home: const MovieListScreen(),
         routes: {
           VideoScreen.routeName: (context) => const VideoScreen(),
-          ChannelsScreen.routeName: (context) => ChannelsScreen(),
+          ChannelsScreen.routeName: (context) => const ChannelsScreen(),
+          TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),
     );

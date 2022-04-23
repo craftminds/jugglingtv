@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/screens/channels_screen.dart';
-import 'package:provider/provider.dart';
-import '../providers/channels.dart';
+import '../screens/channels_screen.dart';
+import '../screens/tags_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -26,7 +25,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
               leading: const Icon(Icons.tag_sharp),
               title: const Text('Tags'),
-              onTap: () {}),
+              onTap: () {
+                Navigator.of(context).pushNamed(TagsScreen.routeName);
+              }),
           const Divider(),
           ListTile(
               leading: const Icon(Icons.people),

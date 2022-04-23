@@ -27,6 +27,7 @@ List<Movie> parseMovies(String responseBody) {
 */
 
 class MovieListScreen extends StatefulWidget {
+  static const routeName = '/';
   const MovieListScreen({Key? key}) : super(key: key);
 
   @override
