@@ -30,6 +30,19 @@ class _TagsScreenState extends State<TagsScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.cancel_presentation_sharp),
+              label: 'Clear Selection'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+        ],
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
