@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         routes: {
           VideoScreen.routeName: (context) => const VideoScreen(),
           ChannelsScreen.routeName: (context) => const ChannelsScreen(),
-          TagsScreen.routeName: ((context) => const TagsScreen()),
+          //TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),
     );
