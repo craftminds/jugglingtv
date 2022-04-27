@@ -4,9 +4,14 @@ import '../models/videos_db.dart';
 
 class Tags with ChangeNotifier {
   List<Tag> _items = [];
+  List<Tag> _filteredItems = [];
 
   List<Tag> get items {
-    return [...items];
+    return [..._items];
+  }
+
+  List<Tag> get filteredItems {
+    return [..._filteredItems];
   }
 
   Future<List<Tag>> fetchAndSetTags() async {
@@ -18,5 +23,9 @@ class Tags with ChangeNotifier {
     }
     _items = loadedTags;
     return _items;
+  }
+
+  void setFilteredTags(List<Tag> filteredItems) {
+    _filteredItems = filteredItems;
   }
 }

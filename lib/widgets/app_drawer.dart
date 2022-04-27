@@ -23,13 +23,6 @@ class AppDrawer extends StatelessWidget {
               }),
           const Divider(),
           ListTile(
-              leading: const Icon(Icons.tag_sharp),
-              title: const Text('Tags'),
-              onTap: () {
-                Navigator.of(context).popAndPushNamed(TagsScreen.routeName);
-              }),
-          const Divider(),
-          ListTile(
               leading: const Icon(Icons.people),
               title: const Text('Authors'),
               onTap: () {}),

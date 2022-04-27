@@ -3,15 +3,22 @@ import 'package:flutter/material.dart';
 import '../providers/tags.dart';
 import '../models/videos_db.dart';
 import 'package:provider/provider.dart';
+import '../widgets/filter_tags.dart';
+import '../providers/tags.dart';
 
-class TagsScreen extends StatelessWidget {
+class TagsScreen extends StatefulWidget {
   static const routeName = '/tags-screen';
   const TagsScreen({Key? key}) : super(key: key);
 
   @override
+  State<TagsScreen> createState() => _TagsScreenState();
+}
+
+class _TagsScreenState extends State<TagsScreen> {
+  @override
   Widget build(BuildContext context) {
-    List<Tag> selectedTagList = [];
-    //List<Tag> tagList;
+    final tags = Provider.of<Tags>(context, listen: false);
+
     AppBar appBar = AppBar(
       backgroundColor: Colors.white,
       iconTheme: const IconThemeData(
@@ -56,8 +63,9 @@ class TagsScreen extends StatelessWidget {
             //       ),
             //     ),
             Container(
-          height:
-              MediaQuery.of(context).size.height - appBar.preferredSize.height,
+          height: MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              20,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder<List<Tag>>(
               future: Provider.of<Tags>(context).fetchAndSetTags(),
@@ -67,44 +75,18 @@ class TagsScreen extends StatelessWidget {
                     child: Text("${snapshot.error}"),
                   );
                 } else if (snapshot.hasData) {
-                  //tagList = snapshot.data as List<Tag>;
+                  print(tags.filteredItems[0].name);
                   return Container(
-                    constraints:
-                        const BoxConstraints(maxHeight: double.infinity),
-                    width: MediaQuery.of(context).size.width,
-                    child: FilterListWidget<Tag>(
-                      listData: snapshot.data,
-                      themeData: FilterListThemeData(context,
-                          backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                          headerTheme: HeaderThemeData(
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              searchFieldBackgroundColor: Colors.black12)),
-                      selectedListData: selectedTagList,
-                      validateSelectedItem: (list, val) {
-                        //selectedTagList = list as List<Tag>;
-
-                        ///  identify if item is selected or not
-                        return list!.contains(val);
-                      },
-                      choiceChipLabel: (item) {
-                        return item!.name;
-                      },
-                      onItemSearch: (tag, query) {
-                        return tag.name
-                            .toLowerCase()
-                            .contains(query.toLowerCase());
-                      },
-                      onApplyButtonClick: (list) {
-                        //selectedTagList = list as List<Tag>;
-                        //TODO: it must first ask the database and then open new page with the list of movies. Filtered tags must shown when clicked maybe in the right top corner
-                        print(selectedTagList);
-
-                        //Navigator.pop(context, list);
-                      },
-                    ),
-                  );
+                      constraints:
+                          const BoxConstraints(maxHeight: double.infinity),
+                      width: MediaQuery.of(context).size.width,
+                      child: FilterTags(
+                        allTagsList: <Tag>[
+                          Tag(name: 'kendama'),
+                          Tag(name: 'dama'),
+                        ],
+                        selectedTagList: tags.filteredItems,
+                      ));
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(

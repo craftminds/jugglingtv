@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
+import 'package:jugglingtv/screens/channels_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
+import 'package:filter_list/filter_list.dart';
 
 import '../widgets/movie_list.dart';
 import '../db/local_database.dart';
 import '../models/videos_db.dart';
 import '../providers/videos.dart';
 import '../widgets/app_drawer.dart';
+import '../providers/tags.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -36,9 +39,10 @@ class MovieListScreen extends StatefulWidget {
 
 class _MovieListScreenState extends State<MovieListScreen> {
   late List<Video> videos;
-  bool isLoading = false;
+  bool _isLoading = false;
   var _isInit = true;
-  var _isLoading = false;
+  List<Tag> allTags = [];
+  List<Tag>? selectedUserList = [];
 
   void initState() {
     super.initState();
@@ -51,7 +55,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
         _isLoading = true;
       });
       //print('Fetching videos...');
-      Provider.of<Videos>(context).fetchAndSetVideos().then((_) {
+      Provider.of<Tags>(context).fetchAndSetTags().then((tags) {
+        allTags = tags;
         _isLoading = false;
       });
     }
@@ -72,6 +77,50 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   //   setState(() => isLoading = false);
   // }
+  void _openFilterDialog() async {
+    await FilterListDialog.display<Tag>(
+      context,
+      hideSelectedTextCount: true,
+      themeData: FilterListThemeData(context),
+      headlineText: 'Select Users',
+      height: 500,
+      listData: allTags,
+      selectedListData: selectedUserList,
+      choiceChipLabel: (item) => item!.name,
+      validateSelectedItem: (list, val) => list!.contains(val),
+      controlButtons: [ContolButtonType.All, ContolButtonType.Reset],
+      onItemSearch: (user, query) {
+        /// When search query change in search bar then this method will be called
+        ///
+        /// Check if items contains query
+        return user.name.toLowerCase().contains(query.toLowerCase());
+      },
+
+      onApplyButtonClick: (list) {
+        setState(() {
+          selectedUserList = List.from(list!);
+        });
+        Navigator.pop(context);
+      },
+
+      /// uncomment below code to create custom choice chip
+      /*choiceChipBuilder: (context, item, isSelected) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
+          )),
+          child: Text(
+            item.name,
+            style: TextStyle(
+                color: isSelected ? Colors.blue[300] : Colors.grey[300]),
+          ),
+        );
+      },*/
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,22 +138,24 @@ class _MovieListScreenState extends State<MovieListScreen> {
         ),
       ),
       drawer: const AppDrawer(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sort),
-            label: 'Sort',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.tv),
-            label: 'Channels',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.tag_sharp),
-            label: 'Tags',
-          ),
-        ],
-      ),
+      bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              TextButton(
+                autofocus: false,
+                child: Text('Tags Filtering'),
+                onPressed: _openFilterDialog,
+              ),
+              TextButton(
+                autofocus: false,
+                child: Text('Channels'),
+                onPressed: () =>
+                    Navigator.pushNamed(context, ChannelsScreen.routeName),
+              ),
+            ],
+          )),
       body: //_isLoading
           // ? const Center(child: CircularProgressIndicator())
           // : MovieList(movies: videosData.items)
