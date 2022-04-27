@@ -42,7 +42,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   bool _isLoading = false;
   var _isInit = true;
   List<Tag> allTags = [];
-  List<Tag>? selectedUserList = [];
+  List<Tag>? selectedTagList = [];
 
   void initState() {
     super.initState();
@@ -82,13 +82,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
       context,
       hideSelectedTextCount: true,
       themeData: FilterListThemeData(context),
-      headlineText: 'Select Users',
+      headlineText: 'Select Tags',
       height: 500,
       listData: allTags,
-      selectedListData: selectedUserList,
+      selectedListData: selectedTagList,
       choiceChipLabel: (item) => item!.name,
       validateSelectedItem: (list, val) => list!.contains(val),
-      controlButtons: [ContolButtonType.All, ContolButtonType.Reset],
+      controlButtons: [ContolButtonType.Reset],
       onItemSearch: (user, query) {
         /// When search query change in search bar then this method will be called
         ///
@@ -98,34 +98,34 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
       onApplyButtonClick: (list) {
         setState(() {
-          selectedUserList = List.from(list!);
+          selectedTagList = List.from(list!);
         });
         Navigator.pop(context);
       },
 
       /// uncomment below code to create custom choice chip
-      /*choiceChipBuilder: (context, item, isSelected) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              border: Border.all(
-            color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
-          )),
-          child: Text(
-            item.name,
-            style: TextStyle(
-                color: isSelected ? Colors.blue[300] : Colors.grey[300]),
-          ),
-        );
-      },*/
+      // choiceChipBuilder: (context, item, isSelected) {
+      //   return Container(
+      //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      //     decoration: BoxDecoration(
+      //         border: Border.all(
+      //       color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
+      //     )),
+      //     child: Text(
+      //       item.name,
+      //       style: TextStyle(
+      //           color: isSelected ? Colors.blue[300] : Colors.grey[300]),
+      //     ),
+      //   );
+      // },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final videosData = Provider.of<Videos>(context);
-    final r = 0;
+    // final videosData = Provider.of<Videos>(context);
+    // final r = 0;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -139,22 +139,63 @@ class _MovieListScreenState extends State<MovieListScreen> {
       ),
       drawer: const AppDrawer(),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              TextButton(
-                autofocus: false,
-                child: Text('Tags Filtering'),
-                onPressed: _openFilterDialog,
-              ),
-              TextButton(
-                autofocus: false,
-                child: Text('Channels'),
-                onPressed: () =>
-                    Navigator.pushNamed(context, ChannelsScreen.routeName),
-              ),
-            ],
+          padding: const EdgeInsets.only(bottom: 2),
+          child: Container(
+            height: 60.0,
+            child: Column(
+              children: [
+                const Divider(thickness: 1.0, height: 2.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(Icons.tag,
+                              color:
+                                  Theme.of(context).textTheme.caption?.color),
+                          Text(
+                            'Tags Filtering',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: _openFilterDialog,
+                    ),
+                    TextButton(
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(Icons.tv,
+                              color:
+                                  Theme.of(context).textTheme.caption?.color),
+                          Text(
+                            'Channels',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () => Navigator.pushNamed(
+                          context, ChannelsScreen.routeName),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           )),
       body: //_isLoading
           // ? const Center(child: CircularProgressIndicator())
