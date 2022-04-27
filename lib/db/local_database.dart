@@ -164,6 +164,33 @@ CREATE TABLE $tableVideoTag (
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
+  //TODO: function that filters videos by channel
+  Future<List<Video>> readVideosByChannel(String channelName) async {
+    final db = await instance.database;
+    final result = await db.rawQuery(
+      '''SELECT 
+      $tableVideo.${VideosFields.id},
+      $tableVideo.${VideosFields.title},
+        $tableVideo.${VideosFields.thumbnailUrl},
+        $tableVideo.${VideosFields.videoUrl},
+        $tableVideo.${VideosFields.views},
+        $tableVideo.${VideosFields.duration},
+        $tableVideo.${VideosFields.commentsNo},
+        $tableVideo.${VideosFields.description},
+        $tableVideo.${VideosFields.year},
+        $tableVideo.${VideosFields.country},
+        $tableAuthor.${AuthorFields.name}
+        FROM
+        $tableVideo, $tableAuthor, $tableChannel
+        WHERE
+        $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id} AND
+        
+        ''',
+    );
+    //print(result);
+    return result.map((json) => Video.fromJson(json)).toList();
+  }
+
 //this function only returns one record
   Future<Video> readVideoById(int videoId) async {
     final db = await instance.database;

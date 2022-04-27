@@ -29,9 +29,10 @@ class MovieItem extends StatelessWidget {
         side: BorderSide(
           color: Colors.grey.withOpacity(0.2),
           width: 1,
+          style: BorderStyle.none,
         ),
       ),
-      elevation: 3,
+      elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
         onTap: () {
@@ -46,7 +47,7 @@ class MovieItem extends StatelessWidget {
               //first column in the ROW
               Flexible(
                 fit: FlexFit.tight,
-                flex: 3,
+                flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: Image.network(
@@ -58,15 +59,14 @@ class MovieItem extends StatelessWidget {
               //second column in the ROW
               Flexible(
                 fit: FlexFit.tight,
-                flex: 5,
+                flex: 3,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
-                        fit: FlexFit.tight,
+                        fit: FlexFit.loose,
                         child: Text(
                           title,
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -82,7 +82,7 @@ class MovieItem extends StatelessWidget {
               ),
               //third column in the ROW
               Flexible(
-                flex: 3,
+                flex: 1,
                 child: FittedBox(
                   child: Container(
                     //width: 80,
