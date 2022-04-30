@@ -169,8 +169,8 @@ CREATE TABLE $tableVideoTag (
     final db = await instance.database;
     final result = await db.rawQuery(
       '''SELECT 
-      $tableVideo.${VideosFields.id},
-      $tableVideo.${VideosFields.title},
+        $tableVideo.${VideosFields.id},
+        $tableVideo.${VideosFields.title},
         $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
@@ -181,10 +181,12 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.country},
         $tableAuthor.${AuthorFields.name}
         FROM
-        $tableVideo, $tableAuthor, $tableChannel
+        $tableVideo, $tableAuthor, $tableChannel, $tableVideoChannel
         WHERE
         $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id} AND
-        
+        $tableVideo.${VideosFields.id} = $tableVideoChannel.${VideoChannelFields.videoId} AND
+        $tableChannel.${ChannelFields.id} = $tableVideoChannel.${VideoChannelFields.channelId} AND
+        $tableChannel.${ChannelFields.name} = "$channelName"
         ''',
     );
     //print(result);

@@ -13,6 +13,7 @@ import '../models/videos_db.dart';
 import '../providers/videos.dart';
 import '../widgets/app_drawer.dart';
 import '../providers/tags.dart';
+import '../widgets/movie_list_builder.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -197,33 +198,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
               ],
             ),
           )),
-      body: //_isLoading
-          // ? const Center(child: CircularProgressIndicator())
-          // : MovieList(movies: videosData.items)
-//TODO: above tries to load all the data - maybe it's wrong?
-
-          FutureBuilder<List<Video>>(
-        // future: LocalDatabase.instance.readAllVideos(),
-        //TODO: write a function that recognizes what filters to apply ie: channels, tags, there show be a row in the headline
-        // saying what filters are applied
-        future: Provider.of<Videos>(context).fetchAndSetVideos(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          } else if (snapshot.hasData) {
-            return MovieList(movies: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.grey,
-                strokeWidth: 1.0,
-              ),
-            );
-          }
-        },
-      ),
+      body: MovieListBuilder(),
     );
   }
 }

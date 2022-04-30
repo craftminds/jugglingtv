@@ -9,11 +9,26 @@ class Videos with ChangeNotifier {
     return [...items];
   }
 
+// Read all the videos
   Future<List<Video>> fetchAndSetVideos() async {
     //TODO: add try&catch
     List<Video> loadedVideos = [];
     try {
       loadedVideos = await LocalDatabase.instance.readAllVideos();
+    } catch (error) {
+      throw (error);
+    }
+    _items = loadedVideos;
+    return _items;
+  }
+
+// Read only the videos within the given channel
+  Future<List<Video>> fetchAndSetVideosByChannel(String channelName) async {
+    //TODO: add try&catch
+    List<Video> loadedVideos = [];
+    try {
+      loadedVideos =
+          await LocalDatabase.instance.readVideosByChannel(channelName);
     } catch (error) {
       throw (error);
     }
