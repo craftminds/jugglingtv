@@ -14,6 +14,7 @@ import '../providers/videos.dart';
 import '../widgets/app_drawer.dart';
 import '../providers/tags.dart';
 import '../widgets/movie_list_builder.dart';
+import '../models/main_screen_arguments.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -78,6 +79,18 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   //   setState(() => isLoading = false);
   // }
+  MainScreenArguments _setMainScreenArguments(BuildContext context) {
+    if (ModalRoute.of(context)?.settings.arguments == null) {
+      return MainScreenArguments(
+        mainScreenMode: MainScreenMode.allVideos,
+        channel: "",
+        tags: [],
+      );
+    } else {
+      return ModalRoute.of(context)?.settings.arguments as MainScreenArguments;
+    }
+  }
+
   void _openFilterDialog() async {
     await FilterListDialog.display<Tag>(
       context,
@@ -125,8 +138,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final videosData = Provider.of<Videos>(context);
-    // final r = 0;
+    var videosListMode = _setMainScreenArguments(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -141,7 +154,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
       drawer: const AppDrawer(),
       bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 2),
-          child: Container(
+          child: SizedBox(
             height: 60.0,
             child: Column(
               children: [
@@ -198,7 +211,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
               ],
             ),
           )),
-      body: MovieListBuilder(),
+      body: MovieListBuilder(args: videosListMode),
     );
   }
 }

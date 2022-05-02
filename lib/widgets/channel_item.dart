@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:provider/provider.dart';
 import '../models/videos_db.dart';
 import '../screens/movies_list_screen.dart';
@@ -22,9 +23,12 @@ class ChannelItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            // TODO: make it with args and put the filter in there
             Navigator.of(context)
-                .pushReplacementNamed(MovieListScreen.routeName);
+                .pushReplacementNamed(MovieListScreen.routeName,
+                    arguments: MainScreenArguments(
+                      channel: name,
+                      mainScreenMode: MainScreenMode.channel,
+                    ));
           },
           child: Image.network(
             imageUrl,
