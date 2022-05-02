@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/models/main_screen_arguments.dart';
+import 'package:jugglingtv/screens/movies_list_screen.dart';
 import '../screens/channels_screen.dart';
 import '../screens/tags_screen.dart';
 
@@ -14,6 +16,16 @@ class AppDrawer extends StatelessWidget {
             title: const Text('Choose your prop!'),
             automaticallyImplyLeading: false,
           ),
+          const Divider(),
+          ListTile(
+              leading: const Icon(Icons.list_alt_outlined),
+              title: const Text('All movies'),
+              onTap: () {
+                Navigator.of(context).popAndPushNamed(MovieListScreen.routeName,
+                    arguments: MainScreenArguments(
+                      mainScreenMode: MainScreenMode.allVideos,
+                    ));
+              }),
           const Divider(),
           ListTile(
               leading: const Icon(Icons.tv),
