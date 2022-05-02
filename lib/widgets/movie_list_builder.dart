@@ -9,12 +9,9 @@ import '../models/main_screen_arguments.dart';
 class MovieListBuilder extends StatelessWidget {
   MovieListBuilder({
     Key? key,
-    MainScreenArguments? args,
+    required this.args,
   }) : super(key: key);
-  MainScreenArguments args = MainScreenArguments(
-    mainScreenMode: MainScreenMode.channel,
-    channel: "Clubs",
-  );
+  final MainScreenArguments args;
 
   Future<List<Video>> _viewListViewMode(
       BuildContext context, MainScreenMode mode) {
