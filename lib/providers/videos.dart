@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/videos_db.dart';
 import '../db/local_database.dart';
+import '../models/db_query.helper.dart';
 
 class Videos with ChangeNotifier {
   List<Video> _items = [];
@@ -23,12 +24,21 @@ class Videos with ChangeNotifier {
   }
 
 // Read only the videos within the given channel
-  Future<List<Video>> fetchAndSetVideosByChannel(String channelName) async {
+  Future<List<Video>> fetchAndSetVideosByChannel(
+      String channelName, OrderBy order, Sort sort) async {
     //TODO: add try&catch
     List<Video> loadedVideos = [];
+    //in case no ordering is given, there must default value
+    if (order.value == "") {
+      order = OrderBy.title;
+    }
+    // the same as above but for sorting
+    if (sort.value == "") {
+      sort = Sort.asc;
+    }
     try {
-      loadedVideos =
-          await LocalDatabase.instance.readVideosByChannel(channelName);
+      loadedVideos = await LocalDatabase.instance
+          .readVideosByChannel(channelName, order, sort);
     } catch (error) {
       throw (error);
     }

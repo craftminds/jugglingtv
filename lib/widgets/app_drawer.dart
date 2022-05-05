@@ -19,7 +19,7 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
               leading: const Icon(Icons.list_alt_outlined),
-              title: const Text('All movies'),
+              title: const Text('All videos'),
               onTap: () {
                 Navigator.of(context).popAndPushNamed(MovieListScreen.routeName,
                     arguments: MainScreenArguments(

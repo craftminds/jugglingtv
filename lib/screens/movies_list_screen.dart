@@ -227,6 +227,28 @@ class _MovieListScreenState extends State<MovieListScreen> {
                       onPressed: () => Navigator.pushNamed(
                           context, ChannelsScreen.routeName),
                     ),
+                    TextButton(
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(Icons.sort,
+                              color:
+                                  Theme.of(context).textTheme.caption?.color),
+                          Text(
+                            'Sorting',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () => Navigator.pushNamed(
+                          context, ChannelsScreen.routeName),
+                    ),
                   ],
                 ),
               ],

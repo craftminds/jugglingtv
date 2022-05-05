@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 import 'package:collection/collection.dart';
 import '../models/videos_db.dart';
+import '../models/db_query.helper.dart';
 
 class LocalDatabase with ChangeNotifier {
   static final LocalDatabase instance = LocalDatabase._init();
@@ -167,7 +168,8 @@ CREATE TABLE $tableVideoTag (
 
 // Filtering videos by the channel
 //TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
-  Future<List<Video>> readVideosByChannel(String channelName) async {
+  Future<List<Video>> readVideosByChannel(
+      String channelName, OrderBy order, Sort sort) async {
     final db = await instance.database;
     final result = await db.rawQuery(
       '''SELECT 
@@ -189,6 +191,7 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.id} = $tableVideoChannel.${VideoChannelFields.videoId} AND
         $tableChannel.${ChannelFields.id} = $tableVideoChannel.${VideoChannelFields.channelId} AND
         $tableChannel.${ChannelFields.name} = "$channelName"
+        ORDER BY ${order.value} ${sort.value}
         ''',
     );
     //print(result);

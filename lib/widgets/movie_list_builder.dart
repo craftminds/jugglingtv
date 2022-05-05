@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/models/db_query.helper.dart';
 import 'package:jugglingtv/models/movie.dart';
 import 'package:provider/provider.dart';
 import '../providers/videos.dart';
@@ -23,14 +24,14 @@ class MovieListBuilder extends StatelessWidget {
 
       case MainScreenMode.channel:
         {
-          return Provider.of<Videos>(context)
-              .fetchAndSetVideosByChannel(args.channel!);
+          return Provider.of<Videos>(context).fetchAndSetVideosByChannel(
+              args.channel!, OrderBy.views, Sort.desc);
         }
       case MainScreenMode.tags:
         {
           //correct for tags filtering
           return Provider.of<Videos>(context)
-              .fetchAndSetVideosByChannel("Clubs");
+              .fetchAndSetVideosByChannel("Clubs", OrderBy.author, Sort.asc);
         }
       default:
         {
