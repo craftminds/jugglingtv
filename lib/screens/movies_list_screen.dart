@@ -155,10 +155,31 @@ class _MovieListScreenState extends State<MovieListScreen> {
       bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 2),
           child: SizedBox(
-            height: 60.0,
+            height: videosListMode.channel != null ? 100 : 60,
             child: Column(
               children: [
-                const Divider(thickness: 1.0, height: 2.0),
+                videosListMode.channel != null
+                    ? Column(children: [
+                        const Divider(thickness: 1.0, height: 2.0),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: Colors.black12,
+                          ),
+                          child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                '${videosListMode.channel} channel',
+                                style: const TextStyle(
+                                  //color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              )),
+                        ),
+                        const Divider(thickness: 1.0, height: 2.0),
+                      ])
+                    : const Divider(thickness: 1.0, height: 2.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.end,

@@ -131,6 +131,7 @@ CREATE TABLE $tableVideoTag (
     }
   }
 
+//TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
   Future<List<Video>> readAllVideos() async {
     final db = await instance.database;
 
@@ -164,7 +165,8 @@ CREATE TABLE $tableVideoTag (
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
-  //TODO: function that filters videos by channel
+// Filtering videos by the channel
+//TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
   Future<List<Video>> readVideosByChannel(String channelName) async {
     final db = await instance.database;
     final result = await db.rawQuery(
@@ -193,7 +195,7 @@ CREATE TABLE $tableVideoTag (
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
-//this function only returns one record
+//this function only returns one record ID must be given - used to retrieve video for the video screen
   Future<Video> readVideoById(int videoId) async {
     final db = await instance.database;
 
@@ -217,7 +219,6 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id}
         ''',
     );
-    //print(result);
     return result.map((json) => Video.fromJson(json)).toList()[0];
     // dirty solution - takes the first found element, always should be only one though
   }
@@ -237,7 +238,6 @@ CREATE TABLE $tableVideoTag (
     }
   }
 
-  //TODO: create function to read channels for a video
   Future<List<VideoChannel>> readChannelsByVideoId(int id) async {
     final db = await instance.database;
 

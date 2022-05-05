@@ -15,7 +15,6 @@ class MovieListBuilder extends StatelessWidget {
 
   Future<List<Video>> _viewListViewMode(
       BuildContext context, MainScreenMode mode) {
-    print(mode);
     switch (mode) {
       case MainScreenMode.allVideos:
         {
