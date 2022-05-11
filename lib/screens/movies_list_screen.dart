@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
+import 'package:jugglingtv/models/db_query.helper.dart';
 import 'package:jugglingtv/screens/channels_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -45,6 +46,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
   var _isInit = true;
   List<Tag> allTags = [];
   List<Tag>? selectedTagList = [];
+  String dropdownSortByValue = 'title';
+  String dropdownOrderValue = 'ASCENDING';
 
   void initState() {
     super.initState();
@@ -63,6 +66,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
       });
     }
     _isInit = false;
+
     super.didChangeDependencies();
   }
 
@@ -83,8 +87,10 @@ class _MovieListScreenState extends State<MovieListScreen> {
     if (ModalRoute.of(context)?.settings.arguments == null) {
       return MainScreenArguments(
         mainScreenMode: MainScreenMode.allVideos,
-        channel: "",
+        channel: null,
         tags: [],
+        orderBy: OrderBy.title,
+        sort: Sort.asc,
       );
     } else {
       return ModalRoute.of(context)?.settings.arguments as MainScreenArguments;
@@ -153,81 +159,75 @@ class _MovieListScreenState extends State<MovieListScreen> {
       ),
       drawer: const AppDrawer(),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 2),
-          child: SizedBox(
-            height: videosListMode.channel != null ? 100 : 60,
-            child: Column(
-              children: [
-                videosListMode.channel != null
-                    ? Column(children: [
-                        const Divider(thickness: 1.0, height: 2.0),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                            color: Colors.black12,
-                          ),
-                          child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                '${videosListMode.channel} channel',
-                                style: const TextStyle(
-                                  //color: Colors.amber,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
-                              )),
+        padding: const EdgeInsets.only(bottom: 2),
+        child: SizedBox(
+          height: videosListMode.channel != null ? 100 : 60,
+          child: Column(
+            children: [
+              videosListMode.channel != null
+                  ? Column(children: [
+                      const Divider(thickness: 1.0, height: 2.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          color: Colors.black12,
                         ),
-                        const Divider(thickness: 1.0, height: 2.0),
-                      ])
-                    : const Divider(thickness: 1.0, height: 2.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    TextButton(
-                      autofocus: false,
-                      child: Column(
-                        children: [
-                          Icon(Icons.tag,
-                              color:
-                                  Theme.of(context).textTheme.caption?.color),
-                          Text(
-                            'Tags Filtering',
-                            style: TextStyle(
-                              color: Theme.of(context).textTheme.caption?.color,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  ?.fontFamily,
-                            ),
-                          ),
-                        ],
+                        child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              '${videosListMode.channel} channel',
+                              style: const TextStyle(
+                                //color: Colors.amber,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            )),
                       ),
-                      onPressed: _openFilterDialog,
-                    ),
-                    TextButton(
-                      autofocus: false,
-                      child: Column(
-                        children: [
-                          Icon(Icons.tv,
-                              color:
-                                  Theme.of(context).textTheme.caption?.color),
-                          Text(
-                            'Channels',
-                            style: TextStyle(
-                              color: Theme.of(context).textTheme.caption?.color,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  ?.fontFamily,
-                            ),
+                      const Divider(thickness: 1.0, height: 2.0),
+                    ])
+                  : const Divider(thickness: 1.0, height: 2.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextButton(
+                    autofocus: false,
+                    child: Column(
+                      children: [
+                        Icon(Icons.tag,
+                            color: Theme.of(context).textTheme.caption?.color),
+                        Text(
+                          'Tags Filtering',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption?.color,
+                            fontFamily:
+                                Theme.of(context).textTheme.caption?.fontFamily,
                           ),
-                        ],
-                      ),
-                      onPressed: () => Navigator.pushNamed(
-                          context, ChannelsScreen.routeName),
+                        ),
+                      ],
                     ),
-                    TextButton(
+                    onPressed: _openFilterDialog,
+                  ),
+                  TextButton(
+                    autofocus: false,
+                    child: Column(
+                      children: [
+                        Icon(Icons.tv,
+                            color: Theme.of(context).textTheme.caption?.color),
+                        Text(
+                          'Channels',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption?.color,
+                            fontFamily:
+                                Theme.of(context).textTheme.caption?.fontFamily,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, ChannelsScreen.routeName),
+                  ),
+                  TextButton(
                       autofocus: false,
                       child: Column(
                         children: [
@@ -246,14 +246,138 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           ),
                         ],
                       ),
-                      onPressed: () => Navigator.pushNamed(
-                          context, ChannelsScreen.routeName),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )),
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                                builder: (context, setState) {
+                              return Dialog(
+                                elevation: 0,
+                                backgroundColor: Colors.transparent,
+                                insetPadding: const EdgeInsets.all(15),
+                                child: Container(
+                                  height: 200,
+                                  width: 200,
+                                  color: Colors.transparent,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8, 8, 0, 10),
+                                        child: Column(children: <Widget>[
+                                          Text(
+                                            "Select filter",
+                                            style: TextStyle(
+                                                fontStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .headline1!
+                                                    .fontStyle),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              const Flexible(
+                                                  fit: FlexFit.loose,
+                                                  child: Text('Sort by: ')),
+                                              DropdownButton(
+                                                items: <String>[
+                                                  'title',
+                                                  'date',
+                                                  'views',
+                                                  'duration',
+                                                  'comments number',
+                                                  'country of origin'
+                                                ].map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                value: dropdownSortByValue,
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    dropdownSortByValue =
+                                                        newValue!;
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              const Flexible(
+                                                  fit: FlexFit.loose,
+                                                  child: Text('View in ')),
+                                              DropdownButton(
+                                                items: <String>[
+                                                  'ASCENDING',
+                                                  'DESCENDING'
+                                                ].map<DropdownMenuItem<String>>(
+                                                    (String value) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                value: dropdownOrderValue,
+                                                onChanged: (String? newValue) {
+                                                  setState(() {
+                                                    dropdownOrderValue =
+                                                        newValue!;
+                                                  });
+                                                },
+                                              ),
+                                              const Flexible(
+                                                fit: FlexFit.loose,
+                                                child: Text('order '),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    // setState(() {
+                                                    //   MainScreenArguments(orderBy: ,
+                                                    //   sort:
+
+                                                    //   )
+                                                    // });
+                                                  },
+                                                  child: const Text('Apply')),
+                                            ],
+                                          )
+                                        ]),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                          })),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       body: MovieListBuilder(args: videosListMode),
     );
   }
