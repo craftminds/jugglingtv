@@ -1,4 +1,4 @@
-import './db_query.helper.dart';
+import 'db_query_helper.dart';
 
 class MainScreenArguments {
   final String? channel;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
-import 'package:jugglingtv/models/db_query.helper.dart';
+import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/screens/channels_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -46,10 +46,19 @@ class _MovieListScreenState extends State<MovieListScreen> {
   var _isInit = true;
   List<Tag> allTags = [];
   List<Tag>? selectedTagList = [];
-  String dropdownSortByValue = 'title';
+  late DropdownListItem dropdownSortByValue;
   String dropdownOrderValue = 'ASCENDING';
+  List<DropdownListItem> sortByDropdowList = <DropdownListItem>[
+    DropdownListItem('title', 'title'),
+    DropdownListItem('views', 'views'),
+    DropdownListItem('duration', 'duration'),
+    DropdownListItem('# of comments', 'comments_no'),
+    DropdownListItem('country of origin', 'country'),
+    DropdownListItem('date', 'year'),
+  ];
 
   void initState() {
+    dropdownSortByValue = sortByDropdowList[0];
     super.initState();
   }
 
@@ -284,29 +293,28 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                               const Flexible(
                                                   fit: FlexFit.loose,
                                                   child: Text('Sort by: ')),
-                                              DropdownButton(
-                                                items: <String>[
-                                                  'title',
-                                                  'date',
-                                                  'views',
-                                                  'duration',
-                                                  'comments number',
-                                                  'country of origin'
-                                                ].map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                                value: dropdownSortByValue,
-                                                onChanged: (String? newValue) {
-                                                  setState(() {
-                                                    dropdownSortByValue =
-                                                        newValue!;
-                                                  });
-                                                },
+                                              DropdownButtonHideUnderline(
+                                                child: DropdownButton(
+                                                  items: sortByDropdowList.map(
+                                                      (DropdownListItem item) {
+                                                    return DropdownMenuItem<
+                                                        DropdownListItem>(
+                                                      value: item,
+                                                      child: Text(
+                                                        item.caption,
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                  value: dropdownSortByValue,
+                                                  hint: Text('sort by'),
+                                                  onChanged: (DropdownListItem?
+                                                      newValue) {
+                                                    setState(() {
+                                                      dropdownSortByValue =
+                                                          newValue!;
+                                                    });
+                                                  },
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -381,4 +389,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
       body: MovieListBuilder(args: videosListMode),
     );
   }
+}
+
+class DropdownListItem {
+  final String name;
+  final String caption;
+
+  DropdownListItem(this.name, this.caption);
 }

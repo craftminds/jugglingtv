@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/videos_db.dart';
 import '../db/local_database.dart';
-import '../models/db_query.helper.dart';
+import '../models/db_query_helper.dart';
 
 class Videos with ChangeNotifier {
   List<Video> _items = [];

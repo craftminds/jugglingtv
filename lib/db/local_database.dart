@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io' as io;
 import 'package:collection/collection.dart';
 import '../models/videos_db.dart';
-import '../models/db_query.helper.dart';
+import '../models/db_query_helper.dart';
 
 class LocalDatabase with ChangeNotifier {
   static final LocalDatabase instance = LocalDatabase._init();
