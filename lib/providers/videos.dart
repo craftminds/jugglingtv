@@ -37,6 +37,8 @@ class Videos with ChangeNotifier {
       sort = Sort.asc;
     }
     try {
+      print(sort.value);
+      print(order.value);
       loadedVideos = await LocalDatabase.instance
           .readVideosByChannel(channelName, order, sort);
     } catch (error) {

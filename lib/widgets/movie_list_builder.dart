@@ -25,7 +25,7 @@ class MovieListBuilder extends StatelessWidget {
       case MainScreenMode.channel:
         {
           return Provider.of<Videos>(context).fetchAndSetVideosByChannel(
-              args.channel!, OrderBy.views, Sort.desc);
+              args.channel!, args.orderBy!, args.sort!);
         }
       case MainScreenMode.tags:
         {

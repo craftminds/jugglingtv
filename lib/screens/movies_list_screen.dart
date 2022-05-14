@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/screens/channels_screen.dart';
+import 'package:jugglingtv/widgets/sort_order_dialog.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:filter_list/filter_list.dart';
@@ -47,18 +48,23 @@ class _MovieListScreenState extends State<MovieListScreen> {
   List<Tag> allTags = [];
   List<Tag>? selectedTagList = [];
   late DropdownListItem dropdownSortByValue;
-  String dropdownOrderValue = 'ASCENDING';
+  late DropdownListItem dropdownOrderValue;
   List<DropdownListItem> sortByDropdowList = <DropdownListItem>[
-    DropdownListItem('title', 'title'),
-    DropdownListItem('views', 'views'),
-    DropdownListItem('duration', 'duration'),
-    DropdownListItem('# of comments', 'comments_no'),
-    DropdownListItem('country of origin', 'country'),
-    DropdownListItem('date', 'year'),
+    DropdownListItem(caption: 'title', orderValue: OrderBy.title),
+    DropdownListItem(caption: 'views', orderValue: OrderBy.views),
+    DropdownListItem(caption: 'duration', orderValue: OrderBy.duration),
+    DropdownListItem(caption: '# of comments', orderValue: OrderBy.commentsNo),
+    DropdownListItem(caption: 'country of origin', orderValue: OrderBy.country),
+    DropdownListItem(caption: 'date', orderValue: OrderBy.year),
+  ];
+  List<DropdownListItem> orderDropdowList = <DropdownListItem>[
+    DropdownListItem(caption: 'ASCENDING', sortValue: Sort.asc),
+    DropdownListItem(caption: 'DESCENDING', sortValue: Sort.desc),
   ];
 
   void initState() {
     dropdownSortByValue = sortByDropdowList[0];
+    dropdownOrderValue = orderDropdowList[0];
     super.initState();
   }
 
@@ -260,124 +266,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           builder: (BuildContext context) {
                             return StatefulBuilder(
                                 builder: (context, setState) {
-                              return Dialog(
-                                elevation: 0,
-                                backgroundColor: Colors.transparent,
-                                insetPadding: const EdgeInsets.all(15),
-                                child: Container(
-                                  height: 200,
-                                  width: 200,
-                                  color: Colors.transparent,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            8, 8, 0, 10),
-                                        child: Column(children: <Widget>[
-                                          Text(
-                                            "Select filter",
-                                            style: TextStyle(
-                                                fontStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .headline1!
-                                                    .fontStyle),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const Flexible(
-                                                  fit: FlexFit.loose,
-                                                  child: Text('Sort by: ')),
-                                              DropdownButtonHideUnderline(
-                                                child: DropdownButton(
-                                                  items: sortByDropdowList.map(
-                                                      (DropdownListItem item) {
-                                                    return DropdownMenuItem<
-                                                        DropdownListItem>(
-                                                      value: item,
-                                                      child: Text(
-                                                        item.caption,
-                                                      ),
-                                                    );
-                                                  }).toList(),
-                                                  value: dropdownSortByValue,
-                                                  hint: Text('sort by'),
-                                                  onChanged: (DropdownListItem?
-                                                      newValue) {
-                                                    setState(() {
-                                                      dropdownSortByValue =
-                                                          newValue!;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const Flexible(
-                                                  fit: FlexFit.loose,
-                                                  child: Text('View in ')),
-                                              DropdownButton(
-                                                items: <String>[
-                                                  'ASCENDING',
-                                                  'DESCENDING'
-                                                ].map<DropdownMenuItem<String>>(
-                                                    (String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                                value: dropdownOrderValue,
-                                                onChanged: (String? newValue) {
-                                                  setState(() {
-                                                    dropdownOrderValue =
-                                                        newValue!;
-                                                  });
-                                                },
-                                              ),
-                                              const Flexible(
-                                                fit: FlexFit.loose,
-                                                child: Text('order '),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.pop(context),
-                                                child: const Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    // setState(() {
-                                                    //   MainScreenArguments(orderBy: ,
-                                                    //   sort:
-
-                                                    //   )
-                                                    // });
-                                                  },
-                                                  child: const Text('Apply')),
-                                            ],
-                                          )
-                                        ]),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return SortOrderDialog();
                             });
                           })),
                 ],
@@ -392,8 +281,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
 }
 
 class DropdownListItem {
-  final String name;
   final String caption;
+  final OrderBy? orderValue;
+  final Sort? sortValue;
 
-  DropdownListItem(this.name, this.caption);
+  DropdownListItem({
+    required this.caption,
+    this.orderValue,
+    this.sortValue,
+  });
 }
