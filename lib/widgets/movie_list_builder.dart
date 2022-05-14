@@ -19,7 +19,8 @@ class MovieListBuilder extends StatelessWidget {
     switch (mode) {
       case MainScreenMode.allVideos:
         {
-          return Provider.of<Videos>(context).fetchAndSetVideos();
+          return Provider.of<Videos>(context)
+              .fetchAndSetVideos(args.orderBy!, args.sort!);
         }
 
       case MainScreenMode.channel:
@@ -37,7 +38,8 @@ class MovieListBuilder extends StatelessWidget {
         {
           // return all videos if wrong arguments are passed
 
-          return Provider.of<Videos>(context).fetchAndSetVideos();
+          return Provider.of<Videos>(context)
+              .fetchAndSetVideos(args.orderBy!, args.sort!);
         }
     }
   }

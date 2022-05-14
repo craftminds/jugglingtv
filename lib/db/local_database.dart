@@ -133,7 +133,7 @@ CREATE TABLE $tableVideoTag (
   }
 
 //TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
-  Future<List<Video>> readAllVideos() async {
+  Future<List<Video>> readAllVideos(OrderBy order, Sort sort) async {
     final db = await instance.database;
 
     //final orderBy = '${VideosFields.id} ASC';
@@ -160,6 +160,7 @@ CREATE TABLE $tableVideoTag (
         $tableVideo, $tableAuthor
         WHERE
         $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id}
+        ORDER BY ${order.value} ${sort.value}
         ''',
     );
     //print(result);

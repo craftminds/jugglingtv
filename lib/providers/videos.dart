@@ -11,11 +11,18 @@ class Videos with ChangeNotifier {
   }
 
 // Read all the videos
-  Future<List<Video>> fetchAndSetVideos() async {
+  Future<List<Video>> fetchAndSetVideos(OrderBy order, Sort sort) async {
     //TODO: add try&catch
     List<Video> loadedVideos = [];
+    if (order.value == "") {
+      order = OrderBy.title;
+    }
+    // the same as above but for sorting
+    if (sort.value == "") {
+      sort = Sort.asc;
+    }
     try {
-      loadedVideos = await LocalDatabase.instance.readAllVideos();
+      loadedVideos = await LocalDatabase.instance.readAllVideos(order, sort);
     } catch (error) {
       throw (error);
     }
@@ -37,10 +44,7 @@ class Videos with ChangeNotifier {
       sort = Sort.asc;
     }
     try {
-      print(sort.value);
-      print(order.value);
-      loadedVideos = await LocalDatabase.instance
-          .readVideosByChannel(channelName, order, sort);
+      loadedVideos = await LocalDatabase.instance.readAllVideos(order, sort);
     } catch (error) {
       throw (error);
     }

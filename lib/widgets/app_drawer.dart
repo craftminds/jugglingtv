@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import '../screens/channels_screen.dart';
@@ -24,6 +25,8 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context).popAndPushNamed(MovieListScreen.routeName,
                     arguments: MainScreenArguments(
                       mainScreenMode: MainScreenMode.allVideos,
+                      orderBy: OrderBy.title,
+                      sort: Sort.asc,
                     ));
               }),
           const Divider(),

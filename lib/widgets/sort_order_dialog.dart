@@ -123,8 +123,7 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                           Navigator.popAndPushNamed(
                               context, MovieListScreen.routeName,
                               arguments: MainScreenArguments(
-                                mainScreenMode: MainScreenMode.channel,
-                                channel: 'Balls',
+                                mainScreenMode: MainScreenMode.allVideos,
                                 orderBy: dropdownSortByValue.orderValue,
                                 sort: dropdownOrderValue.sortValue,
                               ));
