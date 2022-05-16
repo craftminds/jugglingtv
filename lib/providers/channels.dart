@@ -6,7 +6,7 @@ class Channels with ChangeNotifier {
   List<Channel> _items = [];
 
   List<Channel> get items {
-    return [...items];
+    return [..._items];
   }
 
   Future<List<Channel>> fetchAndSetChannels() async {
