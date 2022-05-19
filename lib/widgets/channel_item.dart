@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:provider/provider.dart';
 import '../models/videos_db.dart';
@@ -28,6 +29,8 @@ class ChannelItem extends StatelessWidget {
                     arguments: MainScreenArguments(
                       channel: name,
                       mainScreenMode: MainScreenMode.channel,
+                      orderBy: OrderBy.title,
+                      sort: Sort.desc,
                     ));
           },
           child: Image.network(

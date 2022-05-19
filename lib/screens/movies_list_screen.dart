@@ -78,6 +78,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
       Provider.of<Tags>(context).fetchAndSetTags().then((tags) {
         allTags = tags;
         _isLoading = false;
+        print('Number of tags: ${tags.length}');
       });
     }
     _isInit = false;
@@ -112,50 +113,52 @@ class _MovieListScreenState extends State<MovieListScreen> {
     }
   }
 
-  void _openFilterDialog() async {
-    await FilterListDialog.display<Tag>(
-      context,
-      hideSelectedTextCount: true,
-      themeData: FilterListThemeData(context),
-      headlineText: 'Select Tags',
-      height: 500,
-      listData: allTags,
-      selectedListData: selectedTagList,
-      choiceChipLabel: (item) => item!.name,
-      validateSelectedItem: (list, val) => list!.contains(val),
-      controlButtons: [ContolButtonType.Reset],
-      onItemSearch: (user, query) {
-        /// When search query change in search bar then this method will be called
-        ///
-        /// Check if items contains query
-        return user.name.toLowerCase().contains(query.toLowerCase());
-      },
+// too many tags? the dialog window just doesn't open
 
-      onApplyButtonClick: (list) {
-        setState(() {
-          selectedTagList = List.from(list!);
-        });
-        Navigator.pop(context);
-      },
+  // void _openFilterDialog() async {
+  //   await FilterListDialog.display<Tag>(
+  //     context,
+  //     hideSelectedTextCount: true,
+  //     themeData: FilterListThemeData(context),
+  //     headlineText: 'Select Tags',
+  //     height: 500,
+  //     listData: allTags,
+  //     selectedListData: selectedTagList,
+  //     choiceChipLabel: (item) => item!.name,
+  //     validateSelectedItem: (list, val) => list!.contains(val),
+  //     controlButtons: [ContolButtonType.Reset],
+  //     onItemSearch: (user, query) {
+  //       /// When search query change in search bar then this method will be called
+  //       ///
+  //       /// Check if items contains query
+  //       return user.name.toLowerCase().contains(query.toLowerCase());
+  //     },
 
-      /// uncomment below code to create custom choice chip
-      // choiceChipBuilder: (context, item, isSelected) {
-      //   return Container(
-      //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      //     decoration: BoxDecoration(
-      //         border: Border.all(
-      //       color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
-      //     )),
-      //     child: Text(
-      //       item.name,
-      //       style: TextStyle(
-      //           color: isSelected ? Colors.blue[300] : Colors.grey[300]),
-      //     ),
-      //   );
-      // },
-    );
-  }
+  //     onApplyButtonClick: (list) {
+  //       setState(() {
+  //         selectedTagList = List.from(list!);
+  //       });
+  //       Navigator.pop(context);
+  //     },
+
+  //     /// uncomment below code to create custom choice chip
+  //     // choiceChipBuilder: (context, item, isSelected) {
+  //     //   return Container(
+  //     //     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+  //     //     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+  //     //     decoration: BoxDecoration(
+  //     //         border: Border.all(
+  //     //       color: isSelected! ? Colors.blue[300]! : Colors.grey[300]!,
+  //     //     )),
+  //     //     child: Text(
+  //     //       item.name,
+  //     //       style: TextStyle(
+  //     //           color: isSelected ? Colors.blue[300] : Colors.grey[300]),
+  //     //     ),
+  //     //   );
+  //     // },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +171,23 @@ class _MovieListScreenState extends State<MovieListScreen> {
           child: Image.asset(
             "assets/images/logo.png",
             //fit: BoxFit.cover,
-            scale: 1.5,
+            scale: 1,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () => showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return SortOrderDialog();
+                  });
+                }),
+            icon: const Icon(Icons.sort_by_alpha_rounded),
+            iconSize: 28,
+            color: const Color.fromARGB(255, 255, 186, 8),
+          )
+        ],
       ),
       drawer: const AppDrawer(),
       bottomNavigationBar: Padding(
@@ -205,24 +222,26 @@ class _MovieListScreenState extends State<MovieListScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  TextButton(
-                    autofocus: false,
-                    child: Column(
-                      children: [
-                        Icon(Icons.tag,
-                            color: Theme.of(context).textTheme.caption?.color),
-                        Text(
-                          'Tags Filtering',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.caption?.color,
-                            fontFamily:
-                                Theme.of(context).textTheme.caption?.fontFamily,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onPressed: _openFilterDialog,
-                  ),
+                  // Below widget just doesn't work with that many tags have to reconsider if it makes sense to keep tags searching function
+
+                  // TextButton(
+                  //   autofocus: false,
+                  //   child: Column(
+                  //     children: [
+                  //       Icon(Icons.tag,
+                  //           color: Theme.of(context).textTheme.caption?.color),
+                  //       Text(
+                  //         'Tags Filtering',
+                  //         style: TextStyle(
+                  //           color: Theme.of(context).textTheme.caption?.color,
+                  //           fontFamily:
+                  //               Theme.of(context).textTheme.caption?.fontFamily,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   onPressed: _openFilterDialog,
+                  // ),
                   TextButton(
                     autofocus: false,
                     child: Column(
@@ -242,15 +261,42 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     onPressed: () =>
                         Navigator.pushNamed(context, ChannelsScreen.routeName),
                   ),
+                  // TextButton(
+                  //     autofocus: false,
+                  //     child: Column(
+                  //       children: [
+                  //         Icon(Icons.sort,
+                  //             color:
+                  //                 Theme.of(context).textTheme.caption?.color),
+                  //         Text(
+                  //           'Sorting',
+                  //           style: TextStyle(
+                  //             color: Theme.of(context).textTheme.caption?.color,
+                  //             fontFamily: Theme.of(context)
+                  //                 .textTheme
+                  //                 .caption
+                  //                 ?.fontFamily,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  // onPressed: () => showDialog(
+                  //     context: context,
+                  //     builder: (BuildContext context) {
+                  //       return StatefulBuilder(
+                  //           builder: (context, setState) {
+                  //         return SortOrderDialog();
+                  //       });
+                  //     })),
                   TextButton(
                       autofocus: false,
                       child: Column(
                         children: [
-                          Icon(Icons.sort,
+                          Icon(Icons.person_search,
                               color:
                                   Theme.of(context).textTheme.caption?.color),
                           Text(
-                            'Sorting',
+                            'Authors',
                             style: TextStyle(
                               color: Theme.of(context).textTheme.caption?.color,
                               fontFamily: Theme.of(context)
@@ -261,14 +307,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           ),
                         ],
                       ),
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return StatefulBuilder(
-                                builder: (context, setState) {
-                              return SortOrderDialog();
-                            });
-                          })),
+                      onPressed: () => {}),
                 ],
               ),
             ],
