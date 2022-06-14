@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/models/db_query_helper.dart';
-import 'package:jugglingtv/models/movie.dart';
 import 'package:provider/provider.dart';
 import '../providers/videos.dart';
 import '../models/videos_db.dart';

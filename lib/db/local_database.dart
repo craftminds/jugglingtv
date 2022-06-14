@@ -242,6 +242,29 @@ CREATE TABLE $tableVideoTag (
     }
   }
 
+  Future<List<Author>> readAllAuthors(String order, Sort sort) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+      '''SELECT 
+      $tableAuthor.${AuthorFields.id},
+      $tableAuthor.${AuthorFields.name},
+      $tableAuthor.${AuthorFields.imageUrl},
+      $tableAuthor.${AuthorFields.fullName},
+      $tableAuthor.${AuthorFields.noFollowers},
+      $tableAuthor.${AuthorFields.videoViews},
+      $tableAuthor.${AuthorFields.profileViews},
+      $tableAuthor.${AuthorFields.hometown},
+      $tableAuthor.${AuthorFields.country}
+      FROM
+      $tableAuthor
+      ORDER BY $order ${sort.value}
+      ''',
+    );
+    print(result);
+    return result.map((json) => Author.fromJson(json)).toList();
+  }
+
   Future<List<VideoChannel>> readChannelsByVideoId(int id) async {
     final db = await instance.database;
 

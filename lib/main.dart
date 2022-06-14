@@ -13,6 +13,8 @@ import 'providers/channels.dart';
 import './screens/channels_screen.dart';
 import './screens/tags_screen.dart';
 import 'providers/tags.dart';
+import './screens/authors_screen.dart';
+import './providers/authors.dart';
 
 void main() => runApp(const MyApp());
 
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => VideoTags()),
         ChangeNotifierProvider(create: (context) => Channels()),
         ChangeNotifierProvider(create: (context) => Tags()),
+        ChangeNotifierProvider(create: (context) => Authors()),
       ],
       child: MaterialApp(
         //TODO: work on theme for the app, the font, the colors etc.
@@ -64,6 +67,7 @@ class MyApp extends StatelessWidget {
         routes: {
           VideoScreen.routeName: (context) => const VideoScreen(),
           ChannelsScreen.routeName: (context) => const ChannelsScreen(),
+          AuthorsScreen.routeName: (context) => const AuthorsScreen(),
           //TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),

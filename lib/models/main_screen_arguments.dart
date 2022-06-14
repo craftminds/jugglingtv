@@ -7,12 +7,26 @@ class MainScreenArguments {
   final OrderBy? orderBy;
   final Sort? sort;
 
-  MainScreenArguments(
-      {this.channel, this.tags, this.mainScreenMode, this.orderBy, this.sort});
+  MainScreenArguments({
+    this.channel,
+    this.tags,
+    this.mainScreenMode,
+    this.orderBy,
+    this.sort,
+  });
 }
 
 enum MainScreenMode {
   allVideos,
   channel,
   tags,
+}
+
+class AuthorsScreenArguments {
+  final String? order;
+  final Sort? sort;
+  AuthorsScreenArguments({
+    this.order,
+    this.sort,
+  });
 }

@@ -19,23 +19,58 @@ class AuthorFields {
   static final List<String> values = [
     id,
     name,
+    imageUrl,
+    fullName,
+    noFollowers,
+    videoViews,
+    profileViews,
+    hometown,
+    country,
   ];
   static const String id = 'id';
   static const String name = 'name';
+  static const String imageUrl = 'image_url';
+  static const String fullName = 'full_name';
+  static const String noFollowers = 'no_followers';
+  static const String videoViews = 'video_views';
+  static const String profileViews = 'profile_views';
+  static const String hometown = 'hometown';
+  static const String country = 'country';
 }
 
 class Author {
   final int id;
   final String name;
+  final String imageUrl;
+  final String fullName;
+  // final int noFollowers;
+  // final int videoViews;
+  // final int profileViews;
+  final String hometown;
+  final String country;
 
   const Author({
     required this.id,
     required this.name,
+    required this.imageUrl,
+    required this.fullName,
+    // required this.noFollowers,
+    // required this.videoViews,
+    // required this.profileViews,
+    required this.hometown,
+    required this.country,
   });
 
   static Author fromJson(Map<String, Object?> json) => Author(
         id: json[AuthorFields.id] as int,
         name: json[AuthorFields.name] as String,
+        imageUrl: json[AuthorFields.imageUrl] as String,
+        fullName: json[AuthorFields.fullName] as String,
+        // noFollowers: json[AuthorFields.noFollowers] as int,
+        // videoViews: json[AuthorFields.videoViews] as int,
+        // profileViews: json[AuthorFields.profileViews] as int,
+        hometown: json[AuthorFields.hometown] as String,
+        country: json[AuthorFields.country] as String,
       );
 }
 

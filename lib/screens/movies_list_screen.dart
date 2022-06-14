@@ -17,6 +17,7 @@ import '../widgets/app_drawer.dart';
 import '../providers/tags.dart';
 import '../widgets/movie_list_builder.dart';
 import '../models/main_screen_arguments.dart';
+import '../screens/authors_screen.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -99,7 +100,10 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   //   setState(() => isLoading = false);
   // }
+
+  //Sets the default state of the main screen
   MainScreenArguments _setMainScreenArguments(BuildContext context) {
+    // if it is first time opening the default setting would be as below
     if (ModalRoute.of(context)?.settings.arguments == null) {
       return MainScreenArguments(
         mainScreenMode: MainScreenMode.allVideos,
@@ -109,6 +113,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
         sort: Sort.asc,
       );
     } else {
+      // otherwise (if main screen is opened from another screen) it uses arguments provided
       return ModalRoute.of(context)?.settings.arguments as MainScreenArguments;
     }
   }
@@ -289,25 +294,24 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   //       });
                   //     })),
                   TextButton(
-                      autofocus: false,
-                      child: Column(
-                        children: [
-                          Icon(Icons.person_search,
-                              color:
-                                  Theme.of(context).textTheme.caption?.color),
-                          Text(
-                            'Authors',
-                            style: TextStyle(
-                              color: Theme.of(context).textTheme.caption?.color,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  ?.fontFamily,
-                            ),
+                    autofocus: false,
+                    child: Column(
+                      children: [
+                        Icon(Icons.person_search,
+                            color: Theme.of(context).textTheme.caption?.color),
+                        Text(
+                          'Authors',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption?.color,
+                            fontFamily:
+                                Theme.of(context).textTheme.caption?.fontFamily,
                           ),
-                        ],
-                      ),
-                      onPressed: () => {}),
+                        ),
+                      ],
+                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, AuthorsScreen.routeName),
+                  )
                 ],
               ),
             ],
