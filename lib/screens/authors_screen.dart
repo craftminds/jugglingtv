@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../providers/authors.dart';
 import '../models/db_query_helper.dart';
 import '../screens/channels_screen.dart';
+import '../screens/movies_list_screen.dart';
 
 class AuthorsScreen extends StatelessWidget {
   const AuthorsScreen({Key? key}) : super(key: key);
@@ -57,6 +58,32 @@ class AuthorsScreen extends StatelessWidget {
                     autofocus: false,
                     child: Column(
                       children: [
+                        Icon(
+                          Icons.video_collection,
+                          color: Theme.of(context).textTheme.caption?.color,
+                        ),
+                        Text(
+                          'Movies',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption?.color,
+                            fontFamily:
+                                Theme.of(context).textTheme.caption?.fontFamily,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () => Navigator.of(context)
+                        .popAndPushNamed(MovieListScreen.routeName,
+                            arguments: MainScreenArguments(
+                              mainScreenMode: MainScreenMode.allVideos,
+                              orderBy: OrderBy.title,
+                              sort: Sort.asc,
+                            )),
+                  ),
+                  TextButton(
+                    autofocus: false,
+                    child: Column(
+                      children: [
                         Icon(Icons.tv,
                             color: Theme.of(context).textTheme.caption?.color),
                         Text(
@@ -76,20 +103,18 @@ class AuthorsScreen extends StatelessWidget {
                     autofocus: false,
                     child: Column(
                       children: [
-                        Icon(Icons.person_search,
-                            color: Theme.of(context).textTheme.caption?.color),
+                        Icon(Icons.person_search, color: Colors.amber[200]),
                         Text(
                           'Authors',
                           style: TextStyle(
-                            color: Theme.of(context).textTheme.caption?.color,
+                            color: Colors.amber[200],
                             fontFamily:
                                 Theme.of(context).textTheme.caption?.fontFamily,
                           ),
                         ),
                       ],
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AuthorsScreen.routeName),
+                    onPressed: () => {},
                   )
                 ],
               ),

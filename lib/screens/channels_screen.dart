@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import '../providers/channels.dart';
 import '../widgets/channel_item.dart';
 import '../models/videos_db.dart';
+import '../screens/authors_screen.dart';
+import '../screens/movies_list_screen.dart';
+import '../models/db_query_helper.dart';
+import 'package:jugglingtv/models/main_screen_arguments.dart';
 
 class ChannelsScreen extends StatelessWidget {
   const ChannelsScreen({Key? key}) : super(key: key);
@@ -21,6 +25,92 @@ class ChannelsScreen extends StatelessWidget {
               "assets/images/logo.png",
               //fit: BoxFit.cover,
               scale: 1.5,
+            ),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 2),
+          child: SizedBox(
+            height: 60,
+            child: Column(
+              children: [
+                const Divider(thickness: 1.0, height: 2.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.video_collection,
+                            color: Theme.of(context).textTheme.caption?.color,
+                          ),
+                          Text(
+                            'Movies',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () => Navigator.of(context)
+                          .popAndPushNamed(MovieListScreen.routeName,
+                              arguments: MainScreenArguments(
+                                mainScreenMode: MainScreenMode.allVideos,
+                                orderBy: OrderBy.title,
+                                sort: Sort.asc,
+                              )),
+                    ),
+                    TextButton(
+                        autofocus: false,
+                        child: Column(
+                          children: [
+                            Icon(Icons.tv, color: Colors.amber[200]),
+                            Text(
+                              'Channels',
+                              style: TextStyle(
+                                color: Colors.amber[200],
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    ?.fontFamily,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onPressed: () => {}),
+                    TextButton(
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.person_search,
+                            color: Theme.of(context).textTheme.caption?.color,
+                          ),
+                          Text(
+                            'Authors',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, AuthorsScreen.routeName),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
         ),

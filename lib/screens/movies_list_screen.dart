@@ -251,6 +251,24 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     autofocus: false,
                     child: Column(
                       children: [
+                        Icon(Icons.video_collection, color: Colors.amber[200]),
+                        Text(
+                          'Movies',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption?.color,
+                            fontFamily:
+                                Theme.of(context).textTheme.caption?.fontFamily,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, ChannelsScreen.routeName),
+                  ),
+                  TextButton(
+                    autofocus: false,
+                    child: Column(
+                      children: [
                         Icon(Icons.tv,
                             color: Theme.of(context).textTheme.caption?.color),
                         Text(
