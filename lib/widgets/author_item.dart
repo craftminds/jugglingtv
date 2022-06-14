@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/screens/author_screen.dart';
 
 class AuthorItem extends StatelessWidget {
   final int id;
@@ -27,7 +28,8 @@ class AuthorItem extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
-        onTap: () {},
+        onTap: () => Navigator.of(context)
+            .pushNamed(AuthorScreen.routeName, arguments: id),
         child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -72,7 +74,7 @@ class AuthorItem extends StatelessWidget {
                               child: Text(
                                 name,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 24),
+                                    fontWeight: FontWeight.bold, fontSize: 20),
                                 //maxLines: 3,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,

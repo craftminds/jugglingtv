@@ -261,7 +261,7 @@ CREATE TABLE $tableVideoTag (
       ORDER BY $order ${sort.value}
       ''',
     );
-    print(result);
+    // print(result);
     return result.map((json) => Author.fromJson(json)).toList();
   }
 
@@ -279,7 +279,7 @@ SELECT
     $tableVideoChannel.${VideoChannelFields.videoId} = $id
 ''',
     );
-    print(result);
+    // print(result);
     // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
     // print(groupedResult);
     return result.map((json) => VideoChannel.fromJson(json)).toList();
@@ -333,7 +333,7 @@ SELECT
     $tableVideoTag.${VideoTagFields.videoId} = $id
 ''',
     );
-    print(result);
+    // print(result);
     // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
     // print(groupedResult);
     return result.map((json) => VideoTag.fromJson(json)).toList();

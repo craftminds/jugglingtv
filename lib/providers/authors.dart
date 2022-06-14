@@ -7,7 +7,7 @@ class Authors with ChangeNotifier {
   List<Author> _items = [];
 
   List<Author> get items {
-    return [...items];
+    return [..._items];
   }
 
 // Read all the Authors
@@ -29,5 +29,9 @@ class Authors with ChangeNotifier {
     }
     _items = loadedAuthors;
     return _items;
+  }
+
+  Author readAuthorById(int id) {
+    return _items.firstWhere((author) => author.id == id);
   }
 }
