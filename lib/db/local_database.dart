@@ -195,7 +195,7 @@ CREATE TABLE $tableVideoTag (
         ORDER BY ${order.value} ${sort.value}
         ''',
     );
-    //print(result);
+    print(result);
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
@@ -261,7 +261,7 @@ CREATE TABLE $tableVideoTag (
       ORDER BY $order ${sort.value}
       ''',
     );
-    print(result);
+    // print(result);
     return result.map((json) => Author.fromJson(json)).toList();
   }
 
@@ -344,3 +344,7 @@ SELECT
     db.close();
   }
 }
+
+
+// function to count the number of videos:
+// select video.author_id , author.name, count(*) as NUM FROM video,author WHERE video.author_id = author.id group by video.author_id

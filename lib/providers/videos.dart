@@ -44,7 +44,8 @@ class Videos with ChangeNotifier {
       sort = Sort.asc;
     }
     try {
-      loadedVideos = await LocalDatabase.instance.readAllVideos(order, sort);
+      loadedVideos = await LocalDatabase.instance
+          .readVideosByChannel(channelName, order, sort);
     } catch (error) {
       throw (error);
     }
