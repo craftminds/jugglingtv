@@ -213,7 +213,9 @@ class Video {
         description: json[VideosFields.description] as String,
         year: DateTime.parse(json[VideosFields.year] as String),
         // year: json[VideosFields.year] as DateTime,
-        country: json[VideosFields.country] as String,
+        country: json[VideosFields.country] == null
+            ? ' '
+            : json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
       );
 }
