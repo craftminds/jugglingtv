@@ -261,6 +261,24 @@ CREATE TABLE $tableVideoTag (
       ORDER BY $order ${sort.value}
       ''',
     );
+
+//select video.author_id , author.name, count(*)  FROM video,author WHERE video.author_id = author.id group by video.author_id
+    final videoCount = await db.rawQuery('''
+    SELECT
+    $tableVideo.${VideosFields.authorId},
+    $tableAuthor.${AuthorFields.name},
+    count (*) as NUM
+    FROM
+    $tableVideo,
+    $tableAuthor
+    WHERE
+    $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id}
+    GROUP BY
+    $tableVideo.${VideosFields.authorId}
+    ''');
+
+    // write the function to merge two of above results of db queries
+    //print(videoCount);
     // print(result);
     return result.map((json) => Author.fromJson(json)).toList();
   }

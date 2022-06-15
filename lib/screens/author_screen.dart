@@ -55,6 +55,12 @@ class AuthorScreen extends StatelessWidget {
                           authorInfo('Name', loadedAuthor.name),
                           authorInfo('Hometown', loadedAuthor.hometown),
                           authorInfo('Country', loadedAuthor.country),
+                          authorInfo(
+                              'Followers', loadedAuthor.noFollowers.toString()),
+                          authorInfo('Video Views',
+                              loadedAuthor.videoViews.toString()),
+                          authorInfo('Profile Views',
+                              loadedAuthor.profileViews.toString()),
                         ],
                       ),
                     ),

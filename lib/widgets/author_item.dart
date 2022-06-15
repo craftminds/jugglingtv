@@ -56,7 +56,7 @@ class AuthorItem extends StatelessWidget {
                                 fullName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                 ),
                                 maxLines: 3,
                                 softWrap: true,
@@ -74,7 +74,9 @@ class AuthorItem extends StatelessWidget {
                               child: Text(
                                 name,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                                 //maxLines: 3,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
