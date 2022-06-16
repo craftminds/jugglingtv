@@ -19,6 +19,7 @@ class AuthorList extends StatelessWidget {
             name: authors[index].name,
             imageUrl: authors[index].imageUrl,
             fullName: authors[index].fullName,
+            moviesCount: authors[index].moviesCount,
           );
         });
   }

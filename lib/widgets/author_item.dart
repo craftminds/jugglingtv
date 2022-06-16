@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/screens/author_screen.dart';
 
 class AuthorItem extends StatelessWidget {
   final int id;
   final String name;
   final String imageUrl;
   final String fullName;
+  final int moviesCount;
 
   const AuthorItem({
     Key? key,
@@ -12,6 +14,7 @@ class AuthorItem extends StatelessWidget {
     required this.name,
     required this.imageUrl,
     required this.fullName,
+    required this.moviesCount,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -27,21 +30,24 @@ class AuthorItem extends StatelessWidget {
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
-        onTap: () {},
+        onTap: () => Navigator.of(context)
+            .pushNamed(AuthorScreen.routeName, arguments: id),
         child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           //alignment: Alignment.center,
           child: Row(children: [
             Flexible(
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl),
-                  radius: 40,
-                ),
-                fit: FlexFit.tight,
-                flex: 1),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(imageUrl),
+                radius: 40,
+              ),
+              fit: FlexFit.tight,
+              flex: 1,
+            ),
             Flexible(
               flex: 3,
+              fit: FlexFit.tight,
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: fullName != ' '
@@ -54,7 +60,7 @@ class AuthorItem extends StatelessWidget {
                                 fullName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                 ),
                                 maxLines: 3,
                                 softWrap: true,
@@ -72,7 +78,9 @@ class AuthorItem extends StatelessWidget {
                               child: Text(
                                 name,
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 24),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                                 //maxLines: 3,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
@@ -80,6 +88,26 @@ class AuthorItem extends StatelessWidget {
                             ),
                           ],
                         )),
+            ),
+            Flexible(
+              child: Column(
+                children: [
+                  const Text('Movies',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  CircleAvatar(
+                    child: Text(
+                      '$moviesCount',
+                      style: const TextStyle(color: Colors.black87),
+                    ),
+                    backgroundColor: Colors.amber[100],
+                    radius: 25,
+                  ),
+                ],
+              ),
+              flex: 1,
+              fit: FlexFit.loose,
             )
           ]),
         ),

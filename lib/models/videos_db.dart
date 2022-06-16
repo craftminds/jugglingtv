@@ -36,6 +36,7 @@ class AuthorFields {
   static const String profileViews = 'profile_views';
   static const String hometown = 'hometown';
   static const String country = 'country';
+  static const String moviesCount = 'movies_count';
 }
 
 class Author {
@@ -43,22 +44,24 @@ class Author {
   final String name;
   final String imageUrl;
   final String fullName;
-  // final int noFollowers;
-  // final int videoViews;
-  // final int profileViews;
+  final int noFollowers;
+  final int videoViews;
+  final int profileViews;
   final String hometown;
   final String country;
+  int moviesCount;
 
-  const Author({
+  Author({
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.fullName,
-    // required this.noFollowers,
-    // required this.videoViews,
-    // required this.profileViews,
+    required this.noFollowers,
+    required this.videoViews,
+    required this.profileViews,
     required this.hometown,
     required this.country,
+    required this.moviesCount,
   });
 
   static Author fromJson(Map<String, Object?> json) => Author(
@@ -66,11 +69,14 @@ class Author {
         name: json[AuthorFields.name] as String,
         imageUrl: json[AuthorFields.imageUrl] as String,
         fullName: json[AuthorFields.fullName] as String,
-        // noFollowers: json[AuthorFields.noFollowers] as int,
-        // videoViews: json[AuthorFields.videoViews] as int,
-        // profileViews: json[AuthorFields.profileViews] as int,
+        noFollowers: json[AuthorFields.noFollowers] as int,
+        videoViews: json[AuthorFields.videoViews] as int,
+        profileViews: json[AuthorFields.profileViews] as int,
         hometown: json[AuthorFields.hometown] as String,
         country: json[AuthorFields.country] as String,
+        moviesCount: json[AuthorFields.moviesCount] == null
+            ? 0
+            : json[AuthorFields.moviesCount] as int,
       );
 }
 
@@ -187,6 +193,7 @@ class Video {
   final DateTime year;
   final String country;
   final String authorName;
+  final int authorID;
 
   Video({
     required this.id,
@@ -200,6 +207,7 @@ class Video {
     required this.year,
     required this.country,
     required this.authorName,
+    required this.authorID,
   });
 
   static Video fromJson(Map<String, Object?> json) => Video(
@@ -213,8 +221,11 @@ class Video {
         description: json[VideosFields.description] as String,
         year: DateTime.parse(json[VideosFields.year] as String),
         // year: json[VideosFields.year] as DateTime,
-        country: json[VideosFields.country] as String,
+        country: json[VideosFields.country] == null
+            ? ' '
+            : json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
+        authorID: json[VideosFields.authorId] as int,
       );
 }
 

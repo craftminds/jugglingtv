@@ -14,6 +14,7 @@ import './screens/channels_screen.dart';
 import './screens/tags_screen.dart';
 import 'providers/tags.dart';
 import './screens/authors_screen.dart';
+import './screens/author_screen.dart';
 import './providers/authors.dart';
 
 void main() => runApp(const MyApp());
@@ -68,6 +69,8 @@ class MyApp extends StatelessWidget {
           VideoScreen.routeName: (context) => const VideoScreen(),
           ChannelsScreen.routeName: (context) => const ChannelsScreen(),
           AuthorsScreen.routeName: (context) => const AuthorsScreen(),
+          AuthorScreen.routeName: (context) => const AuthorScreen(),
+
           //TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),
