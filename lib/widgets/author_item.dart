@@ -6,6 +6,7 @@ class AuthorItem extends StatelessWidget {
   final String name;
   final String imageUrl;
   final String fullName;
+  final int moviesCount;
 
   const AuthorItem({
     Key? key,
@@ -13,6 +14,7 @@ class AuthorItem extends StatelessWidget {
     required this.name,
     required this.imageUrl,
     required this.fullName,
+    required this.moviesCount,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,14 +38,16 @@ class AuthorItem extends StatelessWidget {
           //alignment: Alignment.center,
           child: Row(children: [
             Flexible(
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(imageUrl),
-                  radius: 40,
-                ),
-                fit: FlexFit.tight,
-                flex: 1),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(imageUrl),
+                radius: 40,
+              ),
+              fit: FlexFit.tight,
+              flex: 1,
+            ),
             Flexible(
               flex: 3,
+              fit: FlexFit.tight,
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: fullName != ' '
@@ -84,6 +88,26 @@ class AuthorItem extends StatelessWidget {
                             ),
                           ],
                         )),
+            ),
+            Flexible(
+              child: Column(
+                children: [
+                  const Text('Movies',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  CircleAvatar(
+                    child: Text(
+                      '$moviesCount',
+                      style: const TextStyle(color: Colors.black87),
+                    ),
+                    backgroundColor: Colors.amber[100],
+                    radius: 25,
+                  ),
+                ],
+              ),
+              flex: 1,
+              fit: FlexFit.loose,
             )
           ]),
         ),

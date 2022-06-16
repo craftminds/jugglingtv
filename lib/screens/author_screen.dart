@@ -8,7 +8,8 @@ class AuthorScreen extends StatelessWidget {
 
   Offstage authorInfo(String caption, String infoText) {
     return Offstage(
-        offstage: infoText == ' ', child: Text('$caption: $infoText'));
+        offstage: infoText == ' ' || infoText == '0',
+        child: Text('$caption: $infoText'));
   }
 
   @override
