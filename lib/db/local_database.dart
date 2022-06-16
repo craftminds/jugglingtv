@@ -155,6 +155,7 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.description},
         $tableVideo.${VideosFields.year},
         $tableVideo.${VideosFields.country},
+        $tableVideo.${VideosFields.authorId},
         $tableAuthor.${AuthorFields.name}
         FROM
         $tableVideo, $tableAuthor

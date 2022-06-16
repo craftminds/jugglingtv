@@ -55,4 +55,9 @@ class Videos with ChangeNotifier {
   Video readVideoById(int id) {
     return _items.firstWhere((vid) => vid.id == id);
   }
+
+  //Returns the list of videos by author, works on the copy of the list from the database, not querying the database
+  List<Video> readVideoByAuthor(int authorID) {
+    return _items.where((element) => element.authorID == authorID).toList();
+  }
 }

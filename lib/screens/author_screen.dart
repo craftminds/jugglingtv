@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/authors.dart';
+import '../widgets/author_screen_videos_list.dart';
 
 class AuthorScreen extends StatelessWidget {
   const AuthorScreen({Key? key}) : super(key: key);
@@ -73,6 +74,7 @@ class AuthorScreen extends StatelessWidget {
               ),
             ),
             const Divider(thickness: 1.0, height: 2.0),
+            Expanded(child: AuthorScreenVideosList(authorId: authorId)),
           ],
         ),
       ),

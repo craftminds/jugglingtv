@@ -193,6 +193,7 @@ class Video {
   final DateTime year;
   final String country;
   final String authorName;
+  final int authorID;
 
   Video({
     required this.id,
@@ -206,6 +207,7 @@ class Video {
     required this.year,
     required this.country,
     required this.authorName,
+    required this.authorID,
   });
 
   static Video fromJson(Map<String, Object?> json) => Video(
@@ -223,6 +225,7 @@ class Video {
             ? ' '
             : json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
+        authorID: json[VideosFields.authorId] as int,
       );
 }
 
