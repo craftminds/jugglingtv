@@ -36,6 +36,7 @@ class AuthorFields {
   static const String profileViews = 'profile_views';
   static const String hometown = 'hometown';
   static const String country = 'country';
+  static const String moviesCount = 'movies_count';
 }
 
 class Author {
@@ -48,8 +49,9 @@ class Author {
   final int profileViews;
   final String hometown;
   final String country;
+  int moviesCount;
 
-  const Author({
+  Author({
     required this.id,
     required this.name,
     required this.imageUrl,
@@ -59,6 +61,7 @@ class Author {
     required this.profileViews,
     required this.hometown,
     required this.country,
+    required this.moviesCount,
   });
 
   static Author fromJson(Map<String, Object?> json) => Author(
@@ -71,6 +74,9 @@ class Author {
         profileViews: json[AuthorFields.profileViews] as int,
         hometown: json[AuthorFields.hometown] as String,
         country: json[AuthorFields.country] as String,
+        moviesCount: json[AuthorFields.moviesCount] == null
+            ? 0
+            : json[AuthorFields.moviesCount] as int,
       );
 }
 

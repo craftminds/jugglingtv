@@ -168,7 +168,7 @@ CREATE TABLE $tableVideoTag (
   }
 
 // Filtering videos by the channel
-//TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
+
   Future<List<Video>> readVideosByChannel(
       String channelName, OrderBy order, Sort sort) async {
     final db = await instance.database;
@@ -245,8 +245,7 @@ CREATE TABLE $tableVideoTag (
   Future<List<Author>> readAllAuthors(String order, Sort sort) async {
     final db = await instance.database;
 
-    final result = await db.rawQuery(
-      '''SELECT 
+    final result = await db.rawQuery('''SELECT 
       $tableAuthor.${AuthorFields.id},
       $tableAuthor.${AuthorFields.name},
       $tableAuthor.${AuthorFields.imageUrl},
@@ -259,8 +258,7 @@ CREATE TABLE $tableVideoTag (
       FROM
       $tableAuthor
       ORDER BY $order ${sort.value}
-      ''',
-    );
+      ''');
 
 //select video.author_id , author.name, count(*)  FROM video,author WHERE video.author_id = author.id group by video.author_id
     final videoCount = await db.rawQuery('''
@@ -277,10 +275,21 @@ CREATE TABLE $tableVideoTag (
     $tableVideo.${VideosFields.authorId}
     ''');
 
-    // write the function to merge two of above results of db queries
-    //print(videoCount);
+    // create new map of Authors
+    // check every element of map if id is in author_id
+    var resultWithMovies = result.map((json) => Author.fromJson(json)).toList();
+    for (var author in resultWithMovies) {
+      int authorIndex =
+          videoCount.indexWhere((element) => author.id == element["author_id"]);
+      if (authorIndex != -1) {
+        author.moviesCount = videoCount[authorIndex]["NUM"] as int;
+      }
+      //print(author.moviesCount);
+    }
+
+    // print(videoCount);
     // print(result);
-    return result.map((json) => Author.fromJson(json)).toList();
+    return resultWithMovies;
   }
 
   Future<List<VideoChannel>> readChannelsByVideoId(int id) async {

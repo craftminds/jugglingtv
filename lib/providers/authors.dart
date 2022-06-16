@@ -35,6 +35,3 @@ class Authors with ChangeNotifier {
     return _items.firstWhere((author) => author.id == id);
   }
 }
-
-
-//select video.author_id , author.name, count(*)  FROM video,author WHERE video.author_id = author.id group by video.author_id

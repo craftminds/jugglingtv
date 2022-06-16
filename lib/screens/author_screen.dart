@@ -37,6 +37,7 @@ class AuthorScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
                     flex: 1,
@@ -47,7 +48,7 @@ class AuthorScreen extends StatelessWidget {
                   Flexible(
                     flex: 3,
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -61,6 +62,8 @@ class AuthorScreen extends StatelessWidget {
                               loadedAuthor.videoViews.toString()),
                           authorInfo('Profile Views',
                               loadedAuthor.profileViews.toString()),
+                          authorInfo('Number of videos',
+                              loadedAuthor.moviesCount.toString()),
                         ],
                       ),
                     ),
