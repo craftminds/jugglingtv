@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/screens/author_screen.dart';
+import '../models/videos_db.dart';
 
 class AuthorItem extends StatelessWidget {
-  final int id;
-  final String name;
-  final String imageUrl;
-  final String fullName;
-  final int moviesCount;
+  final Author author;
+  // final int id;
+  // final String name;
+  // final String imageUrl;
+  // final String fullName;
+  // final int moviesCount;
 
   const AuthorItem({
     Key? key,
-    required this.id,
-    required this.name,
-    required this.imageUrl,
-    required this.fullName,
-    required this.moviesCount,
+    required this.author,
+    // required this.id,
+    // required this.name,
+    // required this.imageUrl,
+    // required this.fullName,
+    // required this.moviesCount,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class AuthorItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
         onTap: () => Navigator.of(context)
-            .pushNamed(AuthorScreen.routeName, arguments: id),
+            .pushNamed(AuthorScreen.routeName, arguments: author.id),
         child: Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -39,7 +42,7 @@ class AuthorItem extends StatelessWidget {
           child: Row(children: [
             Flexible(
               child: CircleAvatar(
-                backgroundImage: NetworkImage(imageUrl),
+                backgroundImage: NetworkImage(author.imageUrl),
                 radius: 40,
               ),
               fit: FlexFit.tight,
@@ -50,14 +53,14 @@ class AuthorItem extends StatelessWidget {
               fit: FlexFit.tight,
               child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: fullName != ' '
+                  child: author.fullName != ' '
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Flexible(
                               fit: FlexFit.loose,
                               child: Text(
-                                fullName,
+                                author.fullName,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -67,7 +70,7 @@ class AuthorItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Text(name),
+                            Text(author.name),
                           ],
                         )
                       : Column(
@@ -76,7 +79,7 @@ class AuthorItem extends StatelessWidget {
                             Flexible(
                               fit: FlexFit.loose,
                               child: Text(
-                                name,
+                                author.name,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -98,7 +101,7 @@ class AuthorItem extends StatelessWidget {
                       )),
                   CircleAvatar(
                     child: Text(
-                      '$moviesCount',
+                      '${author.moviesCount}',
                       style: const TextStyle(color: Colors.black87),
                     ),
                     backgroundColor: Colors.amber[100],

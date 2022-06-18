@@ -39,6 +39,7 @@ dependencies:
   timeago: ^3.2.2
   filter_list: ^1.0.1
   smart_select: ^4.3.2
+  searchable_listview: ^1.6.0
 
 
 

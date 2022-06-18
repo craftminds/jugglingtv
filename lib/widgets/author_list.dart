@@ -14,13 +14,13 @@ class AuthorList extends StatelessWidget {
     return ListView.builder(
         itemCount: authors.length,
         itemBuilder: (context, index) {
-          return AuthorItem(
-            id: authors[index].id,
-            name: authors[index].name,
-            imageUrl: authors[index].imageUrl,
-            fullName: authors[index].fullName,
-            moviesCount: authors[index].moviesCount,
-          );
+          return AuthorItem(author: authors[index]
+              // id: authors[index].id,
+              // name: authors[index].name,
+              // imageUrl: authors[index].imageUrl,
+              // fullName: authors[index].fullName,
+              // moviesCount: authors[index].moviesCount,
+              );
         });
   }
 }
