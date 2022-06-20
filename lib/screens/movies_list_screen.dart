@@ -79,7 +79,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
       Provider.of<Tags>(context).fetchAndSetTags().then((tags) {
         allTags = tags;
         _isLoading = false;
-        print('Number of tags: ${tags.length}');
+        //print('Number of tags: ${tags.length}');
       });
     }
     _isInit = false;
@@ -248,23 +248,24 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   //   onPressed: _openFilterDialog,
                   // ),
                   TextButton(
-                    autofocus: false,
-                    child: Column(
-                      children: [
-                        Icon(Icons.video_collection, color: Colors.amber[200]),
-                        Text(
-                          'Movies',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.caption?.color,
-                            fontFamily:
-                                Theme.of(context).textTheme.caption?.fontFamily,
+                      autofocus: false,
+                      child: Column(
+                        children: [
+                          Icon(Icons.video_collection,
+                              color: Colors.amber[200]),
+                          Text(
+                            'Movies',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption?.color,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  ?.fontFamily,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, ChannelsScreen.routeName),
-                  ),
+                        ],
+                      ),
+                      onPressed: () {}),
                   TextButton(
                     autofocus: false,
                     child: Column(

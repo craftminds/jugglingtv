@@ -19,57 +19,76 @@ class AuthorListBuilder extends StatefulWidget {
 }
 
 class _AuthorListBuilderState extends State<AuthorListBuilder> {
-  final List<Author> authors = [];
+  List<Author> authors = [];
+  var _isInit = true;
+  bool _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        Provider.of<Authors>(context)
+            .fetchAndSetAuthors(widget.args.order!, widget.args.sort!)
+            .then((fetchedAuthors) {
+          authors = fetchedAuthors;
+          setState(() {
+            _isLoading = false;
+          });
+        });
+      } catch (error) {
+        error;
+        rethrow;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Author>>(
-        future: Provider.of<Authors>(context)
-            .fetchAndSetAuthors(widget.args.order!, widget.args.sort!),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          } else if (snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchableList<Author>(
-                initialList: snapshot.data!,
-                filter: _filterAuthorList,
-                builder: (Author author) => AuthorItem(author: author),
-                emptyWidget: const EmptyView(),
-                onItemSelected: (Author item) {},
-                inputDecoration: InputDecoration(
-                  labelText: "Search Author",
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 0.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
+    return _isLoading == true
+        ? const Center(
+            child: CircularProgressIndicator(
+              color: Colors.grey,
+              strokeWidth: 1.0,
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchableList<Author>(
+              initialList: authors,
+              filter: _filterAuthorList,
+              builder: (Author author) => AuthorItem(author: author),
+              emptyWidget: const EmptyView(),
+              onItemSelected: (Author item) {},
+              inputDecoration: InputDecoration(
+                contentPadding: EdgeInsets.all(15.0),
+                //isCollapsed: true,
+                labelStyle: const TextStyle(color: Colors.black26),
+                labelText: "Who are you looking for?",
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    width: 0.5,
+                    color: Colors.black38,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.blue,
-                      width: 0.5,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.black45,
+                    width: 1,
                   ),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
-            );
+            ),
+          );
 
-            // AuthorList(authors: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.grey,
-                strokeWidth: 1.0,
-              ),
-            );
-          }
-        });
+    // AuthorList(authors: snapshot.data!);
   }
 
   List<Author> _filterAuthorList(String searchTerm) {
