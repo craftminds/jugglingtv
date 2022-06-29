@@ -7,6 +7,7 @@ const String tableTag = 'tag';
 const String tableVideo = 'video';
 const String tableVideoChannel = 'video_channel';
 const String tableVideoTag = 'video_tag';
+const String tableCountries = 'countries';
 
 /*
 CREATE TABLE author (
@@ -49,6 +50,7 @@ class Author {
   final int profileViews;
   final String hometown;
   final String country;
+  final String countryId;
   int moviesCount;
 
   Author({
@@ -62,6 +64,7 @@ class Author {
     required this.hometown,
     required this.country,
     required this.moviesCount,
+    required this.countryId,
   });
 
   static Author fromJson(Map<String, Object?> json) => Author(
@@ -77,6 +80,7 @@ class Author {
         moviesCount: json[AuthorFields.moviesCount] == null
             ? 0
             : json[AuthorFields.moviesCount] as int,
+        countryId: json[CountriesFields.idCountry] as String,
       );
 }
 
@@ -277,4 +281,20 @@ class VideoTag {
   static VideoTag fromJson(Map<String, Object?> json) => VideoTag(
         tagName: json[TagFields.name] as String,
       );
+}
+
+class CountriesFields {
+  static const String id = 'id';
+  static const String value = 'value';
+  static const String idCountry = 'idCountry';
+}
+
+class Countries {
+  final String countryId;
+  final String countryValue;
+
+  const Countries({
+    required this.countryId,
+    required this.countryValue,
+  });
 }

@@ -8,7 +8,7 @@ import '../widgets/author_item.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 class AuthorListBuilder extends StatefulWidget {
-  AuthorListBuilder({
+  const AuthorListBuilder({
     Key? key,
     required this.args,
   }) : super(key: key);
@@ -65,7 +65,7 @@ class _AuthorListBuilderState extends State<AuthorListBuilder> {
               emptyWidget: const EmptyView(),
               onItemSelected: (Author item) {},
               inputDecoration: InputDecoration(
-                contentPadding: EdgeInsets.all(15.0),
+                contentPadding: const EdgeInsets.all(15.0),
                 //isCollapsed: true,
                 labelStyle: const TextStyle(color: Colors.black26),
                 labelText: "Who are you looking for?",

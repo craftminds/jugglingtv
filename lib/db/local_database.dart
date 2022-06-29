@@ -256,13 +256,17 @@ CREATE TABLE $tableVideoTag (
       $tableAuthor.${AuthorFields.videoViews},
       $tableAuthor.${AuthorFields.profileViews},
       $tableAuthor.${AuthorFields.hometown},
-      $tableAuthor.${AuthorFields.country}
+      $tableAuthor.${AuthorFields.country},
+      $tableCountries.${CountriesFields.id} AS ${CountriesFields.idCountry}
       FROM
-      $tableAuthor
+      $tableAuthor,
+      $tableCountries
+      WHERE $tableCountries.${CountriesFields.value} = $tableAuthor.${AuthorFields.country}
       ORDER BY $order ${sort.value}
       ''');
 
 //select video.author_id , author.name, count(*)  FROM video,author WHERE video.author_id = author.id group by video.author_id
+// there is second query to the database to check how many videos every author have
     final videoCount = await db.rawQuery('''
     SELECT
     $tableVideo.${VideosFields.authorId},
@@ -276,7 +280,6 @@ CREATE TABLE $tableVideoTag (
     GROUP BY
     $tableVideo.${VideosFields.authorId}
     ''');
-
     // create new map of Authors
     // check every element of map if id is in author_id
     var resultWithMovies = result.map((json) => Author.fromJson(json)).toList();
