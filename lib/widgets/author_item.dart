@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/screens/author_screen.dart';
 import '../models/videos_db.dart';
+import 'package:flag/flag.dart';
 
 class AuthorItem extends StatelessWidget {
   final Author author;
@@ -59,15 +60,29 @@ class AuthorItem extends StatelessWidget {
                           children: [
                             Flexible(
                               fit: FlexFit.loose,
-                              child: Text(
-                                author.fullName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                              child: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      author.fullName,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      maxLines: 3,
+                                      softWrap: true,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    author.countryId == ' '
+                                        ? const SizedBox.shrink()
+                                        : Flag.fromString(
+                                            author.countryId.toLowerCase(),
+                                            height: 18,
+                                            width: 32,
+                                          ),
+                                  ],
                                 ),
-                                maxLines: 3,
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Text(author.name),
@@ -78,15 +93,29 @@ class AuthorItem extends StatelessWidget {
                           children: [
                             Flexible(
                               fit: FlexFit.loose,
-                              child: Text(
-                                author.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                              child: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      author.name,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                      maxLines: 3,
+                                      softWrap: true,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    author.countryId == ' '
+                                        ? const SizedBox.shrink()
+                                        : Flag.fromString(
+                                            author.countryId.toLowerCase(),
+                                            height: 18,
+                                            width: 32,
+                                          ),
+                                  ],
                                 ),
-                                //maxLines: 3,
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
