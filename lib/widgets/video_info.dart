@@ -26,12 +26,15 @@ class VideoInfo extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                loadedvideo.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 15.0),
+              Expanded(
+                child: Text(
+                  loadedvideo.title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontSize: 15.0),
+                  overflow: TextOverflow.clip,
+                ),
               ),
             ],
           ),
@@ -79,7 +82,10 @@ class VideoInfo extends StatelessWidget {
           const SizedBox(height: _sizedBoxHeight),
           const Text(
             'Description:',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.justify,
           ),
           Row(
             children: [

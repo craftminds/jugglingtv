@@ -37,7 +37,7 @@ class VideoInfoChannels extends StatelessWidget {
                   for (var item in snapshot.data!)
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).pushReplacementNamed(
+                        Navigator.of(context).popAndPushNamed(
                           MovieListScreen.routeName,
                           arguments: MainScreenArguments(
                             channel: item.channelName,

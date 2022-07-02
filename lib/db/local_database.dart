@@ -187,7 +187,8 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.year},
         $tableVideo.${VideosFields.country},
         $tableVideo.${VideosFields.authorId},
-        $tableAuthor.${AuthorFields.name}
+        $tableAuthor.${AuthorFields.name},
+        $tableAuthor.${AuthorFields.imageUrl}
         FROM
         $tableVideo, $tableAuthor, $tableChannel, $tableVideoChannel
         WHERE
@@ -198,7 +199,7 @@ CREATE TABLE $tableVideoTag (
         ORDER BY ${order.value} ${sort.value}
         ''',
     );
-    print(result);
+    //print(result);
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
