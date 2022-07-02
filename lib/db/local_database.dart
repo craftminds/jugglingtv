@@ -156,7 +156,8 @@ CREATE TABLE $tableVideoTag (
         $tableVideo.${VideosFields.year},
         $tableVideo.${VideosFields.country},
         $tableVideo.${VideosFields.authorId},
-        $tableAuthor.${AuthorFields.name}
+        $tableAuthor.${AuthorFields.name},
+        $tableAuthor.${AuthorFields.imageUrl}
         FROM
         $tableVideo, $tableAuthor
         WHERE

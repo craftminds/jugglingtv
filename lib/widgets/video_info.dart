@@ -96,7 +96,6 @@ class VideoInfo extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                //TODO: change for the author avatar - scrape it from the page for every author
                 foregroundImage: NetworkImage(loadedvideo.authorImageUrl),
               ),
               const SizedBox(width: 10.0),

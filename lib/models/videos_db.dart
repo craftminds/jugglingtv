@@ -198,6 +198,7 @@ class Video {
   final String country;
   final String authorName;
   final int authorID;
+  final String authorImageUrl;
 
   Video({
     required this.id,
@@ -212,6 +213,7 @@ class Video {
     required this.country,
     required this.authorName,
     required this.authorID,
+    required this.authorImageUrl,
   });
 
   static Video fromJson(Map<String, Object?> json) => Video(
@@ -230,6 +232,8 @@ class Video {
             : json[VideosFields.country] as String,
         authorName: json[AuthorFields.name] as String,
         authorID: json[VideosFields.authorId] as int,
+        authorImageUrl: json[AuthorFields.imageUrl]
+            as String, //for the easiness of having that info inside the video screen - other solution is to get list of author earlier to have that info ready from the local storage not from file
       );
 }
 
