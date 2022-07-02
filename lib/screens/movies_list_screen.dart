@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart';
 import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/providers/authors.dart';
 import 'package:jugglingtv/screens/channels_screen.dart';
 import 'package:jugglingtv/widgets/sort_order_dialog.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
-import 'package:filter_list/filter_list.dart';
 
-import '../widgets/movie_list.dart';
 import '../db/local_database.dart';
 import '../models/videos_db.dart';
-import '../providers/videos.dart';
 import '../widgets/app_drawer.dart';
 import '../providers/tags.dart';
 import '../widgets/movie_list_builder.dart';
@@ -70,7 +64,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
     dropdownOrderValue = orderDropdowList[0];
     // call for all Authors for the sake of future data, single calls for one author makes no sense - too little data to get. All the authors is not that much.
     // if that applications is ever too grow more it should be considered to be done one by one
-    //Provider.of<Authors>(context).fetchAndSetAuthors('id', Sort.asc);
+
     super.initState();
   }
 
@@ -85,6 +79,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
         allTags = tags;
         _isLoading = false;
         //print('Number of tags: ${tags.length}');
+      });
+      Provider.of<Authors>(context)
+          .fetchAndSetAuthors('author.id', Sort.asc)
+          .then((value) {
+        print(value.length);
       });
     }
     _isInit = false;

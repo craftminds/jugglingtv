@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/providers/video_channel.dart';
+import 'package:jugglingtv/screens/author_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../models/videos_db.dart';
 import 'package:provider/provider.dart';
@@ -99,32 +100,38 @@ class VideoInfo extends StatelessWidget {
           ),
           const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
-          Row(
-            children: [
-              CircleAvatar(
-                foregroundImage: NetworkImage(loadedvideo.authorImageUrl),
-              ),
-              const SizedBox(width: 10.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    loadedvideo.authorName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: 15.0),
-                  ),
-                  Text(
-                    loadedvideo.country,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption!
-                        .copyWith(fontSize: 14.0),
-                  )
-                ],
-              )
-            ],
+          InkWell(
+            onTap: () {
+              Navigator.of(context).popAndPushNamed(AuthorScreen.routeName,
+                  arguments: loadedvideo.authorID);
+            },
+            child: Row(
+              children: [
+                CircleAvatar(
+                  foregroundImage: NetworkImage(loadedvideo.authorImageUrl),
+                ),
+                const SizedBox(width: 10.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      loadedvideo.authorName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 15.0),
+                    ),
+                    Text(
+                      loadedvideo.country,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption!
+                          .copyWith(fontSize: 14.0),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
           const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
