@@ -29,7 +29,7 @@ class MovieListBuilder extends StatelessWidget {
         }
       case MainScreenMode.tags:
         {
-          //correct for tags filtering
+          //TODO: correct for tags filtering
           return Provider.of<Videos>(context)
               .fetchAndSetVideosByChannel("Clubs", OrderBy.author, Sort.asc);
         }

@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../models/videos_db.dart';
 import '../providers/video_channel.dart';
+import '../models/main_screen_arguments.dart';
+import '../screens/movies_list_screen.dart';
+import '../models/db_query_helper.dart';
 
 class VideoInfoChannels extends StatelessWidget {
   const VideoInfoChannels({
@@ -32,17 +35,30 @@ class VideoInfoChannels extends StatelessWidget {
                 spacing: 20.0,
                 children: <Widget>[
                   for (var item in snapshot.data!)
-                    Text(
-                      item.channelName,
-                      style: TextStyle(
-                          //fontWeight: FontWeight.w600,
-                          //fontSize: 20,
-                          height: 3,
-                          background: Paint()
-                            ..strokeWidth = 18.0
-                            ..color = const Color.fromARGB(255, 255, 186, 8)
-                            ..style = PaintingStyle.stroke
-                            ..strokeJoin = StrokeJoin.round),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed(
+                          MovieListScreen.routeName,
+                          arguments: MainScreenArguments(
+                            channel: item.channelName,
+                            mainScreenMode: MainScreenMode.channel,
+                            orderBy: OrderBy.title,
+                            sort: Sort.desc,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        item.channelName,
+                        style: TextStyle(
+                            //fontWeight: FontWeight.w600,
+                            //fontSize: 20,
+                            height: 3,
+                            background: Paint()
+                              ..strokeWidth = 18.0
+                              ..color = const Color.fromARGB(255, 255, 186, 8)
+                              ..style = PaintingStyle.stroke
+                              ..strokeJoin = StrokeJoin.round),
+                      ),
                     ),
                 ],
                 //

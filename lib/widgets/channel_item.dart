@@ -24,14 +24,15 @@ class ChannelItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .pushReplacementNamed(MovieListScreen.routeName,
-                    arguments: MainScreenArguments(
-                      channel: name,
-                      mainScreenMode: MainScreenMode.channel,
-                      orderBy: OrderBy.title,
-                      sort: Sort.desc,
-                    ));
+            Navigator.of(context).pushReplacementNamed(
+              MovieListScreen.routeName,
+              arguments: MainScreenArguments(
+                channel: name,
+                mainScreenMode: MainScreenMode.channel,
+                orderBy: OrderBy.title,
+                sort: Sort.desc,
+              ),
+            );
           },
           child: Image.network(
             imageUrl,

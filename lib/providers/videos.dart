@@ -12,7 +12,6 @@ class Videos with ChangeNotifier {
 
 // Read all the videos
   Future<List<Video>> fetchAndSetVideos(OrderBy order, Sort sort) async {
-    //TODO: add try&catch
     List<Video> loadedVideos = [];
     if (order.value == "") {
       order = OrderBy.title;
@@ -33,7 +32,6 @@ class Videos with ChangeNotifier {
 // Read only the videos within the given channel
   Future<List<Video>> fetchAndSetVideosByChannel(
       String channelName, OrderBy order, Sort sort) async {
-    //TODO: add try&catch
     List<Video> loadedVideos = [];
     //in case no ordering is given, there must default value
     if (order.value == "") {
