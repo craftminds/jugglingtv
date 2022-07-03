@@ -29,6 +29,7 @@ List<Movie> parseMovies(String responseBody) {
   return parsed.map<Movie>((json) => Movie.fromJson(json)).toList();
 }
 */
+final bucketGlobal = PageStorageBucket();
 
 class MovieListScreen extends StatefulWidget {
   static const routeName = '/';
@@ -349,7 +350,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
           ),
         ),
       ),
-      body: MovieListBuilder(args: videosListMode),
+      body: PageStorage(
+          bucket: bucketGlobal, child: MovieListBuilder(args: videosListMode)),
     );
   }
 }
