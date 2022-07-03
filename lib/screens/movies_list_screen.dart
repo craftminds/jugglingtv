@@ -13,6 +13,7 @@ import '../providers/tags.dart';
 import '../widgets/movie_list_builder.dart';
 import '../models/main_screen_arguments.dart';
 import '../screens/authors_screen.dart';
+import '../widgets/video_search.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -185,6 +186,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
         ),
         actions: [
           IconButton(
+            onPressed: (() {
+              showSearch(context: context, delegate: VideoSearch());
+            }),
+            icon: const Icon(Icons.search),
+            iconSize: 28,
+          ),
+          IconButton(
             onPressed: () => showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -194,7 +202,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                 }),
             icon: const Icon(Icons.sort_by_alpha_rounded),
             iconSize: 28,
-            color: const Color.fromARGB(255, 255, 186, 8),
+            //color: const Color.fromARGB(255, 255, 186, 8),
           )
         ],
       ),

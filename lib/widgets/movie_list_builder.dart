@@ -33,6 +33,7 @@ class MovieListBuilder extends StatelessWidget {
           return Provider.of<Videos>(context)
               .fetchAndSetVideosByChannel("Clubs", OrderBy.author, Sort.asc);
         }
+
       default:
         {
           // return all videos if wrong arguments are passed

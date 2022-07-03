@@ -5,9 +5,14 @@ import '../models/db_query_helper.dart';
 
 class Videos with ChangeNotifier {
   List<Video> _items = [];
+  List<Video> _foundItems = [];
 
   List<Video> get items {
-    return [...items];
+    return [..._items];
+  }
+
+  List<Video> get foundItems {
+    return [..._foundItems];
   }
 
 // Read all the videos
@@ -58,5 +63,14 @@ class Videos with ChangeNotifier {
   //Returns the list of videos by author, works on the copy of the list from the database, not querying the database
   List<Video> readVideoByAuthor(int authorID) {
     return _items.where((element) => element.authorID == authorID).toList();
+  }
+
+  List<Video> searchTitles(String query) {
+    _foundItems = _items
+        .where((element) =>
+            element.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return _foundItems;
   }
 }
