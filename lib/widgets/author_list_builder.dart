@@ -30,14 +30,22 @@ class _AuthorListBuilderState extends State<AuthorListBuilder> {
         _isLoading = true;
       });
       try {
-        Provider.of<Authors>(context)
-            .fetchAndSetAuthors(widget.args.order!, widget.args.sort!)
-            .then((fetchedAuthors) {
-          authors = fetchedAuthors;
+        var authorsItems = Provider.of<Authors>(context).items;
+        if (authorsItems.isEmpty) {
+          Provider.of<Authors>(context)
+              .fetchAndSetAuthors(widget.args.order!, widget.args.sort!)
+              .then((fetchedAuthors) {
+            authors = fetchedAuthors;
+            setState(() {
+              _isLoading = false;
+            });
+          });
+        } else {
+          authors = authorsItems;
           setState(() {
             _isLoading = false;
           });
-        });
+        }
       } catch (error) {
         error;
         rethrow;
@@ -59,6 +67,7 @@ class _AuthorListBuilderState extends State<AuthorListBuilder> {
         : Padding(
             padding: const EdgeInsets.all(8.0),
             child: SearchableList<Author>(
+              key: const PageStorageKey<String>('authorsPage'),
               initialList: authors,
               filter: _filterAuthorList,
               builder: (Author author) => AuthorItem(author: author),

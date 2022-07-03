@@ -9,7 +9,7 @@ class MovieList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      key: PageStorageKey<String>('videoPage'),
+      key: const PageStorageKey<String>('videoPage'),
       itemCount: movies.length,
       itemBuilder: (context, index) {
         return MovieItem(

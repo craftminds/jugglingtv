@@ -18,8 +18,15 @@ class MovieListBuilder extends StatelessWidget {
     switch (mode) {
       case MainScreenMode.allVideos:
         {
-          return Provider.of<Videos>(context)
-              .fetchAndSetVideos(args.orderBy!, args.sort!);
+          var videoItems = Provider.of<Videos>(context, listen: false).items;
+          if (videoItems.isEmpty) {
+            print("database read");
+            return Provider.of<Videos>(context)
+                .fetchAndSetVideos(args.orderBy!, args.sort!);
+          } else {
+            print("items read");
+            return Future(() => videoItems);
+          }
         }
 
       case MainScreenMode.channel:
