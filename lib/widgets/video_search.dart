@@ -7,6 +7,7 @@ import '../screens/video_screen.dart';
 import '../screens/movies_list_screen.dart';
 import '../models/main_screen_arguments.dart';
 import '../models/db_query_helper.dart';
+import 'package:flag/flag.dart';
 
 class VideoSearch extends SearchDelegate<String> {
   final suggestionValues = ['1', '2', '3'];

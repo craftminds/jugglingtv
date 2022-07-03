@@ -68,7 +68,9 @@ class Videos with ChangeNotifier {
   List<Video> searchTitles(String query) {
     _foundItems = _items
         .where((element) =>
-            element.title.toLowerCase().contains(query.toLowerCase()))
+            element.title.toLowerCase().contains(query.toLowerCase()) ||
+            element.authorName.toLowerCase().contains(query.toLowerCase()) ||
+            element.country.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return _foundItems;
