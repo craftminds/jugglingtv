@@ -5,10 +5,16 @@ import '../models/db_query_helper.dart';
 
 class Videos with ChangeNotifier {
   List<Video> _items = [];
+  List<Video> _itemsAll = [];
   List<Video> _foundItems = [];
 
   List<Video> get items {
     return [..._items];
+  }
+
+  //this might be redundant...
+  List<Video> get itemsAll {
+    return [..._itemsAll];
   }
 
   List<Video> get foundItems {
@@ -30,6 +36,7 @@ class Videos with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
+    _itemsAll = loadedVideos;
     _items = loadedVideos;
     return _items;
   }

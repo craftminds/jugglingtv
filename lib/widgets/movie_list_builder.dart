@@ -18,12 +18,13 @@ class MovieListBuilder extends StatelessWidget {
     switch (mode) {
       case MainScreenMode.allVideos:
         {
-          var videoItems = Provider.of<Videos>(context, listen: false).items;
+          var videoItems = Provider.of<Videos>(context, listen: false).itemsAll;
           if (videoItems.isEmpty) {
             print("database read");
             return Provider.of<Videos>(context)
                 .fetchAndSetVideos(args.orderBy!, args.sort!);
           } else {
+            //check how many times were read, this is the archive mode so it is constant. Or maybe create a copy that will be the whole list?
             print("items read");
             return Future(() => videoItems);
           }
