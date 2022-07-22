@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'package:jugglingtv/screens/video_screen.dart';
 
 class MovieItem extends StatelessWidget {
@@ -9,6 +10,7 @@ class MovieItem extends StatelessWidget {
   final String duration;
   final int views;
   final int commentsNo;
+  final String videoUrl;
 
   const MovieItem({
     Key? key,
@@ -19,10 +21,12 @@ class MovieItem extends StatelessWidget {
     required this.duration,
     required this.views,
     required this.commentsNo,
+    required this.videoUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VideoPlayerController controller;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
@@ -36,7 +40,10 @@ class MovieItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(VideoScreen.routeName, arguments: id);
+          controller = VideoPlayerController.network(videoUrl);
+          //TODO: pass videoController as an argument to the nxt window - it should be enough to load it
+          Navigator.of(context)
+              .pushNamed(VideoScreen.routeName, arguments: {id, controller});
         },
         child: Container(
           height: 80,
