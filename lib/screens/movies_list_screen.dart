@@ -211,7 +211,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 2),
         child: SizedBox(
-          height: videosListMode.channel != null ? 120 : 80,
+          height: videosListMode.channel != null ? 100 : 60,
           child: Column(
             children: [
               videosListMode.channel != null

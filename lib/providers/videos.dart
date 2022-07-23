@@ -64,7 +64,7 @@ class Videos with ChangeNotifier {
   }
 
   Video readVideoById(int id) {
-    return _itemsAll.firstWhere((vid) => vid.id == id);
+    return _items.firstWhere((vid) => vid.id == id);
   }
 
   //Returns the list of videos by author, works on the copy of the list from the database, not querying the database
@@ -73,7 +73,7 @@ class Videos with ChangeNotifier {
   }
 
   List<Video> searchTitles(String query) {
-    _foundItems = _itemsAll
+    _foundItems = _items
         .where((element) =>
             element.title.toLowerCase().contains(query.toLowerCase()) ||
             element.authorName.toLowerCase().contains(query.toLowerCase()) ||
