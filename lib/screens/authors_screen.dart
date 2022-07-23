@@ -46,7 +46,7 @@ class AuthorsScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 2),
         child: SizedBox(
-          height: 60,
+          height: 80,
           child: Column(
             children: [
               const Divider(thickness: 1.0, height: 2.0),

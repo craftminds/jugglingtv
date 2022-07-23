@@ -3,7 +3,7 @@ import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import '../screens/channels_screen.dart';
-import '../screens/tags_screen.dart';
+import '../screens/authors_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -40,12 +40,14 @@ class AppDrawer extends StatelessWidget {
           ListTile(
               leading: const Icon(Icons.people),
               title: const Text('Authors'),
-              onTap: () {}),
-          const Divider(),
-          ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {}),
+              onTap: () {
+                Navigator.of(context).popAndPushNamed(AuthorsScreen.routeName);
+              }),
+          // const Divider(),
+          // ListTile(
+          //     leading: const Icon(Icons.settings),
+          //     title: const Text('Settings'),
+          //     onTap: () {}),
         ],
       ),
     );

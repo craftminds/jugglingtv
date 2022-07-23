@@ -27,9 +27,9 @@ class _VideoItemState extends State<VideoItem> {
   Future<void> initVideoPlayer() async {
     await widget.videoPlayerController.initialize();
     setState(() {
-      // print(widget.videoPlayerController.value.aspectRatio);
-      // print('Width: ${widget.videoPlayerController.value.size.width}');
-      // print('Height: ${widget.videoPlayerController.value.size.height}');
+      print(widget.videoPlayerController.value.aspectRatio);
+      print('Width: ${widget.videoPlayerController.value.size.width}');
+      print('Height: ${widget.videoPlayerController.value.size.height}');
       _chewieController = ChewieController(
         videoPlayerController: widget.videoPlayerController,
         aspectRatio: widget.videoPlayerController.value.aspectRatio,
