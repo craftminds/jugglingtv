@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoItem extends StatefulWidget {
-  final VideoPlayerController videoPlayerController;
+  //final VideoPlayerController videoPlayerController;
+  final String? videoUrl;
   final bool looping;
   final bool autoplay;
   //final double aspect_ratio;
 
-  VideoItem({
-    required this.videoPlayerController,
+  const VideoItem({
+    // required this.videoPlayerController,
+    this.videoUrl,
     this.looping = false,
     this.autoplay = false,
     //this.aspect_ratio = 4 / 3,
@@ -23,16 +25,18 @@ class VideoItem extends StatefulWidget {
 class _VideoItemState extends State<VideoItem> {
   late ChewieController _chewieController;
   late Future<void> _future;
+  late VideoPlayerController videoPlayerController;
 
   Future<void> initVideoPlayer() async {
-    await widget.videoPlayerController.initialize();
+    videoPlayerController = VideoPlayerController.network(widget.videoUrl!);
+    await videoPlayerController.initialize();
     setState(() {
-      print(widget.videoPlayerController.value.aspectRatio);
-      print('Width: ${widget.videoPlayerController.value.size.width}');
-      print('Height: ${widget.videoPlayerController.value.size.height}');
+      // print(widget.videoPlayerController.value.aspectRatio);
+      // print('Width: ${widget.videoPlayerController.value.size.width}');
+      // print('Height: ${widget.videoPlayerController.value.size.height}');
       _chewieController = ChewieController(
-        videoPlayerController: widget.videoPlayerController,
-        aspectRatio: widget.videoPlayerController.value.aspectRatio,
+        videoPlayerController: videoPlayerController,
+        aspectRatio: videoPlayerController.value.aspectRatio,
         autoInitialize: true,
         materialProgressColors: ChewieProgressColors(playedColor: Colors.amber),
         autoPlay: widget.autoplay,
@@ -58,24 +62,25 @@ class _VideoItemState extends State<VideoItem> {
   @override
   void dispose() {
     super.dispose();
+    videoPlayerController.dispose();
     _chewieController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _future,
-        builder: (context, snapshot) {
-          return Center(
-            child: widget.videoPlayerController.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: widget.videoPlayerController.value.aspectRatio,
-                    child: Chewie(
-                      controller: _chewieController,
-                    ),
-                  )
-                : const CircularProgressIndicator(),
-          );
-        });
+    return Center(
+      child: videoPlayerController.value.isInitialized
+          ? FutureBuilder(
+              future: _future,
+              builder: (context, snapshot) {
+                return AspectRatio(
+                  aspectRatio: videoPlayerController.value.aspectRatio,
+                  child: Chewie(
+                    controller: _chewieController,
+                  ),
+                );
+              })
+          : const CircularProgressIndicator(),
+    );
   }
 }

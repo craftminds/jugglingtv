@@ -48,8 +48,9 @@ class VideoScreen extends StatelessWidget {
                 //     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
                 color: Theme.of(context).scaffoldBackgroundColor,
                 child: VideoItem(
-                  videoPlayerController:
-                      VideoPlayerController.network(videoUrl),
+                  videoUrl: videoUrl,
+                  // videoPlayerController:
+                  // VideoPlayerController.network(videoUrl),
                   autoplay: false,
                   looping: false,
                 ),
