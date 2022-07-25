@@ -95,7 +95,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
   @override
   void dispose() {
-    LocalDatabase.instance.close();
+    //LocalDatabase.instance.close();
     super.dispose;
   }
 
@@ -218,21 +218,61 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   ? Column(children: [
                       const Divider(thickness: 1.0, height: 2.0),
                       Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          color: Colors.black12,
-                        ),
-                        child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              '${videosListMode.channel} channel',
-                              style: const TextStyle(
-                                //color: Colors.amber,
-                                fontWeight: FontWeight.bold,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: Colors.black12,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Container(width: double.infinity),
+                                flex: 1,
                               ),
-                              textAlign: TextAlign.center,
-                            )),
-                      ),
+                              Expanded(
+                                flex: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Text(
+                                    '${videosListMode.channel} channel',
+                                    style: TextStyle(
+                                      //color: Colors.amber.shade800,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(
+                                      context,
+                                      MovieListScreen.routeName,
+                                      arguments: MainScreenArguments(
+                                        mainScreenMode:
+                                            MainScreenMode.allVideos,
+                                        orderBy: OrderBy.title,
+                                        sort: Sort.asc,
+                                      ),
+                                    );
+                                    // setState(() {
+                                    //   videosListMode = MainScreenArguments(
+                                    //     mainScreenMode:
+                                    //         MainScreenMode.allVideos,
+                                    //     orderBy: OrderBy.title,
+                                    //     sort: Sort.asc,
+                                    //   );
+                                    // });
+                                  },
+                                  icon: const Icon(Icons.close),
+                                  //color: Colors.amber.shade800,
+                                ),
+                              ),
+                            ],
+                          )),
                       const Divider(thickness: 1.0, height: 2.0),
                     ])
                   : const Divider(thickness: 1.0, height: 2.0),
@@ -351,7 +391,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
         ),
       ),
       body: PageStorage(
-          bucket: bucketGlobal, child: MovieListBuilder(args: videosListMode)),
+        bucket: bucketGlobal,
+        child: MovieListBuilder(args: videosListMode),
+      ),
     );
   }
 }

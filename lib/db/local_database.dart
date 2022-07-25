@@ -52,7 +52,7 @@ class LocalDatabase with ChangeNotifier {
     return await openDatabase(dbPathEnglish);
   }
 
-// create all the tables in case the DB is not found
+// create all the tables in case the DB is not found [it is not updated!!!, the columns should be added to create statements]
   Future _createDB(Database db, int version) async {
     await db.execute('''
 CREATE TABLE $tableAuthor (

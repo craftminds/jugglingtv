@@ -69,7 +69,7 @@ class Videos with ChangeNotifier {
 
   //Returns the list of videos by author, works on the copy of the list from the database, not querying the database
   List<Video> readVideoByAuthor(int authorID) {
-    return _items.where((element) => element.authorID == authorID).toList();
+    return _itemsAll.where((element) => element.authorID == authorID).toList();
   }
 
   List<Video> searchTitles(String query) {
