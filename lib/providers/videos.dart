@@ -59,7 +59,7 @@ class Videos with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
-    _items = loadedVideos;
+    _itemsAll = loadedVideos;
     return _items;
   }
 

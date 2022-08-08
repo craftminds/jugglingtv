@@ -4,6 +4,8 @@ import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:provider/provider.dart';
 import '../models/videos_db.dart';
 import '../screens/movies_list_screen.dart';
+import '../main.dart';
+import '../providers/videos.dart';
 
 class ChannelItem extends StatelessWidget {
   const ChannelItem({
@@ -24,15 +26,25 @@ class ChannelItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushReplacementNamed(
-              MovieListScreen.routeName,
-              arguments: MainScreenArguments(
-                channel: name,
-                mainScreenMode: MainScreenMode.channel,
-                orderBy: OrderBy.title,
-                sort: Sort.desc,
-              ),
+            // TODO: it should navigate to the first tab, but with MainScreenArguments passed
+            // solution (partial): https://stackoverflow.com/questions/57560751/flutter-navigation-bar-change-tab-from-another-page
+            // Navigator.of(context).pushReplacementNamed(
+            //   MovieListScreen.routeName,
+            //   arguments: MainScreenArguments(
+            //     channel: name,
+            //     mainScreenMode: MainScreenMode.channel,
+            //     orderBy: OrderBy.title,
+            //     sort: Sort.desc,
+            //   ),
+            // );
+            // Provider.of(context).fetchAndSetVideos();
+            Provider.of<Videos>(context, listen: false)
+                .fetchAndSetVideosByChannel(
+              name,
+              OrderBy.title,
+              Sort.desc,
             );
+            MyApp.mainTabsScreenKey.currentState?.tabController?.animateTo(0);
           },
           child: Image.network(
             imageUrl,

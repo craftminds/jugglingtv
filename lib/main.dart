@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/main_tabs_screen.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  static final mainTabsScreenKey = GlobalKey<MainTabsScreenState>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +67,13 @@ class MyApp extends StatelessWidget {
               // foregroundColor: Color.fromARGB(255, 251, 251, 251),
               foregroundColor: Colors.black54,
             )),
-        home: const MovieListScreen(),
+        home: MainTabsScreen(key: mainTabsScreenKey),
         routes: {
+          MovieListScreen.routeName: (context) => const MovieListScreen(),
           VideoScreen.routeName: (context) => const VideoScreen(),
-          ChannelsScreen.routeName: (context) => const ChannelsScreen(),
+          ChannelsScreen.routeName: (context) => ChannelsScreen(),
           AuthorsScreen.routeName: (context) => const AuthorsScreen(),
           AuthorScreen.routeName: (context) => const AuthorScreen(),
-
           //TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),
