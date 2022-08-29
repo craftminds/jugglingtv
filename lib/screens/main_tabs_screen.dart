@@ -30,9 +30,6 @@ class MainTabsScreenState extends State<MainTabsScreen>
 
   @override
   Widget build(BuildContext context) {
-    var showChannel = Provider.of<Videos>(context, listen: true).viewChannel;
-    int tabIndex =
-        MyApp.mainTabsScreenKey.currentState?.tabController?.index as int;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -68,16 +65,17 @@ class MainTabsScreenState extends State<MainTabsScreen>
           ],
         ),
         drawer: const AppDrawer(),
-        floatingActionButton: (showChannel && (tabIndex == 0))
-            ? FloatingActionButton.extended(
-                label: Text('Close Channel'),
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  print(tabIndex);
-                },
-              )
-            : Container(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        // floatingActionButton: (showChannel && (tabIndexValue() == 0))
+        //     ? FloatingActionButton.extended(
+        //         label: Text('Close Channel'),
+        //         icon: Icon(Icons.close),
+        //         onPressed: () {
+        //           print(tabIndex);
+        //         },
+        //       )
+        //     : Container(),
+        // floatingActionButtonLocation:
+        //     FloatingActionButtonLocation.miniCenterFloat,
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(5),
           child: TabBar(controller: tabController, tabs: [

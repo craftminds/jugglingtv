@@ -17,6 +17,7 @@ import 'providers/tags.dart';
 import './screens/authors_screen.dart';
 import './screens/author_screen.dart';
 import './providers/authors.dart';
+import './screens/about_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
           ChannelsScreen.routeName: (context) => ChannelsScreen(),
           AuthorsScreen.routeName: (context) => const AuthorsScreen(),
           AuthorScreen.routeName: (context) => const AuthorScreen(),
+          AboutScreen.routeName: (context) => const AboutScreen(),
           //TagsScreen.routeName: ((context) => const TagsScreen()),
         },
       ),

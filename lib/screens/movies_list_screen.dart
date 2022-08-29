@@ -15,6 +15,7 @@ import '../models/main_screen_arguments.dart';
 import '../screens/authors_screen.dart';
 import '../widgets/video_search.dart';
 import '../providers/videos.dart';
+import '../main.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -60,7 +61,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
     DropdownListItem(caption: 'ASCENDING', sortValue: Sort.asc),
     DropdownListItem(caption: 'DESCENDING', sortValue: Sort.desc),
   ];
-
   @override
   void initState() {
     dropdownSortByValue = sortByDropdowList[0];
@@ -169,7 +169,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     var videosListMode = setMainScreenArguments(context);
-    var showChannels = Provider.of<Videos>(context).viewChannel;
+    var showChannels = Provider.of<Videos>(context, listen: true).viewChannel;
+    String channelName = Provider.of<Videos>(context, listen: true).channel;
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -385,6 +386,32 @@ class _MovieListScreenState extends State<MovieListScreen> {
       //     ),
       //   ),
       // ),
+      floatingActionButton: showChannels
+          ? (FloatingActionButton.extended(
+              label: Text(
+                'Close $channelName Channel',
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              icon: const Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
+              backgroundColor: Colors.amber[300],
+              onPressed: () {
+                print(showChannels);
+                Provider.of<Videos>(context, listen: false).fetchAndSetVideos(
+                  OrderBy.title,
+                  Sort.asc,
+                );
+                setState(() {});
+              },
+            ))
+          : Container(),
+
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
       body: PageStorage(
         bucket: bucketGlobal,
         child: MovieListBuilder(args: videosListMode),

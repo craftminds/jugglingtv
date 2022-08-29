@@ -8,6 +8,7 @@ class Videos with ChangeNotifier {
   List<Video> _itemsAll = [];
   List<Video> _foundItems = [];
   var viewChannel = false;
+  String channel = '';
 
   List<Video> get items {
     return [..._items];
@@ -40,6 +41,7 @@ class Videos with ChangeNotifier {
     _itemsAll = loadedVideos;
     _items = loadedVideos;
     viewChannel = false;
+    channel = '';
     notifyListeners();
     return _items;
   }
@@ -64,6 +66,7 @@ class Videos with ChangeNotifier {
     }
     _itemsAll = loadedVideos;
     viewChannel = true;
+    channel = channelName;
     notifyListeners();
     return _items;
   }
