@@ -18,7 +18,7 @@ class MovieListBuilder extends StatelessWidget {
     switch (mode) {
       case MainScreenMode.allVideos:
         {
-          var videoItems = Provider.of<Videos>(context, listen: false).itemsAll;
+          var videoItems = Provider.of<Videos>(context).itemsAll;
           if (videoItems.isEmpty) {
             print("database read");
             return Provider.of<Videos>(context)

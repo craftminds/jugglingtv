@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/video_search.dart';
 import '../widgets/sort_order_dialog.dart';
@@ -7,6 +8,8 @@ import '../widgets/app_drawer.dart';
 import '../screens/movies_list_screen.dart';
 import '../screens/channels_screen.dart';
 import '../screens/authors_screen.dart';
+import '../providers/videos.dart';
+import '../main.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({Key? key}) : super(key: key);
@@ -27,6 +30,9 @@ class MainTabsScreenState extends State<MainTabsScreen>
 
   @override
   Widget build(BuildContext context) {
+    var showChannel = Provider.of<Videos>(context, listen: true).viewChannel;
+    int tabIndex =
+        MyApp.mainTabsScreenKey.currentState?.tabController?.index as int;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -62,6 +68,16 @@ class MainTabsScreenState extends State<MainTabsScreen>
           ],
         ),
         drawer: const AppDrawer(),
+        floatingActionButton: (showChannel && (tabIndex == 0))
+            ? FloatingActionButton.extended(
+                label: Text('Close Channel'),
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  print(tabIndex);
+                },
+              )
+            : Container(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(5),
           child: TabBar(controller: tabController, tabs: [

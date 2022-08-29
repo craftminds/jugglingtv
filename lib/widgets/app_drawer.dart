@@ -4,6 +4,9 @@ import 'package:jugglingtv/models/main_screen_arguments.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import '../screens/channels_screen.dart';
 import '../screens/authors_screen.dart';
+import '../main.dart';
+import '../providers/videos.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -22,12 +25,19 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.list_alt_outlined),
               title: const Text('All videos'),
               onTap: () {
-                Navigator.of(context).popAndPushNamed(MovieListScreen.routeName,
-                    arguments: MainScreenArguments(
-                      mainScreenMode: MainScreenMode.allVideos,
-                      orderBy: OrderBy.title,
-                      sort: Sort.asc,
-                    ));
+                // Navigator.of(context).popAndPushNamed(MovieListScreen.routeName,
+                //     arguments: MainScreenArguments(
+                //       mainScreenMode: MainScreenMode.allVideos,
+                //       orderBy: OrderBy.title,
+                //       sort: Sort.asc,
+                //     ));
+                Provider.of<Videos>(context, listen: false).fetchAndSetVideos(
+                  OrderBy.title,
+                  Sort.asc,
+                );
+                Navigator.of(context).pop();
+                MyApp.mainTabsScreenKey.currentState?.tabController
+                    ?.animateTo(0);
               }),
           const Divider(),
           ListTile(

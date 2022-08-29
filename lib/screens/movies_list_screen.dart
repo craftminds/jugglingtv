@@ -14,6 +14,7 @@ import '../widgets/movie_list_builder.dart';
 import '../models/main_screen_arguments.dart';
 import '../screens/authors_screen.dart';
 import '../widgets/video_search.dart';
+import '../providers/videos.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -168,7 +169,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     var videosListMode = setMainScreenArguments(context);
-
+    var showChannels = Provider.of<Videos>(context).viewChannel;
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).appBarTheme.backgroundColor,

@@ -42,7 +42,7 @@ class ChannelItem extends StatelessWidget {
                 .fetchAndSetVideosByChannel(
               name,
               OrderBy.title,
-              Sort.desc,
+              Sort.asc,
             );
             MyApp.mainTabsScreenKey.currentState?.tabController?.animateTo(0);
           },
