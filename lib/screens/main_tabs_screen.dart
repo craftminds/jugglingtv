@@ -57,7 +57,13 @@ class MainTabsScreenState extends State<MainTabsScreen>
                     return StatefulBuilder(builder: (context, setState) {
                       return SortOrderDialog();
                     });
-                  }),
+                  }).then(((value) {
+                print(value);
+                Provider.of<Videos>(context, listen: false).fetchAndSetVideos(
+                  (value as Map)['sortValue'],
+                  (value as Map)['orderValue'],
+                );
+              })),
               icon: const Icon(Icons.sort_by_alpha_rounded),
               iconSize: 28,
               //color: const Color.fromARGB(255, 255, 186, 8),

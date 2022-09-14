@@ -41,7 +41,7 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(15),
       child: Container(
-        height: 200,
+        height: 180,
         width: 200,
         color: Colors.transparent,
         child: ClipRRect(
@@ -51,91 +51,105 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 0, 10),
-              child: Column(children: <Widget>[
-                Text(
-                  "Select filter",
-                  style: TextStyle(
-                      fontStyle:
-                          Theme.of(context).textTheme.headline1!.fontStyle),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Flexible(
-                        fit: FlexFit.loose, child: Text('Sort by: ')),
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        items: sortByDropdowList.map((DropdownListItem item) {
-                          return DropdownMenuItem<DropdownListItem>(
-                            value: item,
-                            child: Text(
-                              item.caption,
-                            ),
-                          );
-                        }).toList(),
-                        value: dropdownSortByValue,
-                        //hint: Text('sort by'),
-                        onChanged: (DropdownListItem? newValue) {
-                          setState(() {
-                            dropdownSortByValue = newValue!;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Flexible(fit: FlexFit.loose, child: Text('View in ')),
-                    DropdownButton(
-                      items: orderDropdowList.map((DropdownListItem item) {
-                        return DropdownMenuItem<DropdownListItem>(
-                          value: item,
-                          child: Text(
-                            item.caption,
-                          ),
-                        );
-                      }).toList(),
-                      value: dropdownOrderValue,
-                      onChanged: (DropdownListItem? newValue) {
-                        setState(() {
-                          dropdownOrderValue = newValue!;
-                        });
-                      },
-                    ),
-                    const Flexible(
-                      fit: FlexFit.loose,
-                      child: Text('order '),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
+                    // Text(
+                    //   "Select filter",
+                    //   style: TextStyle(
+                    //       fontStyle:
+                    //           Theme.of(context).textTheme.headline1!.fontStyle),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Flexible(
+                            fit: FlexFit.loose, child: Text('Sort by')),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            items:
+                                sortByDropdowList.map((DropdownListItem item) {
+                              return DropdownMenuItem<DropdownListItem>(
+                                value: item,
+                                child: Text(
+                                  item.caption,
+                                  style: Theme.of(context).textTheme.bodyText1!,
+                                ),
+                              );
+                            }).toList(),
+                            value: dropdownSortByValue,
+                            //hint: Text('sort by'),
+                            onChanged: (DropdownListItem? newValue) {
+                              setState(() {
+                                dropdownSortByValue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.popAndPushNamed(
-                              context, MovieListScreen.routeName,
-                              arguments: MainScreenArguments(
-                                mainScreenMode: MainScreenMode.allVideos,
-                                orderBy: dropdownSortByValue.orderValue,
-                                sort: dropdownOrderValue.sortValue,
-                              ));
-                          // print(dropdownOrderValue
-                          //     .caption);
-                          // print(dropdownSortByValue
-                          //     .caption);
-                        },
-                        child: const Text('Apply')),
-                  ],
-                )
-              ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Flexible(
+                            fit: FlexFit.loose, child: Text('View in')),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            items:
+                                orderDropdowList.map((DropdownListItem item) {
+                              return DropdownMenuItem<DropdownListItem>(
+                                value: item,
+                                child: Text(
+                                  item.caption,
+                                  style: Theme.of(context).textTheme.bodyText1!,
+                                ),
+                              );
+                            }).toList(),
+                            value: dropdownOrderValue,
+                            onChanged: (DropdownListItem? newValue) {
+                              setState(() {
+                                dropdownOrderValue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                        const Flexible(
+                          fit: FlexFit.loose,
+                          child: Text('order '),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, {
+                              'sortValue': dropdownSortByValue.orderValue,
+                              'orderValue': dropdownOrderValue.sortValue,
+                            });
+                            // print(dropdownOrderValue
+                            //     .caption);
+                            // print(dropdownSortByValue
+                            //     .caption);
+                          },
+                          child: const Text(
+                            'Apply',
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                          // style: ButtonStyle(overlayColor: MaterialStateProperty<Color>(Colors.amber)),
+                        ),
+                      ],
+                    )
+                  ]),
             ),
           ),
         ),
