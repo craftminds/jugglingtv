@@ -6,6 +6,8 @@ import '../providers/video_channel.dart';
 import '../models/main_screen_arguments.dart';
 import '../screens/movies_list_screen.dart';
 import '../models/db_query_helper.dart';
+import '../providers/videos.dart';
+import '../main.dart';
 
 class VideoInfoChannels extends StatelessWidget {
   const VideoInfoChannels({
@@ -37,15 +39,15 @@ class VideoInfoChannels extends StatelessWidget {
                   for (var item in snapshot.data!)
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).popAndPushNamed(
-                          MovieListScreen.routeName,
-                          arguments: MainScreenArguments(
-                            channel: item.channelName,
-                            mainScreenMode: MainScreenMode.channel,
-                            orderBy: OrderBy.title,
-                            sort: Sort.desc,
-                          ),
+                        Provider.of<Videos>(context, listen: false)
+                            .fetchAndSetVideosByChannel(
+                          item.channelName,
+                          OrderBy.title,
+                          Sort.asc,
                         );
+                        Navigator.of(context).pop();
+                        MyApp.mainTabsScreenKey.currentState?.tabController
+                            ?.animateTo(0);
                       },
                       child: Text(
                         item.channelName,
