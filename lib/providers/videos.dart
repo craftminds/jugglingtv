@@ -9,6 +9,8 @@ class Videos with ChangeNotifier {
   List<Video> _foundItems = [];
   var viewChannel = false;
   String channel = '';
+  OrderBy _orderValue = OrderBy.title;
+  Sort _sortValue = Sort.asc;
 
   List<Video> get items {
     return [..._items];
@@ -21,6 +23,14 @@ class Videos with ChangeNotifier {
 
   List<Video> get foundItems {
     return [..._foundItems];
+  }
+
+  Sort get sortValue {
+    return _sortValue;
+  }
+
+  OrderBy get orderValue {
+    return _orderValue;
   }
 
 // Read all the videos
@@ -38,6 +48,8 @@ class Videos with ChangeNotifier {
     } catch (error) {
       throw (error);
     }
+    _orderValue = order;
+    _sortValue = sort;
     _itemsAll = loadedVideos;
     _items = loadedVideos;
     viewChannel = false;

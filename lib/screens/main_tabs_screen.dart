@@ -58,10 +58,9 @@ class MainTabsScreenState extends State<MainTabsScreen>
                       return SortOrderDialog();
                     });
                   }).then(((value) {
-                print(value);
                 Provider.of<Videos>(context, listen: false).fetchAndSetVideos(
-                  (value as Map)['sortValue'],
                   (value as Map)['orderValue'],
+                  (value as Map)['sortValue'],
                 );
               })),
               icon: const Icon(Icons.sort_by_alpha_rounded),

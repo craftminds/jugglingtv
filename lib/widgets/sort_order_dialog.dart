@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/main_screen_arguments.dart';
 import '../models/videos_db.dart';
 import '../models/db_query_helper.dart';
 import '../screens/movies_list_screen.dart';
+import '../providers/videos.dart';
 
 class SortOrderDialog extends StatefulWidget {
   SortOrderDialog({Key? key}) : super(key: key);
@@ -15,22 +17,35 @@ class SortOrderDialog extends StatefulWidget {
 class _SortOrderDialogState extends State<SortOrderDialog> {
   late DropdownListItem dropdownSortByValue;
   late DropdownListItem dropdownOrderValue;
-  List<DropdownListItem> sortByDropdowList = <DropdownListItem>[
-    DropdownListItem(caption: 'title', orderValue: OrderBy.title),
-    DropdownListItem(caption: 'views', orderValue: OrderBy.views),
-    DropdownListItem(caption: 'duration', orderValue: OrderBy.duration),
-    DropdownListItem(caption: '# of comments', orderValue: OrderBy.commentsNo),
-    DropdownListItem(caption: 'country of origin', orderValue: OrderBy.country),
-    DropdownListItem(caption: 'date', orderValue: OrderBy.year),
+  List<DropdownListItem> orderByDropdownList = <DropdownListItem>[
+    DropdownListItem(caption: OrderBy.title.caption, orderValue: OrderBy.title),
+    DropdownListItem(caption: OrderBy.views.caption, orderValue: OrderBy.views),
+    DropdownListItem(
+        caption: OrderBy.duration.caption, orderValue: OrderBy.duration),
+    DropdownListItem(
+        caption: OrderBy.commentsNo.caption, orderValue: OrderBy.commentsNo),
+    DropdownListItem(caption: OrderBy.year.caption, orderValue: OrderBy.year),
   ];
-  List<DropdownListItem> orderDropdowList = <DropdownListItem>[
+  List<DropdownListItem> sortByDropdownList = <DropdownListItem>[
     DropdownListItem(caption: 'ASCENDING', sortValue: Sort.asc),
     DropdownListItem(caption: 'DESCENDING', sortValue: Sort.desc),
   ];
 
   void initState() {
-    dropdownSortByValue = sortByDropdowList[0];
-    dropdownOrderValue = orderDropdowList[0];
+    // dropdownSortByValue = sortByDropdowList[0];
+    // on init the value should be updated with the last used value
+    if (Provider.of<Videos>(context, listen: false).orderValue.value == "") {
+      dropdownOrderValue = orderByDropdownList[0];
+    } else {
+      dropdownOrderValue = orderByDropdownList[orderByDropdownList.indexWhere(
+          (element) =>
+              Provider.of<Videos>(context, listen: false).orderValue ==
+              element.orderValue)];
+    }
+
+    // Provider.of<Videos>(context).sortValue);
+    dropdownSortByValue = sortByDropdownList[0];
+
     super.initState();
   }
 
@@ -65,11 +80,11 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const Flexible(
-                            fit: FlexFit.loose, child: Text('Sort by')),
+                            fit: FlexFit.loose, child: Text('Order by')),
                         DropdownButtonHideUnderline(
                           child: DropdownButton(
-                            items:
-                                sortByDropdowList.map((DropdownListItem item) {
+                            items: orderByDropdownList
+                                .map((DropdownListItem item) {
                               return DropdownMenuItem<DropdownListItem>(
                                 value: item,
                                 child: Text(
@@ -78,11 +93,10 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                                 ),
                               );
                             }).toList(),
-                            value: dropdownSortByValue,
-                            //hint: Text('sort by'),
+                            value: dropdownOrderValue,
                             onChanged: (DropdownListItem? newValue) {
                               setState(() {
-                                dropdownSortByValue = newValue!;
+                                dropdownOrderValue = newValue!;
                               });
                             },
                           ),
@@ -97,7 +111,7 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                         DropdownButtonHideUnderline(
                           child: DropdownButton(
                             items:
-                                orderDropdowList.map((DropdownListItem item) {
+                                sortByDropdownList.map((DropdownListItem item) {
                               return DropdownMenuItem<DropdownListItem>(
                                 value: item,
                                 child: Text(
@@ -106,10 +120,10 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                                 ),
                               );
                             }).toList(),
-                            value: dropdownOrderValue,
+                            value: dropdownSortByValue,
                             onChanged: (DropdownListItem? newValue) {
                               setState(() {
-                                dropdownOrderValue = newValue!;
+                                dropdownSortByValue = newValue!;
                               });
                             },
                           ),
@@ -133,8 +147,8 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                         TextButton(
                           onPressed: () {
                             Navigator.pop(context, {
-                              'sortValue': dropdownSortByValue.orderValue,
-                              'orderValue': dropdownOrderValue.sortValue,
+                              'sortValue': dropdownSortByValue.sortValue,
+                              'orderValue': dropdownOrderValue.orderValue,
                             });
                             // print(dropdownOrderValue
                             //     .caption);

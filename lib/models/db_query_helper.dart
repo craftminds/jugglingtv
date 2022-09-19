@@ -29,6 +29,37 @@ extension OrderByExtension on OrderBy {
         return "";
     }
   }
+
+//extension can't have more than one getter value? this should be a class then
+  String get caption {
+    switch (this) {
+      case OrderBy.author:
+        return "Author";
+      case OrderBy.commentsNo:
+        return "# of comments";
+      case OrderBy.country:
+        return "Country";
+      case OrderBy.duration:
+        return "Duration";
+      case OrderBy.title:
+        return "Title";
+      case OrderBy.views:
+        return "Views";
+      case OrderBy.year:
+        return "Year";
+      default:
+        return "";
+    }
+    // return [
+    //   "Author",
+    //   "Comments",
+    //   "Country",
+    //   "Duration,",
+    //   "Title",
+    //   "views",
+    //   "Year"
+    // ][index];
+  }
 }
 
 enum Sort {
@@ -43,6 +74,17 @@ extension SortExtension on Sort {
         return "ASC";
       case Sort.desc:
         return "DESC";
+      default:
+        return "";
+    }
+  }
+
+  String get caption {
+    switch (this) {
+      case Sort.asc:
+        return "ASCENDING";
+      case Sort.desc:
+        return "DESCENDING";
       default:
         return "";
     }
