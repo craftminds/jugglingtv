@@ -27,8 +27,8 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
     DropdownListItem(caption: OrderBy.year.caption, orderValue: OrderBy.year),
   ];
   List<DropdownListItem> sortByDropdownList = <DropdownListItem>[
-    DropdownListItem(caption: 'ASCENDING', sortValue: Sort.asc),
-    DropdownListItem(caption: 'DESCENDING', sortValue: Sort.desc),
+    DropdownListItem(caption: Sort.asc.caption, sortValue: Sort.asc),
+    DropdownListItem(caption: Sort.desc.caption, sortValue: Sort.desc),
   ];
 
   void initState() {
@@ -37,15 +37,21 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
     if (Provider.of<Videos>(context, listen: false).orderValue.value == "") {
       dropdownOrderValue = orderByDropdownList[0];
     } else {
+      //find the index of the chosen orderValue value
       dropdownOrderValue = orderByDropdownList[orderByDropdownList.indexWhere(
           (element) =>
               Provider.of<Videos>(context, listen: false).orderValue ==
               element.orderValue)];
     }
-
-    // Provider.of<Videos>(context).sortValue);
-    dropdownSortByValue = sortByDropdownList[0];
-
+    if (Provider.of<Videos>(context, listen: false).sortValue.value == "") {
+      dropdownOrderValue = orderByDropdownList[0];
+    } else {
+      //find the index of the sortValue value
+      dropdownSortByValue = sortByDropdownList[sortByDropdownList.indexWhere(
+          (element) =>
+              Provider.of<Videos>(context, listen: false).sortValue ==
+              element.sortValue)];
+    }
     super.initState();
   }
 
@@ -138,7 +144,14 @@ class _SortOrderDialogState extends State<SortOrderDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pop(context, {
+                            'sortValue':
+                                Provider.of<Videos>(context, listen: false)
+                                    .sortValue,
+                            'orderValue':
+                                Provider.of<Videos>(context, listen: false)
+                                    .orderValue,
+                          }),
                           child: const Text(
                             'Cancel',
                             style: TextStyle(color: Colors.amber),
