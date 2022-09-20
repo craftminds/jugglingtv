@@ -132,7 +132,6 @@ CREATE TABLE $tableVideoTag (
     }
   }
 
-//TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
   Future<List<Video>> readAllVideos(OrderBy order, Sort sort) async {
     final db = await instance.database;
 

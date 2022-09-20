@@ -26,18 +26,6 @@ class ChannelItem extends StatelessWidget {
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            // TODO: it should navigate to the first tab, but with MainScreenArguments passed
-            // solution (partial): https://stackoverflow.com/questions/57560751/flutter-navigation-bar-change-tab-from-another-page
-            // Navigator.of(context).pushReplacementNamed(
-            //   MovieListScreen.routeName,
-            //   arguments: MainScreenArguments(
-            //     channel: name,
-            //     mainScreenMode: MainScreenMode.channel,
-            //     orderBy: OrderBy.title,
-            //     sort: Sort.desc,
-            //   ),
-            // );
-            // Provider.of(context).fetchAndSetVideos();
             Provider.of<Videos>(context, listen: false)
                 .fetchAndSetVideosByChannel(
               name,

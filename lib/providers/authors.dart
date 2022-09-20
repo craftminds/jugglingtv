@@ -12,7 +12,6 @@ class Authors with ChangeNotifier {
 
 // Read all the Authors
   Future<List<Author>> fetchAndSetAuthors(String order, Sort sort) async {
-    //TODO: add try&catch
     List<Author> loadedAuthors = [];
     if (order == "") {
       order = AuthorFields.name;

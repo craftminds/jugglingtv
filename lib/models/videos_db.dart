@@ -257,7 +257,7 @@ class VideoChannel {
     //required this.videoId,
     required this.channelName,
   });
-//TODO: correct the mapping!
+  
   static VideoChannel fromJson(Map<String, Object?> json) => VideoChannel(
         channelName: json[ChannelFields.name] as String,
       );
