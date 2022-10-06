@@ -218,27 +218,53 @@ class Video {
 
   static Video fromJson(Map<String, Object?> json) {
     //format from double to min:sec format
-    String addTime =
-        "${((json[VideosFields.duration] as double) / 60).floor}:${(json[VideosFields.duration] as double) % 60}";
+    double addtime = json[VideosFields.duration] as double;
+    String duration =
+        "${(addtime / 60).floor()}:${(addtime.floor() % 60).toString().padLeft(2, "0")}";
+
+    // return Video(
+    //   id: json[VideosFields.id] as int,
+    //   title: json[VideosFields.title] == null
+    //       ? ''
+    //       : json[VideosFields.title] as String,
+    //   thumbnailUrl: "http://juggling.tv/thumb/0_${json[VideosFields.id]}.jpg",
+    //   videoUrl:
+    //       "http://juggling.tv/video/encoded/${json[VideosFields.videoUrl] as String}",
+    //   views: json[VideosFields.views] as int,
+    //   duration: duration,
+    //   commentsNo: json[VideosFields.commentsNo] as int,
+    //   description: json[VideosFields.description] == null
+    //       ? ''
+    //       : json[VideosFields.description] as String,
+
+    //   year: DateTime.parse("2019-07-31 00:00:00.000000"),
+    //   // year: DateTime.parse(json[VideosFields.year] as String),
+    //   // year: json[VideosFields.year] as DateTime,
+    //   country: json[VideosFields.country] == null
+    //       ? ' '
+    //       : json[VideosFields.country] as String,
+    //   authorName: json[AuthorFields.name] == null
+    //       ? ''
+    //       : json[AuthorFields.name] as String,
+    //   authorID: json[VideosFields.authorId] as int,
+    //   authorImageUrl: json[AuthorFields.imageUrl]
+    //       as String, //for the easiness of having that info inside the video screen - other solution is to get list of author earlier to have that info ready from the local storage not from file
+    // );
     return Video(
       id: json[VideosFields.id] as int,
       title: json[VideosFields.title] == null
           ? ''
           : json[VideosFields.title] as String,
-      thumbnailUrl:
-          "http://juggling.tv/thumb/0_${json[VideosFields.id] as String}.jpg",
+      thumbnailUrl: "http://juggling.tv/thumb/0_${json[VideosFields.id]}.jpg",
       videoUrl:
           "http://juggling.tv/video/encoded/${json[VideosFields.videoUrl] as String}",
       views: json[VideosFields.views] as int,
-      duration: addTime,
+      duration: duration,
       commentsNo: json[VideosFields.commentsNo] as int,
       description: json[VideosFields.description] == null
           ? ''
           : json[VideosFields.description] as String,
-
-      year: DateTime.parse("2019-07-31 00:00:00.000000"),
-      // year: DateTime.parse(json[VideosFields.year] as String),
-      // year: json[VideosFields.year] as DateTime,
+      year: DateTime.parse(json[VideosFields.year] as String),
       country: json[VideosFields.country] == null
           ? ' '
           : json[VideosFields.country] as String,
@@ -246,8 +272,7 @@ class Video {
           ? ''
           : json[AuthorFields.name] as String,
       authorID: json[VideosFields.authorId] as int,
-      authorImageUrl: json[AuthorFields.imageUrl]
-          as String, //for the easiness of having that info inside the video screen - other solution is to get list of author earlier to have that info ready from the local storage not from file
+      authorImageUrl: json[AuthorFields.imageUrl] as String,
     );
   }
 }
