@@ -84,7 +84,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
         //print('Number of tags: ${tags.length}');
       });
       Provider.of<Authors>(context)
-          .fetchAndSetAuthors('author.id', Sort.asc)
+          .fetchAndSetAuthors("$tableAuthor.${AuthorFields.id}", Sort.asc)
           .then((value) {
         print(value.length);
       });

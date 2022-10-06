@@ -85,7 +85,6 @@ CREATE TABLE $tableTag (
 CREATE TABLE $tableVideo (
 	${VideosFields.id} INTEGER NOT NULL, 
 	${VideosFields.title} TEXT, 
-	${VideosFields.thumbnailUrl} VARCHAR(2048), 
 	${VideosFields.videoUrl} VARCHAR(2048), 
 	${VideosFields.views} INTEGER, 
 	${VideosFields.duration} INTEGER, 
@@ -146,7 +145,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
       $tableVideo.${VideosFields.id},
       $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -177,7 +175,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
         $tableVideo.${VideosFields.id},
         $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -210,7 +207,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
         $tableVideo.${VideosFields.id},
         $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -285,8 +281,8 @@ CREATE TABLE $tableVideoTag (
     // check every element of map if id is in author_id
     var resultWithMovies = result.map((json) => Author.fromJson(json)).toList();
     for (var author in resultWithMovies) {
-      int authorIndex =
-          videoCount.indexWhere((element) => author.id == element["author_id"]);
+      int authorIndex = videoCount
+          .indexWhere((element) => author.id == element[VideosFields.authorId]);
       if (authorIndex != -1) {
         author.moviesCount = videoCount[authorIndex]["NUM"] as int;
       }
