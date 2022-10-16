@@ -34,14 +34,14 @@ class LocalDatabase with ChangeNotifier {
         await getApplicationDocumentsDirectory();
 
     String dbPathEnglish =
-        path.join(applicationDirectory.path, "scrapy_jugglingtv.db");
+        path.join(applicationDirectory.path, "scrapy_jugglingtv_channels.db");
 
     bool dbExistsEnglish = await io.File(dbPathEnglish).exists();
 
     if (!dbExistsEnglish) {
       // Copy from asset
-      ByteData data =
-          await rootBundle.load(path.join("assets", "scrapy_jugglingtv.db"));
+      ByteData data = await rootBundle
+          .load(path.join("assets", "scrapy_jugglingtv_channels.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 

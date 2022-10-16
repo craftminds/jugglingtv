@@ -5,7 +5,7 @@ const String tableAuthor = 'authors';
 const String tableChannel = 'channel';
 const String tableTag = 'tag';
 const String tableVideo = 'video1';
-const String tableVideoChannel = 'video_channel';
+const String tableVideoChannel = 'video_channel_1';
 const String tableVideoTag = 'video_tag';
 const String tableCountries = 'countries';
 
