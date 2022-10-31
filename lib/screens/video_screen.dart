@@ -20,7 +20,8 @@ class VideoScreen extends StatelessWidget {
     final loadedvideo =
         Provider.of<Videos>(context, listen: false).readVideoById(videoId);
     final title = loadedvideo.title;
-    final videoUrl = loadedvideo.videoUrl;
+    // really important to format the url with %20 instead of spaces
+    final videoUrl = loadedvideo.videoUrl.replaceAll(" ", "%20");
     final videoYearString = DateFormat('yyyy-MM-dd').format(loadedvideo.year);
     print(videoUrl);
     //print(videoId);
