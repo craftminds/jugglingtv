@@ -49,17 +49,25 @@ class VideoInfoChannels extends StatelessWidget {
                         MyApp.mainTabsScreenKey.currentState?.tabController
                             ?.animateTo(0);
                       },
-                      child: Text(
-                        item.channelName,
-                        style: TextStyle(
-                            //fontWeight: FontWeight.w600,
-                            //fontSize: 20,
-                            height: 3,
-                            background: Paint()
-                              ..strokeWidth = 18.0
-                              ..color = const Color.fromARGB(255, 255, 186, 8)
-                              ..style = PaintingStyle.stroke
-                              ..strokeJoin = StrokeJoin.round),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 1.0,
+                          right: 1.0,
+                          top: 12.0,
+                          bottom: 10.0,
+                        ),
+                        child: Text(
+                          item.channelName,
+                          style: TextStyle(
+                              //fontWeight: FontWeight.w600,
+                              //fontSize: 20,
+                              height: 1.2,
+                              background: Paint()
+                                ..strokeWidth = 18.0
+                                ..color = const Color.fromARGB(255, 255, 186, 8)
+                                ..style = PaintingStyle.stroke
+                                ..strokeJoin = StrokeJoin.round),
+                        ),
                       ),
                     ),
                 ],

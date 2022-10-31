@@ -28,26 +28,41 @@ class VideoInfoTags extends StatelessWidget {
                     child: Text("${snapshot.error}"),
                   );
                 } else if (snapshot.hasData) {
-                  return Wrap(
-                    runAlignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
-                    spacing: 20.0,
-                    children: <Widget>[
-                      for (var item in snapshot.data!)
-                        Text(
-                          item.tagName,
-                          style: TextStyle(
-                              //fontWeight: FontWeight.w600,
-                              //fontSize: 20,
-                              height: 3,
-                              background: Paint()
-                                ..strokeWidth = 18.0
-                                ..color = const Color.fromARGB(255, 255, 186, 8)
-                                ..style = PaintingStyle.stroke
-                                ..strokeJoin = StrokeJoin.round),
-                        ),
-                    ],
-                    //
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 30.0),
+                    child: Center(
+                      child: Wrap(
+                        runAlignment: WrapAlignment.start,
+                        direction: Axis.horizontal,
+                        spacing: 20.0,
+                        children: <Widget>[
+                          for (var item in snapshot.data!)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 1.0,
+                                right: 1.0,
+                                top: 12.0,
+                                bottom: 12.0,
+                              ),
+                              child: Text(
+                                item.tagName,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    //fontWeight: FontWeight.w600,
+                                    //fontSize: 20,
+                                    height: 1.2,
+                                    background: Paint()
+                                      ..strokeWidth = 18.0
+                                      ..color =
+                                          const Color.fromARGB(255, 255, 186, 8)
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeJoin = StrokeJoin.round),
+                              ),
+                            ),
+                        ],
+                        //
+                      ),
+                    ),
                   );
                 } else {
                   return const Center(
