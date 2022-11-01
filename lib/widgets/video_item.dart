@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoItem extends StatefulWidget {
@@ -41,6 +42,12 @@ class _VideoItemState extends State<VideoItem> {
         materialProgressColors: ChewieProgressColors(playedColor: Colors.amber),
         autoPlay: widget.autoplay,
         looping: widget.looping,
+        deviceOrientationsOnEnterFullScreen: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.landscapeRight,
+        ],
         errorBuilder: (context, errorMessage) {
           return Center(
             child: Text(
