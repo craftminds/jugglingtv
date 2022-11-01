@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
 
 import '../widgets/video_search.dart';
 import '../widgets/sort_order_dialog.dart';
@@ -82,28 +83,39 @@ class MainTabsScreenState extends State<MainTabsScreen>
         // floatingActionButtonLocation:
         //     FloatingActionButtonLocation.miniCenterFloat,
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.all(5),
-          child: TabBar(controller: tabController, tabs: [
-            Tab(
-              text: 'Movies',
-              icon: Icon(Icons.video_collection),
-            ),
-            Tab(
-              text: 'Channels',
-              icon: Icon(Icons.tv),
-            ),
-            Tab(
-              text: 'Authors',
-              icon: Icon(Icons.person_search),
-            )
-          ]),
+          padding: EdgeInsets.only(
+            top: 2,
+            bottom: Platform.isAndroid ? 5 : 25,
+            left: 15,
+            right: 15,
+          ),
+          child: TabBar(
+              indicatorColor: Colors.amber,
+              labelColor: Colors.amber,
+              indicatorSize: TabBarIndicatorSize.tab,
+              unselectedLabelColor: Colors.black54,
+              controller: tabController,
+              tabs: const [
+                Tab(
+                  text: 'Movies',
+                  icon: Icon(Icons.video_collection),
+                ),
+                Tab(
+                  text: 'Channels',
+                  icon: Icon(Icons.tv),
+                ),
+                Tab(
+                  text: 'Authors',
+                  icon: Icon(Icons.person_search),
+                )
+              ]),
         ),
         body: TabBarView(
           controller: tabController,
           children: [
-            MovieListScreen(),
+            const MovieListScreen(),
             ChannelsScreen(),
-            AuthorsScreen(),
+            const AuthorsScreen(),
           ],
         ),
       ),
