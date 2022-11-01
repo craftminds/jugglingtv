@@ -53,7 +53,7 @@ android {
         configurations.all {
         resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
         }
-        applicationId "com.example.jugglingtv"
+        applicationId "com.ubicircus.jugglingtv"
         minSdkVersion 16
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()

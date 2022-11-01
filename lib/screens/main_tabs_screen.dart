@@ -91,8 +91,8 @@ class MainTabsScreenState extends State<MainTabsScreen>
           ),
           child: TabBar(
               indicatorColor: Colors.amber,
-              labelColor: Colors.amber,
-              indicatorSize: TabBarIndicatorSize.tab,
+              labelColor: const Color.fromARGB(255, 255, 186, 8),
+              indicatorSize: TabBarIndicatorSize.label,
               unselectedLabelColor: Colors.black54,
               controller: tabController,
               tabs: const [
