@@ -35,7 +35,8 @@ class VideoInfoTags extends StatelessWidget {
                       direction: Axis.horizontal,
                       spacing: 20.0,
                       children: <Widget>[
-                        for (var item in snapshot.data!)
+                        for (var item
+                            in snapshot.data!.first.tagName.split(" "))
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 1.0,
@@ -44,7 +45,7 @@ class VideoInfoTags extends StatelessWidget {
                               bottom: 12.0,
                             ),
                             child: Text(
-                              item.tagName,
+                              item,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   //fontWeight: FontWeight.w600,

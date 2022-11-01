@@ -351,18 +351,30 @@ SELECT
   Future<List<VideoTag>> readTagsByVideoId(int id) async {
     final db = await instance.database;
 
+// works for the older database
+//     final result = await db.rawQuery(
+//       '''
+// SELECT
+//     $tableTag.${TagFields.name}
+//     FROM
+//     $tableVideoTag, $tableTag
+//     WHERE
+//     $tableVideoTag.${VideoTagFields.tagId} = $tableTag.${TagFields.id} AND
+//     $tableVideoTag.${VideoTagFields.videoId} = $id
+// ''',
+//     );
+
+//below works for the new DB with video1 table
     final result = await db.rawQuery(
       '''
 SELECT 
-    $tableTag.${TagFields.name}
+    $tableVideo.${VideosFields.tags}
     FROM
-    $tableVideoTag, $tableTag
+    $tableVideo
     WHERE
-    $tableVideoTag.${VideoTagFields.tagId} = $tableTag.${TagFields.id} AND
-    $tableVideoTag.${VideoTagFields.videoId} = $id
+    $tableVideo.${VideosFields.id} = $id
 ''',
     );
-    // print(result);
     // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
     // print(groupedResult);
     return result.map((json) => VideoTag.fromJson(json)).toList();
@@ -373,7 +385,6 @@ SELECT
     db.close();
   }
 }
-
 
 // function to count the number of videos:
 // select video.author_id , author.name, count(*) as NUM FROM video,author WHERE video.author_id = author.id group by video.author_id

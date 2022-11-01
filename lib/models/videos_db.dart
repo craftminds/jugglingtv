@@ -171,6 +171,7 @@ class VideosFields {
     year,
     country,
     authorId,
+    tags,
   ];
   static const String id = 'VID';
   static const String title = 'title';
@@ -183,6 +184,7 @@ class VideosFields {
   static const String year = 'adddate';
   static const String country = 'country';
   static const String authorId = 'UID';
+  static const String tags = "keyword";
 }
 
 class Video {
@@ -322,9 +324,9 @@ class VideoTag {
     // required this.videoId,
     required this.tagName,
   });
-  static VideoTag fromJson(Map<String, Object?> json) => VideoTag(
-        tagName: json[TagFields.name] as String,
-      );
+  static VideoTag fromJson(Map<String, Object?> json) {
+    return VideoTag(tagName: json[VideosFields.tags] as String);
+  }
 }
 
 class CountriesFields {

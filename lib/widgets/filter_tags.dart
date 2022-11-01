@@ -44,12 +44,7 @@ class FilterTags extends StatelessWidget {
       onItemSearch: (tag, query) {
         return tag.name.toLowerCase().contains(query.toLowerCase());
       },
-      onApplyButtonClick: (list) {
-        //selectedTagList = list;
-        //TODO: it must first ask the database and then open new page with the list of movies. Filtered tags must shown when clicked maybe in the right top corner
-
-        //Navigator.pop(context, list);
-      },
+      onApplyButtonClick: (list) {},
     );
   }
 }
