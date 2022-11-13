@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
+import 'package:wakelock/wakelock.dart';
+
 class VideoItem extends StatefulWidget {
   //final VideoPlayerController videoPlayerController;
   final String? videoUrl;
@@ -30,7 +32,17 @@ class _VideoItemState extends State<VideoItem> {
 
   Future<void> initVideoPlayer() async {
     videoPlayerController = VideoPlayerController.network(widget.videoUrl!);
-    await videoPlayerController.initialize();
+    await videoPlayerController.initialize().then(
+          (value) => {
+            videoPlayerController.addListener(() {
+              if (videoPlayerController.value.isPlaying == true) {
+                Wakelock.enable();
+              } else if (videoPlayerController.value.isPlaying == false) {
+                Wakelock.disable();
+              }
+            })
+          },
+        );
     setState(() {
       // print(widget.videoPlayerController.value.aspectRatio);
       // print('Width: ${widget.videoPlayerController.value.size.width}');

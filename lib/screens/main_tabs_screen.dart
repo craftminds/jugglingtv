@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wakelock/wakelock.dart';
 import 'dart:io' show Platform;
 
 import '../widgets/video_search.dart';
@@ -11,6 +12,7 @@ import '../screens/channels_screen.dart';
 import '../screens/authors_screen.dart';
 import '../providers/videos.dart';
 import '../main.dart';
+import 'package:wakelock/wakelock.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({Key? key}) : super(key: key);
@@ -27,6 +29,7 @@ class MainTabsScreenState extends State<MainTabsScreen>
   void initState() {
     super.initState();
     tabController = TabController(vsync: this, length: 3);
+    Wakelock.disable();
   }
 
   @override
