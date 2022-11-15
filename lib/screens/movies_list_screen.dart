@@ -16,6 +16,8 @@ import '../screens/authors_screen.dart';
 import '../widgets/video_search.dart';
 import '../providers/videos.dart';
 import '../main.dart';
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -42,6 +44,9 @@ class MovieListScreen extends StatefulWidget {
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
+  StreamSubscription? connection;
+  bool isOffline = false;
+
   late List<Video> videos;
   bool _isLoading = false;
   var _isInit = true;
@@ -67,7 +72,38 @@ class _MovieListScreenState extends State<MovieListScreen> {
     dropdownOrderValue = orderDropdowList[0];
     // call for all Authors for the sake of future data, single calls for one author makes no sense - too little data to get. All the authors is not that much.
     // if that applications is ever too grow more it should be considered to be done one by one
-
+    connection = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      // whenevery connection status is changed.
+      if (result == ConnectivityResult.none) {
+        //there is no any connection
+        AlertDialog(title: Text("Sample Alert Dialog"));
+        setState(() {
+          isOffline = true;
+        });
+      } else if (result == ConnectivityResult.mobile) {
+        //connection is mobile data network
+        setState(() {
+          isOffline = false;
+        });
+      } else if (result == ConnectivityResult.wifi) {
+        //connection is from wifi
+        setState(() {
+          isOffline = false;
+        });
+      } else if (result == ConnectivityResult.ethernet) {
+        //connection is from wired connection
+        setState(() {
+          isOffline = false;
+        });
+      } else if (result == ConnectivityResult.bluetooth) {
+        //connection is from bluetooth threatening
+        setState(() {
+          isOffline = false;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -414,7 +450,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
           FloatingActionButtonLocation.miniCenterFloat,
       body: PageStorage(
         bucket: bucketGlobal,
-        child: MovieListBuilder(args: videosListMode),
+        child: isOffline
+            ? Center(child: Text("No internet connection"))
+            : MovieListBuilder(args: videosListMode),
       ),
     );
   }

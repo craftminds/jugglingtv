@@ -13,6 +13,7 @@ import '../screens/authors_screen.dart';
 import '../providers/videos.dart';
 import '../main.dart';
 import 'package:wakelock/wakelock.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({Key? key}) : super(key: key);

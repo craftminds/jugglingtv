@@ -14,7 +14,7 @@ extension OrderByExtension on OrderBy {
       case OrderBy.author:
         return "author";
       case OrderBy.commentsNo:
-        return "comments_no";
+        return "com_num";
       case OrderBy.country:
         return "country";
       case OrderBy.duration:
@@ -22,7 +22,7 @@ extension OrderByExtension on OrderBy {
       case OrderBy.title:
         return "title";
       case OrderBy.views:
-        return "views";
+        return "viewnumber";
       case OrderBy.year:
         return "year";
       default:
