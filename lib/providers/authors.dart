@@ -5,6 +5,7 @@ import '../models/db_query_helper.dart';
 
 class Authors with ChangeNotifier {
   List<Author> _items = [];
+  bool authorsLoaded = false;
 
   List<Author> get items {
     return [..._items];
@@ -27,6 +28,8 @@ class Authors with ChangeNotifier {
       rethrow;
     }
     _items = loadedAuthors;
+    authorsLoaded = true;
+    notifyListeners();
     return _items;
   }
 

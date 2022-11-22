@@ -43,7 +43,7 @@ dependencies:
   flag: ^6.0.0
   flutter_launcher_icons: ^0.10.0
   wakelock: ^0.6.2
-  connectivity_plus: ^3.0.2
+  internet_popup: ^1.0.8+5
 
 flutter_icons:
   image_path_ios: "assets/icon/icon.png"

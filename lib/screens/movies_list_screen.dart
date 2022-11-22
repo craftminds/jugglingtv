@@ -17,7 +17,7 @@ import '../widgets/video_search.dart';
 import '../providers/videos.dart';
 import '../main.dart';
 import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:internet_popup/internet_popup.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -70,63 +70,31 @@ class _MovieListScreenState extends State<MovieListScreen> {
   void initState() {
     dropdownSortByValue = sortByDropdowList[0];
     dropdownOrderValue = orderDropdowList[0];
+    InternetPopup().initialize(context: context);
     // call for all Authors for the sake of future data, single calls for one author makes no sense - too little data to get. All the authors is not that much.
     // if that applications is ever too grow more it should be considered to be done one by one
-    connection = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      // whenevery connection status is changed.
-      if (result == ConnectivityResult.none) {
-        //there is no any connection
-        AlertDialog(title: Text("Sample Alert Dialog"));
-        setState(() {
-          isOffline = true;
-        });
-      } else if (result == ConnectivityResult.mobile) {
-        //connection is mobile data network
-        setState(() {
-          isOffline = false;
-        });
-      } else if (result == ConnectivityResult.wifi) {
-        //connection is from wifi
-        setState(() {
-          isOffline = false;
-        });
-      } else if (result == ConnectivityResult.ethernet) {
-        //connection is from wired connection
-        setState(() {
-          isOffline = false;
-        });
-      } else if (result == ConnectivityResult.bluetooth) {
-        //connection is from bluetooth threatening
-        setState(() {
-          isOffline = false;
-        });
-      }
-    });
-    super.initState();
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+      // setState(() {
+      //   _isLoading = true;
+      // });
       //print('Fetching videos...');
-      Provider.of<Tags>(context).fetchAndSetTags().then((tags) {
-        allTags = tags;
-        _isLoading = false;
-        //print('Number of tags: ${tags.length}');
-      });
+      // Provider.of<Tags>(context).fetchAndSetTags().then((tags) {
+      //   allTags = tags;
+      //   _isLoading = false;
+      //   //print('Number of tags: ${tags.length}');
+      // });
       Provider.of<Authors>(context)
-          .fetchAndSetAuthors("$tableAuthor.${AuthorFields.id}", Sort.asc)
-          .then((value) {
-        print(value.length);
-      });
+          .fetchAndSetAuthors("$tableAuthor.${AuthorFields.id}", Sort.asc);
+      //     .then((value) {
+      //   print(value.length);
+      // });
     }
     _isInit = false;
-
+    print("Dependecies changed!");
     super.didChangeDependencies();
   }
 
@@ -207,6 +175,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
     var videosListMode = setMainScreenArguments(context);
     var showChannels = Provider.of<Videos>(context, listen: true).viewChannel;
     String channelName = Provider.of<Videos>(context, listen: true).channel;
+    bool authorsLoaded = Provider.of<Authors>(context).authorsLoaded;
+
     return Scaffold(
       // appBar: AppBar(
       //   backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -450,9 +420,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
           FloatingActionButtonLocation.miniCenterFloat,
       body: PageStorage(
         bucket: bucketGlobal,
-        child: isOffline
-            ? Center(child: Text("No internet connection"))
-            : MovieListBuilder(args: videosListMode),
+        child: MovieListBuilder(args: videosListMode),
       ),
     );
   }
