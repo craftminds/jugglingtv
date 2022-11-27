@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugglingtv/providers/connectivity.dart';
 import '../screens/main_tabs_screen.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Channels()),
         ChangeNotifierProvider(create: (context) => Tags()),
         ChangeNotifierProvider(create: (context) => Authors()),
+        ChangeNotifierProvider(create: (context) => ConnectivityProvider()),
       ],
       child: MaterialApp(
         //TODO: work on theme for the app, the font, the colors etc.

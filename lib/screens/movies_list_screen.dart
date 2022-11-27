@@ -17,7 +17,6 @@ import '../widgets/video_search.dart';
 import '../providers/videos.dart';
 import '../main.dart';
 import 'dart:async';
-import 'package:internet_popup/internet_popup.dart';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?
@@ -45,7 +44,6 @@ class MovieListScreen extends StatefulWidget {
 
 class _MovieListScreenState extends State<MovieListScreen> {
   StreamSubscription? connection;
-  bool isOffline = false;
 
   late List<Video> videos;
   bool _isLoading = false;
@@ -70,7 +68,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
   void initState() {
     dropdownSortByValue = sortByDropdowList[0];
     dropdownOrderValue = orderDropdowList[0];
-    InternetPopup().initialize(context: context);
     // call for all Authors for the sake of future data, single calls for one author makes no sense - too little data to get. All the authors is not that much.
     // if that applications is ever too grow more it should be considered to be done one by one
   }
@@ -176,6 +173,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
     var showChannels = Provider.of<Videos>(context, listen: true).viewChannel;
     String channelName = Provider.of<Videos>(context, listen: true).channel;
     bool authorsLoaded = Provider.of<Authors>(context).authorsLoaded;
+    //bool isInternet = await InternetPopup().checkInternet();
 
     return Scaffold(
       // appBar: AppBar(
@@ -420,7 +418,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
           FloatingActionButtonLocation.miniCenterFloat,
       body: PageStorage(
         bucket: bucketGlobal,
-        child: MovieListBuilder(args: videosListMode),
+        child: true
+            ? MovieListBuilder(args: videosListMode)
+            : const Center(child: Text("No internet connection")),
       ),
     );
   }
