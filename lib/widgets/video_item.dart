@@ -2,6 +2,8 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+import 'package:provider/provider.dart';
+import '../providers/connectivity.dart';
 
 import 'package:wakelock/wakelock.dart';
 
@@ -87,19 +89,25 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: videoPlayerController.value.isInitialized
-          ? FutureBuilder(
-              future: _future,
-              builder: (context, snapshot) {
-                return AspectRatio(
-                  aspectRatio: videoPlayerController.value.aspectRatio,
-                  child: Chewie(
-                    controller: _chewieController,
-                  ),
-                );
-              })
-          : const CircularProgressIndicator(),
-    );
+    bool hasInternet = Provider.of<ConnectivityProvider>(context).isOnline;
+    return hasInternet
+        ? Center(
+            child: videoPlayerController.value.isInitialized
+                ? FutureBuilder(
+                    future: _future,
+                    builder: (context, snapshot) {
+                      return AspectRatio(
+                        aspectRatio: videoPlayerController.value.aspectRatio,
+                        child: Chewie(
+                          controller: _chewieController,
+                        ),
+                      );
+                    })
+                : const CircularProgressIndicator(),
+          )
+        : const Icon(
+            Icons.signal_wifi_connected_no_internet_4_rounded,
+            color: Colors.red,
+          );
   }
 }

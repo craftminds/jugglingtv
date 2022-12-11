@@ -44,6 +44,8 @@ dependencies:
   flutter_launcher_icons: ^0.10.0
   wakelock: ^0.6.2
   connectivity_plus: ^3.0.2
+  internet_connection_checker: ^1.0.0+1
+  overlay_support: ^2.1.0
 
 flutter_icons:
   image_path_ios: "assets/icon/icon.png"

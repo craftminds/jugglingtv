@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/screens/video_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/connectivity.dart';
 
 class MovieItem extends StatelessWidget {
   final int id;
@@ -23,6 +25,7 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasInternet = Provider.of<ConnectivityProvider>(context).isOnline;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
@@ -50,10 +53,16 @@ class MovieItem extends StatelessWidget {
                 flex: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: Image.network(
-                    thumbnailUrl,
-                    fit: BoxFit.cover,
-                  ),
+                  // put below into the try catch clause and give some default image in case of error or internet timeout
+                  child: hasInternet
+                      ? Image.network(
+                          thumbnailUrl,
+                          fit: BoxFit.cover,
+                        )
+                      : const Icon(
+                          Icons.signal_wifi_connected_no_internet_4_rounded,
+                          color: Colors.red,
+                        ),
                 ),
               ),
               //second column in the ROW

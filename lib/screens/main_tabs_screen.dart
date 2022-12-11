@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:provider/provider.dart';
-import 'package:wakelock/wakelock.dart';
-import 'dart:io' show Platform;
+
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../widgets/video_search.dart';
 import '../widgets/sort_order_dialog.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/nestedTabBar.dart';
 
-import '../screens/movies_list_screen.dart';
-import '../screens/channels_screen.dart';
-import '../screens/authors_screen.dart';
 import '../providers/videos.dart';
-import '../main.dart';
-import '../providers/connectivity.dart';
 
 class MainTabsScreen extends StatefulWidget {
   const MainTabsScreen({Key? key}) : super(key: key);
@@ -28,16 +23,41 @@ class MainTabsScreen extends StatefulWidget {
 class MainTabsScreenState extends State<MainTabsScreen>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
+  late bool hasInternet;
   @override
   void initState() {
     super.initState();
     tabController = TabController(vsync: this, length: 3);
+
+    InternetConnectionChecker().onStatusChange.listen((status) {
+      final hasInternet = status == InternetConnectionStatus.connected;
+      setState(
+        () => this.hasInternet = hasInternet,
+      );
+    });
+
     Wakelock.disable();
   }
 
   @override
+  void didChangeDependencies() {
+    if (hasInternet == true) {
+      Future.delayed(Duration.zero, () {
+        showSimpleNotification(
+          const Text("Your internet connection has dropped",
+              textAlign: TextAlign.center),
+          background: Colors.red.shade200,
+        );
+      });
+    }
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    bool isOnline = Provider.of<ConnectivityProvider>(context).isOnline;
+    // bool isOnline = Provider.of<ConnectivityProvider>(context).isOnline;
+    ScrollController _scrollController;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -89,38 +109,7 @@ class MainTabsScreenState extends State<MainTabsScreen>
         //     : Container(),
         // floatingActionButtonLocation:
         //     FloatingActionButtonLocation.miniCenterFloat,
-        body: SingleChildScrollView(
-          child: Column(children: [
-            noInternetBar(isOnline),
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height - 80,
-              child: NestedTabBarView(),
-            ),
-          ]),
-        ),
-      ),
-    );
-  }
-}
-
-Widget noInternetBar(bool isInternet) {
-  if (isInternet == true) {
-    return Container();
-  } else {
-    return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.only(bottom: 5),
-      color: Colors.red,
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.only(right: 6.00),
-            child: Icon(Icons.info, color: Colors.white),
-          ),
-          Text("Oh no! Check internet connection...",
-              style: TextStyle(color: Colors.white)),
-        ],
+        body: NestedTabBarView(),
       ),
     );
   }

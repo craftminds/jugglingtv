@@ -6,6 +6,7 @@ import '../models/videos_db.dart';
 import 'package:provider/provider.dart';
 import './video_info_channels.dart';
 import './video_info_tags.dart';
+import '../providers/connectivity.dart';
 
 class VideoInfo extends StatelessWidget {
   const VideoInfo({
@@ -20,6 +21,7 @@ class VideoInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double _sizedBoxHeight = 3.0;
+    bool hasInternet = Provider.of<ConnectivityProvider>(context).isOnline;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 12.0),
       child: Column(
@@ -107,9 +109,15 @@ class VideoInfo extends StatelessWidget {
             },
             child: Row(
               children: [
-                CircleAvatar(
-                  foregroundImage: NetworkImage(loadedvideo.authorImageUrl),
-                ),
+                hasInternet
+                    ? CircleAvatar(
+                        foregroundImage:
+                            NetworkImage(loadedvideo.authorImageUrl),
+                      )
+                    : const Icon(
+                        Icons.no_accounts,
+                        color: Colors.red,
+                      ),
                 const SizedBox(width: 10.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
