@@ -41,7 +41,7 @@ dependencies:
   smart_select: ^4.3.2
   searchable_listview: ^1.6.0
   flag: ^6.0.0
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
   wakelock: ^0.6.2
   connectivity_plus: ^3.0.2
   internet_connection_checker: ^1.0.0+1

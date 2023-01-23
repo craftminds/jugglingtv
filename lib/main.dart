@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
                 // foregroundColor: Color.fromARGB(255, 251, 251, 251),
                 foregroundColor: Colors.black54,
               )),
-          home: MainTabsScreen(key: mainTabsScreenKey),
+          home: MainTabsScreen(tabKey: mainTabsScreenKey),
           routes: {
             MovieListScreen.routeName: (context) => const MovieListScreen(),
             VideoScreen.routeName: (context) => const VideoScreen(),

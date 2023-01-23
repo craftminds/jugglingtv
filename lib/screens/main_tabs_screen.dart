@@ -13,8 +13,9 @@ import '../widgets/nestedTabBar.dart';
 import '../providers/videos.dart';
 
 class MainTabsScreen extends StatefulWidget {
-  const MainTabsScreen({Key? key}) : super(key: key);
+  MainTabsScreen({Key? key, required Key tabKey}) : super(key: key);
   static const routeName = '/';
+  Key? tabKey;
 
   @override
   State<MainTabsScreen> createState() => MainTabsScreenState();
@@ -23,7 +24,7 @@ class MainTabsScreen extends StatefulWidget {
 class MainTabsScreenState extends State<MainTabsScreen>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
-  late bool hasInternet;
+  bool hasInternet = false;
   @override
   void initState() {
     super.initState();
@@ -109,7 +110,7 @@ class MainTabsScreenState extends State<MainTabsScreen>
         //     : Container(),
         // floatingActionButtonLocation:
         //     FloatingActionButtonLocation.miniCenterFloat,
-        body: NestedTabBarView(),
+        body: NestedTabBarView(key: widget.tabKey),
       ),
     );
   }

@@ -53,6 +53,7 @@ class _NestedTabBarViewState extends State<NestedTabBarView>
             ]),
       ),
       body: TabBarView(
+        key: widget.key,
         controller: tabController,
         children: [
           const MovieListScreen(),
