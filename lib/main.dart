@@ -14,7 +14,7 @@ import 'providers/video_channel.dart';
 import 'providers/video_tag.dart';
 import 'providers/channels.dart';
 import './screens/channels_screen.dart';
-import './screens/tags_screen.dart';
+
 import 'providers/tags.dart';
 import './screens/authors_screen.dart';
 import './screens/author_screen.dart';
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
                 // foregroundColor: Color.fromARGB(255, 251, 251, 251),
                 foregroundColor: Colors.black54,
               )),
-          home: MainTabsScreen(tabKey: mainTabsScreenKey),
+          home: MainTabsScreen(key: mainTabsScreenKey),
           routes: {
             MovieListScreen.routeName: (context) => const MovieListScreen(),
             VideoScreen.routeName: (context) => const VideoScreen(),

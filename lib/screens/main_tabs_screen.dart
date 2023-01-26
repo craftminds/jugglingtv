@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:provider/provider.dart';
+import 'dart:io' show Platform;
 
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../widgets/video_search.dart';
 import '../widgets/sort_order_dialog.dart';
 import '../widgets/app_drawer.dart';
-import '../widgets/nestedTabBar.dart';
+
+import '../screens/movies_list_screen.dart';
+import '../screens/channels_screen.dart';
+import '../screens/authors_screen.dart';
 
 import '../providers/videos.dart';
 
 class MainTabsScreen extends StatefulWidget {
-  MainTabsScreen({Key? key, required Key tabKey}) : super(key: key);
+  MainTabsScreen({Key? key}) : super(key: key);
   static const routeName = '/';
-  Key? tabKey;
 
   @override
   State<MainTabsScreen> createState() => MainTabsScreenState();
@@ -51,7 +54,6 @@ class MainTabsScreenState extends State<MainTabsScreen>
         );
       });
     }
-
     super.didChangeDependencies();
   }
 
@@ -99,18 +101,44 @@ class MainTabsScreenState extends State<MainTabsScreen>
           ],
         ),
         drawer: const AppDrawer(),
-        // floatingActionButton: (showChannel && (tabIndexValue() == 0))
-        //     ? FloatingActionButton.extended(
-        //         label: Text('Close Channel'),
-        //         icon: Icon(Icons.close),
-        //         onPressed: () {
-        //           print(tabIndex);
-        //         },
-        //       )
-        //     : Container(),
-        // floatingActionButtonLocation:
-        //     FloatingActionButtonLocation.miniCenterFloat,
-        body: NestedTabBarView(key: widget.tabKey),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            top: 2,
+            // quite dirrty solution having those fixed values...
+            bottom: Platform.isAndroid ? 5 : 25,
+            left: 15,
+            right: 15,
+          ),
+          child: TabBar(
+              indicatorColor: Colors.amber,
+              labelColor: const Color.fromARGB(255, 255, 186, 8),
+              indicatorSize: TabBarIndicatorSize.label,
+              unselectedLabelColor: Colors.black54,
+              controller: tabController,
+              tabs: const [
+                Tab(
+                  text: 'Movies',
+                  icon: Icon(Icons.video_collection),
+                ),
+                Tab(
+                  text: 'Channels',
+                  icon: Icon(Icons.tv),
+                ),
+                Tab(
+                  text: 'Authors',
+                  icon: Icon(Icons.person_search),
+                )
+              ]),
+        ),
+        body: TabBarView(
+          controller: tabController,
+          children: [
+            const MovieListScreen(),
+            ChannelsScreen(),
+            const AuthorsScreen(),
+          ],
+          // ),
+        ),
       ),
     );
   }

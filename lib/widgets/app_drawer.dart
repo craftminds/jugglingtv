@@ -36,6 +36,7 @@ class AppDrawer extends StatelessWidget {
                   OrderBy.title,
                   Sort.asc,
                 );
+                print(MyApp.mainTabsScreenKey.currentState?.tabController);
                 Navigator.of(context).pop();
                 MyApp.mainTabsScreenKey.currentState?.tabController
                     ?.animateTo(0);
@@ -46,6 +47,7 @@ class AppDrawer extends StatelessWidget {
               title: const Text('Channels'),
               onTap: () {
                 Navigator.of(context).pop();
+                print(MyApp.mainTabsScreenKey.currentState?.tabController);
                 MyApp.mainTabsScreenKey.currentState?.tabController
                     ?.animateTo(1);
               }),

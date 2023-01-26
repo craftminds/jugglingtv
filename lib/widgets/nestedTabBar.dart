@@ -9,10 +9,10 @@ class NestedTabBarView extends StatefulWidget {
   NestedTabBarView({Key? key}) : super(key: key);
 
   @override
-  State<NestedTabBarView> createState() => _NestedTabBarViewState();
+  State<NestedTabBarView> createState() => NestedTabBarViewState();
 }
 
-class _NestedTabBarViewState extends State<NestedTabBarView>
+class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
   @override
