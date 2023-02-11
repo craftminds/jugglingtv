@@ -23,38 +23,38 @@ class ChannelItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
-      child: GridTile(
-        child: GestureDetector(
-          onTap: () {
-            Provider.of<Videos>(context, listen: false)
-                .fetchAndSetVideosByChannel(
-              name,
-              OrderBy.title,
-              Sort.asc,
-            );
-            MyApp.mainTabsScreenKey.currentState?.tabController?.animateTo(0);
-          },
+      child: GestureDetector(
+        onTap: () {
+          Provider.of<Videos>(context, listen: false)
+              .fetchAndSetVideosByChannel(
+            name,
+            OrderBy.title,
+            Sort.asc,
+          );
+          MyApp.mainTabsScreenKey.currentState?.tabController?.animateTo(0);
+        },
+        child: GridTile(
           child: Image.network(
             imageUrl,
             fit: BoxFit.cover,
           ),
-        ),
-        footer: GridTileBar(
-          title: Text(
-            name,
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontFamily: Theme.of(context).textTheme.headline1?.fontFamily,
-              color: Colors.amber,
-              fontWeight: FontWeight.bold,
+          footer: GridTileBar(
+            title: Text(
+              name,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontFamily: Theme.of(context).textTheme.headline1?.fontFamily,
+                color: Colors.amber,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            subtitle: Text(
+              description,
+              softWrap: true,
+              maxLines: 2,
+            ),
+            backgroundColor: Colors.black54,
           ),
-          subtitle: Text(
-            description,
-            softWrap: true,
-            maxLines: 2,
-          ),
-          backgroundColor: Colors.black54,
         ),
       ),
     );
