@@ -1,6 +1,11 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+import 'package:provider/provider.dart';
+import '../providers/connectivity.dart';
+
+import 'package:wakelock/wakelock.dart';
 
 class VideoItem extends StatefulWidget {
   //final VideoPlayerController videoPlayerController;
@@ -29,7 +34,17 @@ class _VideoItemState extends State<VideoItem> {
 
   Future<void> initVideoPlayer() async {
     videoPlayerController = VideoPlayerController.network(widget.videoUrl!);
-    await videoPlayerController.initialize();
+    await videoPlayerController.initialize().then(
+          (value) => {
+            videoPlayerController.addListener(() {
+              if (videoPlayerController.value.isPlaying == true) {
+                Wakelock.enable();
+              } else if (videoPlayerController.value.isPlaying == false) {
+                Wakelock.disable();
+              }
+            })
+          },
+        );
     setState(() {
       // print(widget.videoPlayerController.value.aspectRatio);
       // print('Width: ${widget.videoPlayerController.value.size.width}');
@@ -41,6 +56,12 @@ class _VideoItemState extends State<VideoItem> {
         materialProgressColors: ChewieProgressColors(playedColor: Colors.amber),
         autoPlay: widget.autoplay,
         looping: widget.looping,
+        deviceOrientationsOnEnterFullScreen: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.portraitDown,
+          DeviceOrientation.landscapeRight,
+        ],
         errorBuilder: (context, errorMessage) {
           return Center(
             child: Text(
@@ -68,19 +89,25 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: videoPlayerController.value.isInitialized
-          ? FutureBuilder(
-              future: _future,
-              builder: (context, snapshot) {
-                return AspectRatio(
-                  aspectRatio: videoPlayerController.value.aspectRatio,
-                  child: Chewie(
-                    controller: _chewieController,
-                  ),
-                );
-              })
-          : const CircularProgressIndicator(),
-    );
+    bool hasInternet = Provider.of<ConnectivityProvider>(context).isOnline;
+    return hasInternet
+        ? Center(
+            child: videoPlayerController.value.isInitialized
+                ? FutureBuilder(
+                    future: _future,
+                    builder: (context, snapshot) {
+                      return AspectRatio(
+                        aspectRatio: videoPlayerController.value.aspectRatio,
+                        child: Chewie(
+                          controller: _chewieController,
+                        ),
+                      );
+                    })
+                : const CircularProgressIndicator(),
+          )
+        : const Icon(
+            Icons.signal_wifi_connected_no_internet_4_rounded,
+            color: Colors.red,
+          );
   }
 }

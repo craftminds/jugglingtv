@@ -6,6 +6,8 @@ import '../providers/video_channel.dart';
 import '../models/main_screen_arguments.dart';
 import '../screens/movies_list_screen.dart';
 import '../models/db_query_helper.dart';
+import '../providers/videos.dart';
+import '../main.dart';
 
 class VideoInfoChannels extends StatelessWidget {
   const VideoInfoChannels({
@@ -37,27 +39,35 @@ class VideoInfoChannels extends StatelessWidget {
                   for (var item in snapshot.data!)
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).popAndPushNamed(
-                          MovieListScreen.routeName,
-                          arguments: MainScreenArguments(
-                            channel: item.channelName,
-                            mainScreenMode: MainScreenMode.channel,
-                            orderBy: OrderBy.title,
-                            sort: Sort.desc,
-                          ),
+                        Provider.of<Videos>(context, listen: false)
+                            .fetchAndSetVideosByChannel(
+                          item.channelName,
+                          OrderBy.title,
+                          Sort.asc,
                         );
+                        Navigator.of(context).pop();
+                        MyApp.mainTabsScreenKey.currentState?.tabController
+                            ?.animateTo(0);
                       },
-                      child: Text(
-                        item.channelName,
-                        style: TextStyle(
-                            //fontWeight: FontWeight.w600,
-                            //fontSize: 20,
-                            height: 3,
-                            background: Paint()
-                              ..strokeWidth = 18.0
-                              ..color = const Color.fromARGB(255, 255, 186, 8)
-                              ..style = PaintingStyle.stroke
-                              ..strokeJoin = StrokeJoin.round),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 1.0,
+                          right: 1.0,
+                          top: 12.0,
+                          bottom: 10.0,
+                        ),
+                        child: Text(
+                          item.channelName,
+                          style: TextStyle(
+                              //fontWeight: FontWeight.w600,
+                              //fontSize: 20,
+                              height: 1.2,
+                              background: Paint()
+                                ..strokeWidth = 18.0
+                                ..color = const Color.fromARGB(255, 255, 186, 8)
+                                ..style = PaintingStyle.stroke
+                                ..strokeJoin = StrokeJoin.round),
+                        ),
                       ),
                     ),
                 ],

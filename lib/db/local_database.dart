@@ -34,14 +34,14 @@ class LocalDatabase with ChangeNotifier {
         await getApplicationDocumentsDirectory();
 
     String dbPathEnglish =
-        path.join(applicationDirectory.path, "scrapy_jugglingtv.db");
+        path.join(applicationDirectory.path, "scrapy_jugglingtv_channels.db");
 
     bool dbExistsEnglish = await io.File(dbPathEnglish).exists();
 
     if (!dbExistsEnglish) {
       // Copy from asset
-      ByteData data =
-          await rootBundle.load(path.join("assets", "scrapy_jugglingtv.db"));
+      ByteData data = await rootBundle
+          .load(path.join("assets", "scrapy_jugglingtv_channels.db"));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -85,7 +85,6 @@ CREATE TABLE $tableTag (
 CREATE TABLE $tableVideo (
 	${VideosFields.id} INTEGER NOT NULL, 
 	${VideosFields.title} TEXT, 
-	${VideosFields.thumbnailUrl} VARCHAR(2048), 
 	${VideosFields.videoUrl} VARCHAR(2048), 
 	${VideosFields.views} INTEGER, 
 	${VideosFields.duration} INTEGER, 
@@ -132,7 +131,6 @@ CREATE TABLE $tableVideoTag (
     }
   }
 
-//TODO: add sorting - two more parameters and the column to sort by and ASC or DESC clause
   Future<List<Video>> readAllVideos(OrderBy order, Sort sort) async {
     final db = await instance.database;
 
@@ -147,7 +145,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
       $tableVideo.${VideosFields.id},
       $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -178,7 +175,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
         $tableVideo.${VideosFields.id},
         $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -211,7 +207,6 @@ CREATE TABLE $tableVideoTag (
       '''SELECT 
         $tableVideo.${VideosFields.id},
         $tableVideo.${VideosFields.title},
-        $tableVideo.${VideosFields.thumbnailUrl},
         $tableVideo.${VideosFields.videoUrl},
         $tableVideo.${VideosFields.views},
         $tableVideo.${VideosFields.duration},
@@ -286,8 +281,8 @@ CREATE TABLE $tableVideoTag (
     // check every element of map if id is in author_id
     var resultWithMovies = result.map((json) => Author.fromJson(json)).toList();
     for (var author in resultWithMovies) {
-      int authorIndex =
-          videoCount.indexWhere((element) => author.id == element["author_id"]);
+      int authorIndex = videoCount
+          .indexWhere((element) => author.id == element[VideosFields.authorId]);
       if (authorIndex != -1) {
         author.moviesCount = videoCount[authorIndex]["NUM"] as int;
       }
@@ -356,18 +351,30 @@ SELECT
   Future<List<VideoTag>> readTagsByVideoId(int id) async {
     final db = await instance.database;
 
+// works for the older database
+//     final result = await db.rawQuery(
+//       '''
+// SELECT
+//     $tableTag.${TagFields.name}
+//     FROM
+//     $tableVideoTag, $tableTag
+//     WHERE
+//     $tableVideoTag.${VideoTagFields.tagId} = $tableTag.${TagFields.id} AND
+//     $tableVideoTag.${VideoTagFields.videoId} = $id
+// ''',
+//     );
+
+//below works for the new DB with video1 table
     final result = await db.rawQuery(
       '''
 SELECT 
-    $tableTag.${TagFields.name}
+    $tableVideo.${VideosFields.tags}
     FROM
-    $tableVideoTag, $tableTag
+    $tableVideo
     WHERE
-    $tableVideoTag.${VideoTagFields.tagId} = $tableTag.${TagFields.id} AND
-    $tableVideoTag.${VideoTagFields.videoId} = $id
+    $tableVideo.${VideosFields.id} = $id
 ''',
     );
-    // print(result);
     // var groupedResult = groupBy(result, (Map obj) => obj['video_id']);
     // print(groupedResult);
     return result.map((json) => VideoTag.fromJson(json)).toList();
@@ -378,7 +385,6 @@ SELECT
     db.close();
   }
 }
-
 
 // function to count the number of videos:
 // select video.author_id , author.name, count(*) as NUM FROM video,author WHERE video.author_id = author.id group by video.author_id

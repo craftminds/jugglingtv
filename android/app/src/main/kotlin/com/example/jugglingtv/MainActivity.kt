@@ -1,4 +1,4 @@
-package com.example.jugglingtv
+package com.ubicircus.jugglingtv
 
 import io.flutter.embedding.android.FlutterActivity
 
