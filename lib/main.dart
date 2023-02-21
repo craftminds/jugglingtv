@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/providers/connectivity.dart';
+
 import 'package:overlay_support/overlay_support.dart';
 import '../screens/main_tabs_screen.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
@@ -20,6 +21,8 @@ import './screens/authors_screen.dart';
 import './screens/author_screen.dart';
 import './providers/authors.dart';
 import './screens/about_screen.dart';
+import './providers/favorites.dart';
+import './screens/favorites_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Tags()),
         ChangeNotifierProvider(create: (context) => Authors()),
         ChangeNotifierProvider(create: (context) => ConnectivityProvider()),
+        ChangeNotifierProvider(create: (context) => Favorites()),
       ],
       child: OverlaySupport.global(
         child: MaterialApp(
@@ -80,6 +84,7 @@ class MyApp extends StatelessWidget {
             AuthorsScreen.routeName: (context) => const AuthorsScreen(),
             AuthorScreen.routeName: (context) => const AuthorScreen(),
             AboutScreen.routeName: (context) => const AboutScreen(),
+            FavoritesScreen.routeName: (context) => const FavoritesScreen(),
             //TagsScreen.routeName: ((context) => const TagsScreen()),
           },
         ),

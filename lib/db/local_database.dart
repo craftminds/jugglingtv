@@ -384,7 +384,53 @@ SELECT
     final db = await instance.database;
     db.close();
   }
-}
 
 // function to count the number of videos:
 // select video.author_id , author.name, count(*) as NUM FROM video,author WHERE video.author_id = author.id group by video.author_id
+
+  Future<List<Video>> readFavoriteVideos() async {
+    //function that returns favorite videos from the DB. I no videos available, empty
+    final db = await instance.database;
+
+    // List<Map> result =
+    //     await db.query("favorite", columns: ["id_movie"], where: "*");
+    // if (result.isNotEmpty) {
+    //   return result.map((json) => Favorite.fromJson(json)).toList();
+    // }
+    // return [];
+
+    final result = await db.rawQuery(
+      '''SELECT 
+      $tableVideo.${VideosFields.id},
+      $tableVideo.${VideosFields.title},
+        $tableVideo.${VideosFields.videoUrl},
+        $tableVideo.${VideosFields.views},
+        $tableVideo.${VideosFields.duration},
+        $tableVideo.${VideosFields.commentsNo},
+        $tableVideo.${VideosFields.description},
+        $tableVideo.${VideosFields.year},
+        $tableVideo.${VideosFields.country},
+        $tableVideo.${VideosFields.authorId},
+        $tableAuthor.${AuthorFields.name},
+        $tableAuthor.${AuthorFields.imageUrl}
+        FROM
+        $tableVideo, $tableAuthor, $tableFavorite
+        WHERE
+        $tableVideo.${VideosFields.authorId} = $tableAuthor.${AuthorFields.id} AND
+        $tableVideo.${VideosFields.id} = $tableFavorite.${FavoriteFields.movieId}
+        ''',
+    );
+    // print(result);
+    return result.map((json) => Video.fromJson(json)).toList();
+  }
+
+  Future insertSingleFavorite(int id) async {
+//function that write single id  of the favorite video
+    final db = await instance.database;
+  }
+
+  Future deleteSingleFavorite(int id) async {
+//function that deletes single id of the favorite video
+    final db = await instance.database;
+  }
+}

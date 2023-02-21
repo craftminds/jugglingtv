@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 // names of all the tables in DB
 const String tableAuthor = 'authors';
 const String tableChannel = 'channel';
@@ -8,6 +6,7 @@ const String tableVideo = 'video1';
 const String tableVideoChannel = 'video_channel_1';
 const String tableVideoTag = 'video_tag';
 const String tableCountries = 'countries';
+const String tableFavorite = 'favorite';
 
 /*
 CREATE TABLE author (
@@ -343,4 +342,23 @@ class Countries {
     required this.countryId,
     required this.countryValue,
   });
+}
+
+class FavoriteFields {
+  static const String id = "id";
+  static const String movieId = "id_movie";
+  static const String added_timestamp = "added_timestamp";
+}
+
+class Favorite {
+  //final String favoriteId;
+  final String movieId;
+
+  const Favorite({
+    //required this.favoriteId,
+    required this.movieId,
+  });
+  static Favorite fromJson(Map<Object?, Object?> json) {
+    return Favorite(movieId: json[FavoriteFields.movieId] as String);
+  }
 }
