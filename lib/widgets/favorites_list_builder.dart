@@ -15,7 +15,7 @@ class FavoritesListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Video>>(
-      future: Provider.of<Favorites>(context).fetchVideos(),
+      future: Provider.of<Favorites>(context).fetchFavoriteVideos(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(

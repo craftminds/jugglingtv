@@ -31,17 +31,17 @@ class VideoInfo extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  loadedvideo.title,
+                  loadedvideo.title.trimLeft(),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .copyWith(fontSize: 15.0),
                   overflow: TextOverflow.clip,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: _sizedBoxHeight),
           Row(
             children: [
               Expanded(
@@ -49,7 +49,7 @@ class VideoInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   //const Icon(Icons.visibility_outlined),
-                  const SizedBox(width: 5.0),
+                  // const SizedBox(width: 5.0),
                   Text(
                     '${loadedvideo.views} views',
                     style: Theme.of(context)
@@ -81,7 +81,43 @@ class VideoInfo extends StatelessWidget {
               // )
             ],
           ),
-          const Divider(thickness: 2),
+          // const Divider(thickness: 2),
+          // const SizedBox(height: _sizedBoxHeight),
+          // const SizedBox(height: _sizedBoxHeight),
+          // const SizedBox(height: _sizedBoxHeight),
+
+          // // place for the buttons "Favorite" and "Share" - sharing a link to the juggling.tv site
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: [
+          //     // FloatingActionButton.extended(
+          //     //   extendedPadding: EdgeInsetsDirectional.only(start: 5, end: 5),
+          //     //   onPressed: () {},
+          //     //   label: Text("Favorite"),
+          //     //   backgroundColor: Colors.amber,
+          //     //   icon: Icon(Icons.star_outline_rounded),
+          //     //   tooltip: "Add video to favorites list",
+          //     // )
+          //     ElevatedButton.icon(
+          //       onPressed: () {},
+          //       icon: Icon(Icons.star_border_purple500_outlined),
+          //       label: Text("Favorite"),
+          //       style: ButtonStyle(
+          //         backgroundColor: MaterialStatePropertyAll(Colors.amber),
+          //       ),
+          //     ),
+          //     ElevatedButton.icon(
+          //       onPressed: () {},
+          //       icon: Icon(Icons.share),
+          //       label: Text("Share"),
+          //       style: ButtonStyle(
+          //         backgroundColor: MaterialStatePropertyAll(Colors.amber),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          const SizedBox(height: _sizedBoxHeight),
+          const SizedBox(height: _sizedBoxHeight),
           const SizedBox(height: _sizedBoxHeight),
           const Text(
             'Description:',
@@ -100,7 +136,13 @@ class VideoInfo extends StatelessWidget {
               )),
             ],
           ),
-          const Divider(thickness: 2.0),
+          // const Divider(),
+          // const Divider(thickness: 2.0),
+          const SizedBox(height: _sizedBoxHeight),
+          const SizedBox(height: _sizedBoxHeight),
+          const SizedBox(height: _sizedBoxHeight),
+          const SizedBox(height: _sizedBoxHeight),
+          const SizedBox(height: _sizedBoxHeight),
           const SizedBox(height: _sizedBoxHeight),
           InkWell(
             onTap: () {
@@ -129,19 +171,21 @@ class VideoInfo extends StatelessWidget {
                           .bodyText1!
                           .copyWith(fontSize: 15.0),
                     ),
-                    Text(
-                      loadedvideo.country,
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .copyWith(fontSize: 14.0),
-                    )
+                    loadedvideo.country == ""
+                        ? Container()
+                        : Text(
+                            loadedvideo.country,
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(fontSize: 14.0),
+                          )
                   ],
                 )
               ],
             ),
           ),
-          const Divider(thickness: 2.0),
+          const Divider(),
           const SizedBox(height: _sizedBoxHeight),
           const Text(
             'Channels:',
@@ -150,7 +194,7 @@ class VideoInfo extends StatelessWidget {
           // const SizedBox(height: 5.0),
           VideoInfoChannels(loadedvideo: loadedvideo),
           const SizedBox(height: _sizedBoxHeight),
-          const Divider(thickness: 2.0),
+          // const Divider(thickness: 2.0),
           const SizedBox(height: _sizedBoxHeight),
           const Text(
             'Tags:',

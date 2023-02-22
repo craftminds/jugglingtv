@@ -424,13 +424,25 @@ SELECT
     return result.map((json) => Video.fromJson(json)).toList();
   }
 
-  Future insertSingleFavorite(int id) async {
+  Future<int> insertSingleFavorite(int id) async {
 //function that write single id  of the favorite video
     final db = await instance.database;
+    Map<String, dynamic> row = {
+      FavoriteFields.movieId: id,
+    };
+    int insertedId = await db.insert(tableFavorite, row);
+
+    return insertedId;
   }
 
-  Future deleteSingleFavorite(int id) async {
-//function that deletes single id of the favorite video
+  Future<int> deleteSingleFavorite(int id) async {
     final db = await instance.database;
+
+    int count = await db.delete(
+      tableFavorite,
+      where: '${FavoriteFields.movieId} = ?',
+      whereArgs: [id],
+    );
+    return count;
   }
 }

@@ -77,7 +77,7 @@ class MovieItem extends StatelessWidget {
                       Flexible(
                         fit: FlexFit.loose,
                         child: Text(
-                          title,
+                          title.trimLeft(),
                           style: const TextStyle(fontWeight: FontWeight.bold),
                           maxLines: 3,
                           softWrap: true,
