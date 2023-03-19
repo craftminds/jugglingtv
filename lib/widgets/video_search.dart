@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/widgets/movie_list.dart';
+
 import '../providers/videos.dart';
 import 'package:provider/provider.dart';
 import '../models/videos_db.dart';
 import '../screens/video_screen.dart';
-import '../screens/movies_list_screen.dart';
-import '../models/main_screen_arguments.dart';
-import '../models/db_query_helper.dart';
-import 'package:flag/flag.dart';
+import './movies_list_screen/movie_list.dart';
 
 class VideoSearch extends SearchDelegate<String> {
   final suggestionValues = ['1', '2', '3'];

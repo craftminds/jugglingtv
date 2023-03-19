@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/videos.dart';
-import '../widgets/movie_list.dart';
+import '../../providers/videos.dart';
+import '../movies_list_screen/movie_list.dart';
 
 class AuthorScreenVideosList extends StatelessWidget {
   const AuthorScreenVideosList({Key? key, required this.authorId})

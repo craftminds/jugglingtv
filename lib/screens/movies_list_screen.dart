@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'dart:async';
 import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:jugglingtv/providers/authors.dart';
-import 'package:jugglingtv/screens/channels_screen.dart';
-import 'package:jugglingtv/widgets/sort_order_dialog.dart';
+
 import 'package:provider/provider.dart';
 import '../providers/favorites.dart';
-
-import '../db/local_database.dart';
 import '../models/videos_db.dart';
-import '../widgets/app_drawer.dart';
-import '../providers/tags.dart';
-import '../widgets/movie_list_builder.dart';
+import '../widgets/movies_list_screen/movie_list_builder.dart';
 import '../models/main_screen_arguments.dart';
-import '../screens/authors_screen.dart';
-import '../widgets/video_search.dart';
 import '../providers/videos.dart';
-import '../main.dart';
-import 'dart:async';
 
 /* this part should be replaces for other source videos
 // get movies from the file - maybe move that to another file?

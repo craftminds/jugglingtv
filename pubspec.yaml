@@ -48,6 +48,7 @@ dependencies:
   overlay_support: ^2.1.0
   share_plus: ^6.3.1
   is_first_run: ^1.0.0
+  flutter_slidable: ^2.0.0
 
 flutter_icons:
   image_path_ios: "assets/icon/icon.png"

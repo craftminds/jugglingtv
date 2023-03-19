@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jugglingtv/models/db_query_helper.dart';
 import 'package:provider/provider.dart';
-import '../providers/videos.dart';
-import '../models/videos_db.dart';
-import '../providers/favorites.dart';
-import './movie_list.dart';
-import '../models/main_screen_arguments.dart';
+import '../../models/videos_db.dart';
+import '../../providers/favorites.dart';
+import '../movies_list_screen/movie_list.dart';
+import './favorites_list.dart';
 
 class FavoritesListBuilder extends StatelessWidget {
   FavoritesListBuilder({
@@ -22,7 +20,7 @@ class FavoritesListBuilder extends StatelessWidget {
             child: Text("${snapshot.error}"),
           );
         } else if (snapshot.hasData) {
-          return MovieList(movies: snapshot.data!);
+          return FavoritesMovieList(movies: snapshot.data!);
         } else {
           return const Center(
             child: CircularProgressIndicator(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/screens/author_screen.dart';
-import '../models/videos_db.dart';
+import '../../models/videos_db.dart';
 import 'package:flag/flag.dart';
 
 class AuthorItem extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/videos_db.dart';
-import '../widgets/author_item.dart';
+import '../../models/videos_db.dart';
+import './author_item.dart';
 
 class AuthorList extends StatelessWidget {
   const AuthorList({

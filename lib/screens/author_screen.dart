@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/authors.dart';
-import '../widgets/author_screen_videos_list.dart';
+import '../widgets/authors_screen/author_screen_videos_list.dart';
 import 'movies_list_screen.dart';
 
 class AuthorScreen extends StatelessWidget {

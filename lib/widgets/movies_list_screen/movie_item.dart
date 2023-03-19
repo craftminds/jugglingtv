@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/screens/video_screen.dart';
 import 'package:provider/provider.dart';
-import '../providers/connectivity.dart';
+import '../../providers/connectivity.dart';
 
 class MovieItem extends StatelessWidget {
   final int id;

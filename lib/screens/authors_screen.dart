@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/models/main_screen_arguments.dart';
-import 'package:jugglingtv/widgets/app_drawer.dart';
-import 'package:jugglingtv/widgets/author_list_builder.dart';
-import 'package:jugglingtv/widgets/movie_list_builder.dart';
-import 'package:provider/provider.dart';
-import '../providers/authors.dart';
+
+import 'package:jugglingtv/widgets/authors_screen/author_list_builder.dart';
 import '../models/db_query_helper.dart';
-import '../screens/channels_screen.dart';
-import '../screens/movies_list_screen.dart';
 
 class AuthorsScreen extends StatelessWidget {
   const AuthorsScreen({Key? key}) : super(key: key);

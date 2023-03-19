@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jugglingtv/models/main_screen_arguments.dart';
-import '../models/videos_db.dart';
+import '../../models/videos_db.dart';
 import 'package:provider/provider.dart';
-import '../providers/authors.dart';
-import '../widgets/author_list.dart';
-import '../widgets/author_item.dart';
+import '../../providers/authors.dart';
+import './author_item.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 class AuthorListBuilder extends StatefulWidget {

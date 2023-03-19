@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
 import '../widgets/app_drawer.dart';
-import '../widgets/favorites_list_builder.dart';
+import '../widgets/favorites_list_screen/favorites_list_builder.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
