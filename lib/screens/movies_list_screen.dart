@@ -5,6 +5,7 @@ import 'package:jugglingtv/providers/authors.dart';
 import 'package:jugglingtv/screens/channels_screen.dart';
 import 'package:jugglingtv/widgets/sort_order_dialog.dart';
 import 'package:provider/provider.dart';
+import '../providers/favorites.dart';
 
 import '../db/local_database.dart';
 import '../models/videos_db.dart';
@@ -68,6 +69,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   void initState() {
     dropdownSortByValue = sortByDropdowList[0];
     dropdownOrderValue = orderDropdowList[0];
+    Provider.of<Favorites>(context, listen: false).fetchFavoriteVideos();
     // call for all Authors for the sake of future data, single calls for one author makes no sense - too little data to get. All the authors is not that much.
     // if that applications is ever too grow more it should be considered to be done one by one
   }
