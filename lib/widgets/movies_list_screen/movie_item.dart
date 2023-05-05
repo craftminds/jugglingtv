@@ -26,6 +26,8 @@ class MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool hasInternet = Provider.of<ConnectivityProvider>(context).isOnline;
+    //variable to check how to build the
+    bool landscapeView = MediaQuery.of(context).size.width > 500;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7),
@@ -42,7 +44,7 @@ class MovieItem extends StatelessWidget {
           Navigator.of(context).pushNamed(VideoScreen.routeName, arguments: id);
         },
         child: Container(
-          height: 80,
+          //height: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
           //alignment: Alignment.center,
           child: Row(

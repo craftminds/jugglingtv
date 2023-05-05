@@ -8,8 +8,20 @@ class MovieList extends StatelessWidget {
   final List<Video> movies;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    // if the window is larger than 300px? then return GridView, other wise just ListView is enough
+    return GridView.builder(
+      gridDelegate: MediaQuery.of(context).size.width < 500
+          ? const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 1, mainAxisExtent: 100)
+          : const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 400, mainAxisExtent: 100),
+
+      // SliverGridDelegateWithMaxCrossAxisExtent(
+      //   maxCrossAxisExtent: 400,
+
+      // ),
       key: const PageStorageKey<String>('videoPage'),
+
       itemCount: movies.length,
       itemBuilder: (context, index) {
         return MovieItem(

@@ -128,9 +128,9 @@ class ChannelsScreen extends StatelessWidget {
           //return MovieList(movies: snapshot.data!);
           return GridView(
             padding: const EdgeInsets.all(10.0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 3 / 2,
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                //childAspectRatio: 3 / 2,
                 crossAxisSpacing: 2.0,
                 mainAxisSpacing: 5.0),
             children: <Widget>[
