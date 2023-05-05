@@ -63,36 +63,38 @@ class _AuthorListBuilderState extends State<AuthorListBuilder> {
               strokeWidth: 1.0,
             ),
           )
-        : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: 400,
-              child: SearchableList<Author>(
-                key: const PageStorageKey<String>('authorsPage'),
-                initialList: authors,
-                filter: _filterAuthorList,
-                builder: (Author author) => AuthorItem(author: author),
-                emptyWidget: const EmptyView(),
-                onItemSelected: (Author item) {},
-                inputDecoration: InputDecoration(
-                  contentPadding: const EdgeInsets.all(15.0),
-                  //isCollapsed: true,
-                  labelStyle: const TextStyle(color: Colors.black26),
-                  labelText: "Who are you looking for?",
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 0.5,
-                      color: Colors.black38,
+        : Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 400,
+                child: SearchableList<Author>(
+                  key: const PageStorageKey<String>('authorsPage'),
+                  initialList: authors,
+                  filter: _filterAuthorList,
+                  builder: (Author author) => AuthorItem(author: author),
+                  emptyWidget: const EmptyView(),
+                  onItemSelected: (Author item) {},
+                  inputDecoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(15.0),
+                    //isCollapsed: true,
+                    labelStyle: const TextStyle(color: Colors.black26),
+                    labelText: "Who are you looking for?",
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        width: 0.5,
+                        color: Colors.black38,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.black45,
-                      width: 1,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black45,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),
