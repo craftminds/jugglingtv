@@ -13,7 +13,12 @@ class FavoritesMovieList extends StatelessWidget {
             style: TextStyle(color: Colors.black)),
       );
     } else {
-      return ListView.builder(
+      return GridView.builder(
+          gridDelegate: MediaQuery.of(context).size.width < 500
+              ? const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1, mainAxisExtent: 100)
+              : const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 400, mainAxisExtent: 100),
           key: const PageStorageKey<String>('videoPage'),
           itemCount: movies.length,
           itemBuilder: (context, index) {
