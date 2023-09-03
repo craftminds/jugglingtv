@@ -6,10 +6,8 @@ import '../screens/main_tabs_screen.dart';
 import 'package:jugglingtv/screens/movies_list_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter/foundation.dart';
 import './screens/video_screen.dart';
 import './db/local_database.dart';
-import 'models/videos_db.dart';
 import 'providers/videos.dart';
 import 'providers/video_channel.dart';
 import 'providers/video_tag.dart';
@@ -50,6 +48,7 @@ class MyApp extends StatelessWidget {
       child: OverlaySupport.global(
         child: MaterialApp(
           //TODO: work on theme for the app, the font, the colors etc.
+          debugShowCheckedModeBanner: false,
           title: appTitle,
           theme: ThemeData(
               primaryColor: Colors.lightGreen,
